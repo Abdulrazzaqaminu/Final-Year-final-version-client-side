@@ -1,38 +1,123 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Gilda+Display&family=Inter:wght@400;500;700&family=Manrope:wght@200&family=Poppins:wght@300;500;600;700;800&display=swap');
+
+
+/* ROOT VARIABLES */
+:root{
+  --color-primary: #7380ec ;
+  --color-danger: #ff7782 ;
+  --color-success: #41f1b6 ;
+  --color-warning: #ffbb55 ;
+  --color-white: #fff ;
+  --color-info-dark: #7d8da1 ;
+  --color-info-light: #dce1eb ;
+  --color-dark: #363949 ;
+  --color-light: rgba(132, 139, 200, 0.18) ;
+  --color-primary-variant: #111e88 ;
+  --color-dark-variant: #677483 ;
+  --color-background: #f6f6f9 ;
+
+  --card-border-radius: 2rem ;
+  --border-radius-1: 0.4rem ;
+  --border-radius-2: 0.8rem ;
+  --border-radius-3: 1.2rem ;
+
+  --card-padding: 1.8rem ;
+  --padding: 1.2rem ;
+
+  --box-shadow: 0 2rem 3rem var(--color-light) ;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+*{
+  margin: 0;
+  padding: 0;
+  outline: none;
+  appearance: none;
+  border: 0;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  width: 98vw;
+  height: 100vh;
+  font-family: poppins, sans-serif;
+  background-color: var(--color-background);
+  user-select: none;
+  overflow: auto;
+  font-size: 14px;
+  color: var(--color-dark);
+}
+body::-webkit-scrollbar{
+  display: none;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.container{
+  display: grid;
+  width: 96%;
+  margin: 0 auto;
+  gap: 1.8rem;
+  grid-template-columns: 15rem 55rem;
 }
 
-.App-link {
-  color: #61dafb;
+h1{
+  font-weight: 800;
+  font-size: 1.8rem;
+  white-space: nowrap;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+h2{
+  font-size: 1.2rem;
+  white-space: nowrap;
+}
+
+h3{
+  font-size: 0.87rem;
+  white-space: nowrap;
+}
+
+h4{
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+h5{
+  font-size: 0.77rem;
+  white-space: nowrap;
+}
+
+small{
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.profile-photo{
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 50%;
+}
+
+.text-muted{
+  color: var(--color-info-dark);
+}
+
+p{
+  color: var(--color-dark-variant);
+}
+
+b{
+  color: var(--color-dark);
+}
+
+.primary{
+  color: var(--color-primary);
+}
+
+.danger{
+  color: var(--color-danger);
+}
+
+.success{
+  color: var(--color-success);
 }

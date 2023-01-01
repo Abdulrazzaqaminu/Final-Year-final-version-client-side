@@ -1,0 +1,99 @@
+.loans_container{
+    display: grid;
+    grid-template-columns: 35% 60%;
+    gap: 10px;
+    place-items: center;
+    /* background: purple; */
+    width: 100%;
+    height: 80vh;
+    margin: 80px 30px;
+}
+
+.loans_container .loan-form{
+    background: var(--color-white);
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+    /* background: red; */
+    width: 100%;
+    height: 93%;
+    padding: 10px;
+    border-radius: 7px;
+}
+
+.loans_container .loan-form:hover{
+  box-shadow: none;
+}
+
+.loans_container .loan-form form .field{
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 6px;
+    margin-bottom: -10px;
+}
+
+.loans_container .loan-form form .field textarea{
+    background: var(--color-info-light);
+    outline: none;
+    padding: 10px;
+    border: none;
+    font-size: 1rem;
+    border-radius: var(--border-radius-1);
+}
+
+.loans_container .loan-form form .field .duration{
+    display: grid;
+    grid-template-columns: 1fr 1fr;   
+    gap: 8px;
+}
+
+.loans_container .loan-form form .field .duration input{
+    width: 134px;  
+    text-align: center;
+}
+
+.loans_container .loan-table{
+    /* background: blue; */
+    width: 100%;
+    margin-left: 68px;
+    height: 93%;
+    overflow: auto;
+    border-radius: 6px;
+    background: var(--color-white);
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+}
+
+.loans_container .loan-table:hover{
+   box-shadow: none;
+}
+
+.loans_container .loan-table::-webkit-scrollbar{
+    display: none;
+}
+
+.loans_container .loan-table table{
+    padding: var(--card-padding);
+    transition: all 300ms ease;
+    white-space: nowrap;
+    /* text-align: center; */
+    width: 100%;
+    height: 100%;
+    /* background: pink; */
+}
+
+.loans_container .loan-table table tbody td{
+    height: 2.8rem;
+    border-bottom: 1px solid var(--color-light);
+    color: var(--color-dark-variant);
+    white-space: nowrap;
+    padding: 0 30px;
+}
+
+.loans_container .loan-table table tbody tr:last-child td{
+    border: none;
+}
+
+.loans_container .loan-table table thead th{
+    text-align: left;
+    padding: 0 30px;
+}

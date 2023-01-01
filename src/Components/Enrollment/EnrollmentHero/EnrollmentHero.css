@@ -1,0 +1,84 @@
+.enrollment-container{
+    margin:100px 30px;
+    height: 80vh;
+    width: 63vw;
+    /* background: red; */
+    border-radius: var(--border-radius-1);
+    overflow: auto;
+}
+
+.enrollment-container::-webkit-scrollbar{
+    display: none;
+}
+
+.enrollment-container form{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 63vw;
+    background:var(--color-white);
+    padding: 30px;
+    /* background: rebeccapurple; */
+}
+  
+.enrollment-container form .field{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
+}
+  
+.enrollment-container form .field .street{
+    margin-bottom: 40px;
+}
+  
+.enrollment-container form .field.selectables{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+}
+  
+.enrollment-container form .field.selectables select{
+    /* position: absolute; */
+    /* margin: 40px 296px; */
+    background: var(--color-info-light);
+    outline: none;
+    border: none;
+    /* height: 2rem; */
+    padding: 0 10px;
+    width: 6.5vw;
+    font-size: 1rem;
+    border-radius: var(--border-radius-1);
+}
+  
+.enrollment-container form .field textarea{
+    width: 201.9%;
+    height: 80px;
+    background: var(--color-info-light);
+    outline: none;
+    border: none;
+    height: 5rem;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: var(--border-radius-1);
+}
+  
+.enrollment-container form .field input,select{
+    background: var(--color-info-light);
+    outline: none;
+    border: none;
+    height: 2rem;
+    padding: 0 10px;
+    font-size: 1rem;
+    border-radius: var(--border-radius-1);
+}
+  
+.enrollment-container form button{
+    padding: 8px;
+    color: red;
+    margin-top: -20px;
+    border-radius: 5px;
+    width: 6vw;
+    border: none;
+    cursor: pointer;
+    background: rgb(236, 212, 212);
+}

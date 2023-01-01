@@ -1,0 +1,46 @@
+.Payroll-table{
+    margin:100px 30px;
+    height: 75vh;
+    border-radius: 5px;
+    overflow: auto;
+}
+
+.Payroll-table::-webkit-scrollbar{
+    display: none;
+}
+
+.Payroll-table table{
+    background: var(--color-white);
+    padding: var(--card-padding);
+    transition: all 300ms ease;
+    white-space: nowrap;
+    width: 100%;
+    height: 100%;
+}
+
+.Payroll-table tbody td{
+    height: 2.8rem;
+    border-bottom: 1px solid var(--color-light);
+    color: var(--color-dark-variant);
+    white-space: nowrap;
+    padding: 0 30px;
+}
+
+.Payroll-table table tbody tr:last-child td{
+    border: none;
+}
+
+.Payroll-table tbody td .salary{
+    color: red;
+    border-radius: 5px;
+    height: 2.8rem;
+    padding: 5px;
+    border: none;
+    cursor: pointer;
+    background: rgb(236, 212, 212);
+}
+
+.Payroll-table table thead th{
+    text-align: left;
+    padding: 0 30px;
+}

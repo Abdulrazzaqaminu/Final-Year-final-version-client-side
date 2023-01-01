@@ -1,0 +1,118 @@
+.dept-container{
+    display: flex;
+    justify-content: space-between;
+    margin: 80px 30px;
+    height: 80vh;
+    /* background: blue; */
+}
+
+.dept-container .dept-left{
+    display: flex;
+    flex-direction: column;
+    /* background: red; */
+    width: 43%;
+    border-radius: 5px;
+}
+
+.dept-container .dept-left .dept-left-top form{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background: var(--color-white);
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+    border-radius: 7px;
+    margin-bottom: 19px;
+}
+
+.dept-container .dept-left .dept-left-top form:hover{
+    box-shadow: none;
+}
+
+.dept-container .dept-left .dept-left-bottom form{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background: var(--color-white);
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+    border-radius: 5px;
+    margin-top: 24px;
+}
+
+.dept-container .dept-left .dept-left-bottom form:hover{
+    box-shadow: none;
+}
+
+.dept-container .dept-right{
+    display: flex;
+    flex-direction: column;
+    /* background: red; */
+    width: 54%;
+    overflow: auto;
+    box-shadow: var(--box-shadow);
+    border-radius: 5px;
+}
+
+.dept-container .dept-right::-webkit-scrollbar{
+    display: none;
+}
+
+.dept-container .dept-right table{
+    background: var(--color-white);
+    border-radius: var(--border-radius-1);
+    padding: var(--card-padding);
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+    white-space: nowrap;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+.dept-container .dept-right table:hover{
+    box-shadow: none;
+}
+
+.dept-container .dept-right table thead h2{
+    margin-bottom: 20px;
+    margin-top: -12px;
+}
+
+.dept-container .dept-right table tbody td{
+    height: 2.8rem;
+    border-bottom: 1px solid var(--color-light);
+    color: var(--color-dark-variant);
+    white-space: nowrap;
+}
+
+.dept-container .dept-right table tbody tr:last-child td{
+    border: none;
+}
+
+.dept-container .dept-right th{
+   text-align: left;
+}
+
+input{
+    margin: 10px 0;
+    background: var(--color-info-light);
+    color: var(--color-muted);
+    outline: none;
+    border: none;
+    height: 2rem;
+    padding: 0 10px;
+    font-size: 1rem;
+    border-radius: var(--border-radius-1);
+}
+
+button{
+    padding: 8px;
+    margin-top: 18px;
+    color: red;
+    border-radius: 5px;
+    width: 6vw;
+    border: none;
+    cursor: pointer;
+    background: rgb(236, 212, 212);
+}

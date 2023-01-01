@@ -1,0 +1,133 @@
+/* ROOT VARIABLES */
+:root{
+    --color-primary: #7380ec ;
+    --color-danger: #ff7782 ;
+    --color-success: #41f1b6 ;
+    --color-warning: #ffbb55 ;
+    --color-white: #fff ;
+    --color-info-dark: #7d8da1 ;
+    --color-info-light: #dce1eb ;
+    --color-dark: #363949 ;
+    --color-light: rgba(132, 139, 200, 0.18) ;
+    --color-primary-variant: #111e88 ;
+    --color-dark-variant: #677483 ;
+    --color-background: #f6f6f9 ;
+  
+    --card-border-radius: 2rem ;
+    --border-radius-1: 0.4rem ;
+    --border-radius-2: 0.8rem ;
+    --border-radius-3: 1.2rem ;
+  
+    --card-padding: 1.8rem ;
+    --padding: 1.2rem ;
+  
+    --box-shadow: 0 2rem 3rem var(--color-light) ;
+}
+
+.link{
+    color: var(--color-dark);
+}
+
+aside{
+    /* background: white; */
+    position: fixed;
+    height: 100vh;
+    width: 20vw;
+    overflow: auto;
+    transition: all 300ms ease;
+}
+
+aside::-webkit-scrollbar{
+    display: none;
+}
+  
+aside .top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.4rem;
+    transition: all 300ms ease;
+}
+
+aside .logo{
+    display: flex;
+    gap: .0.8rem;
+    transition: all 300ms ease;
+}
+
+/* sidebar */
+
+aside .sidebar{
+    /* background: white; */
+    display: flex;
+    flex-direction: column;
+    height: 86vh;
+    position: relative;
+    top: 3rem;
+    transition: all 300ms ease;
+}
+
+aside h3{
+    font-weight: 500;
+}
+
+aside .sidebar .link{
+    display: flex;
+    color: black;
+    gap: 1rem;
+    font-size: 14px;
+    align-items: center;
+    position: relative;
+    height: 3.7rem;
+    transition: all 300ms ease;
+    margin-bottom: 1rem;
+}
+
+aside .sidebar .link:hover{
+    color: var(--color-primary);
+    margin-left: 0.2rem;
+    transition: all 300ms ease;
+    background: var(--color-light);
+}
+
+aside .sidebar .link::before{
+    content: "";
+    width: 6px;
+    height: 100%;
+    background: var(--color-primary);
+    transition: all 300ms ease;
+}
+
+.dropdown-icon{
+    position: absolute;
+    right: 0;
+    margin-top: -52px;
+}
+
+.dropdown-content{
+    display: flex;
+    margin-left: 2rem;
+    gap: 1rem;
+    width: 100%;
+    align-items: center;
+    color: black;
+    position: relative;
+    height: 3.7rem;
+    transition: all 300ms ease;
+    text-decoration: none;
+    margin-bottom: 1rem;
+}
+
+.dropdown-content:hover{
+    color: var(--color-primary);
+    margin-left: 2.3rem;
+    transition: all 300ms ease;
+    background: var(--color-light);
+}
+
+.dropdown-content::before{
+    content: "";
+    width: 6px;
+    height: 100%;
+    background: var(--color-primary);
+}

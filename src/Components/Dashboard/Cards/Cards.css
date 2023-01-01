@@ -1,0 +1,47 @@
+.insights{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3rem;
+}
+
+.insights .cards{
+    background: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    margin-top: 1rem;
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+    width: 18.9vw;
+    height: 22vh;
+}
+
+.insights .cards:hover{
+    box-shadow: none;
+}
+
+.insights .cards span{
+    position: absolute;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--color-primary);
+    padding: 0.5rem;
+    color: var(--color-white);
+    font-size: 2rem;
+}
+
+.insights .cards .middle{
+    display: flex;
+    justify-content: space-between;
+    /* background: red; */
+    width: 50%;
+    height: 15vh;
+    margin-left: 70px;
+}
+
+.insights .cards .middle .left small{
+    position: absolute;
+    top: 250px;
+    font-size: 18px;
+}
+  
