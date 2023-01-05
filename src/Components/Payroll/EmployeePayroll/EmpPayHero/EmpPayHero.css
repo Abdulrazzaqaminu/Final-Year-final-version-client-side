@@ -21,7 +21,7 @@
   display: grid;
   grid-template-columns: 1fr;
   /* gap: 1px; */
-  padding: 13px 20px;
+  padding: 10px;
 }
 
 .empPayroll-container form .field input{

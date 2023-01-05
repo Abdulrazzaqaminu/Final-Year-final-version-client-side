@@ -1,9 +1,14 @@
 import React from 'react';
+import SideNavBar from '../../SideNavBar/SideNavBar';
+import RecordHero from './RecordHero/RecordHero';
+import Profile from '../../Profile/Profile';
 
 const RecordAttendance = () =>{
     return(
         <>
-            <h1>Record Attendance</h1>
+            <SideNavBar />
+            <RecordHero />
+            <Profile />
         </>
     )
 }

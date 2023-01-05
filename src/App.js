@@ -24,7 +24,7 @@ function App() {
             <Route exact path="/enrollment" element={<Enrollment />} />
             <Route exact path="/payroll" element={<Payroll />} />
             <Route exact path="/loans" element={<Loans />} />
-            <Route exact path="/employee_payroll/:id" element={<EmployeePayroll />} />
+            <Route exact path="/employee_payroll/:employee_id" element={<EmployeePayroll />} />
             <Route exact path="/Account" element={<Account />} />
           </Routes>
       </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import './LoansHero.css';
 import TextInput from "../../TextInput/TextInput";
+import Button from "../../Button/Button";
 import { useState } from "react";
 
 const LoansHero = () =>{
@@ -72,7 +73,7 @@ const LoansHero = () =>{
                         <div className="field">
                             <label>Loan Details:</label>
                             <textarea name="" value={loanDesc} onChange={(e) => setLoanDesc(e.target.value)} id="" cols="30" rows="2"></textarea>
-                            <button>Submit</button>
+                            <Button type="submit">Submit</Button>
                         </div>
                     </form>
                 </div>

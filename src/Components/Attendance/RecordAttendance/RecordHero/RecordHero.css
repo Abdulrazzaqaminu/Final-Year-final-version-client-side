@@ -1,0 +1,96 @@
+.record_container{
+    display: grid;
+    grid-template-columns: 55% 42.8%;
+    gap: 20px;
+    width: 100%;
+    height: 80vh;
+    margin: 100px 30px;
+    /* background: red; */
+}
+
+.record_container .qr_reader{
+    background: var(--color-white);
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+    width: 100%;
+    height: 80vh;
+    /* padding: 10px; */
+    /* background: blue; */
+    border-radius: 6px;
+}
+
+.record_container .qr_reader .qr_container .icon{
+    display: grid;
+    place-items: center;
+    position: absolute;
+    top: 290px;
+    left: 510px;
+    font-size: 122px;
+    width: 10%;
+    height: 20%;
+    /* background: var(--color-white); */
+    transition: all 300ms ease;
+    /* background: red; */
+}
+
+.record_container .qr_reader .qr_container .icon:hover{
+    box-shadow: var(--box-shadow);
+    cursor: pointer;
+}
+
+.record_container .qr_reader .qr_container form .confirm{
+    position: absolute;
+    bottom: 40px;
+    margin-left: 10px;
+}
+
+.record_container .qr_reader .scan{
+    width: 200px;
+    position: absolute;
+    z-index: 100;
+    margin-left: 10px;
+}
+
+.record_container .qr_reader .scan p{
+    color: red;
+}
+
+.record_container .qr_reader .result{
+    position: absolute;
+    margin-left:330px;
+    margin-top: 25px;
+    /* background: red; */
+}
+
+.record_container .qr_reader .canvas{
+    width: 100%;
+    margin-top: -60.4px;
+    margin-bottom: -60px;
+}
+
+.record_container .recording_section{
+    background: var(--color-white);
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+    border-radius: 7px;
+    width: 100%;
+    height: 80vh;
+    /* background: purple; */
+}
+
+.record_container .recording_section form .field{
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 10px;
+    margin-bottom: -10px;
+}
+
+.record_container .recording_section form .field .date_time{
+    display: grid;
+    grid-template-columns: 1fr 1fr;   
+    gap: 8px;
+}
+
+.record_container .recording_section form .field .date_time input{
+    width: 174px;  
+}

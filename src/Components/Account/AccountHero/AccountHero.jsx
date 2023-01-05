@@ -9,7 +9,7 @@ const AccountHero = () =>{
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
-    const [role, setRole] = useState("Role");
+    const [role, setRole] = useState("Admin");
     const [password, setPassword] = useState("");
 
     const handleSubmit = async (e) =>{

@@ -17,7 +17,7 @@
     gap: 10px;
     width: 63vw;
     background:var(--color-white);
-    padding: 30px;
+    padding: 10px;
     /* background: rebeccapurple; */
 }
   
@@ -45,7 +45,7 @@
     border: none;
     /* height: 2rem; */
     padding: 0 10px;
-    width: 6.5vw;
+    width: 7vw;
     font-size: 1rem;
     border-radius: var(--border-radius-1);
 }
