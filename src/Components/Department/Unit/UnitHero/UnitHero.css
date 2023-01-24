@@ -1,0 +1,119 @@
+.unit_container{
+    display: grid;
+    grid-template-columns: 60% 35%;
+    gap: 10px;
+    place-items: center;
+    /* background: purple; */
+    width: 100%;
+    height: 80vh;
+    margin: 80px 30px;
+}
+
+.unit_container .unit_table{
+    /* background: blue; */
+    width: 100%;
+    height: 93%;
+    overflow: auto;
+    border-radius: 6px;
+    background: var(--color-white);
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+}
+
+.unit_container .unit_table:hover{
+    box-shadow: none;
+}
+ 
+.unit_container .unit_table::-webkit-scrollbar{
+    display: none;
+}
+
+.unit_container .unit_table table{
+    padding: 15px 5px;
+    transition: all 300ms ease;
+    white-space: nowrap;
+    /* text-align: center; */
+    width: 100%;
+    height: 100%;
+    /* background: pink; */
+}
+
+.unit_container .unit_table table tbody td{
+    height: 2.8rem;
+    border-bottom: 1px solid var(--color-light);
+    color: var(--color-dark-variant);
+    white-space: nowrap;
+    padding: 0 30px;
+}
+
+.unit_container .unit_table table tbody tr:last-child td{
+    border: none;
+}
+
+.unit_container .unit_table table thead th{
+    text-align: left;
+    padding: 0 30px;
+}
+
+.unit_container .unit_form{
+    /* background: var(--color-white); */
+    /* box-shadow: var(--box-shadow); */
+    transition: all 300ms ease;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    /* background: red; */
+    width: 100%;
+    height: 93%;
+    margin-top: 6px;
+    border-radius: 7px;
+}
+
+.unit_container .unit_form .unit_department{
+    background: var(--color-white);
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+    /* background: red; */
+    width: 100%;
+    height: 78%;
+    padding: 7px;
+    border-radius: 7px;
+}
+
+.unit_container .unit_form .unit_department input{
+    width: 100%;
+    margin-top: 20px;
+}
+
+.unit_container .unit_form .unit_update{
+    background: var(--color-white);
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+    /* background: red; */
+    width: 100%;
+    height: 95%;
+    padding: 2px;
+    border-radius: 7px;
+}
+
+.unit_container .unit_form .unit_create{
+    background: var(--color-white);
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+    /* background: red; */
+    width: 100%;
+    height: 95%;
+    padding: 2px;
+    border-radius: 7px;
+}
+
+/* .unit_container .unit_form:hover{
+    box-shadow: none;
+} */
+  
+.unit_container .unit_form form .field{
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 6px;
+    margin-bottom: -10px;
+}

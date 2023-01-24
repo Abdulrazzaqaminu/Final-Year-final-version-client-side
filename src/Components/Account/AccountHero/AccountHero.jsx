@@ -25,6 +25,7 @@ const AccountHero = () =>{
                             <TextInput 
                                 type="text"
                                 value={firstName}
+                                placeholder="Abdulrazzaq"
                                 onChange={(e) => setFirstName(e.target.value)}
                             />
                         </div>
@@ -33,6 +34,7 @@ const AccountHero = () =>{
                             <TextInput 
                                 type="text"
                                 value={lastName}
+                                placeholder="Aminu"
                                 onChange={(e) => setLastName(e.target.value)}
                             />
                         </div>
@@ -41,6 +43,7 @@ const AccountHero = () =>{
                             <TextInput 
                                 type="text"
                                 value={email}
+                                placeholder="abdulrazzaqaminu@gmail.com"
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
@@ -68,6 +71,7 @@ const AccountHero = () =>{
                 <div className="acct_info">
                     <div className="profile_icon">
                         <div className="icon"><MdIcons.MdAccountCircle /> </div>
+                        <Button type="submit" className="logout">Log Out</Button>
                     </div>
                     <div className="acct_org_info">
                         <form>
@@ -81,7 +85,7 @@ const AccountHero = () =>{
                             </div>
                             <div class="field">
                                 <label>Email:</label>
-                                <input type="text" placeholder="abdul@gmail.com" name="state" disabled/>
+                                <input type="text" placeholder="abdulrazzaqaminu@gmail.com" name="state" disabled/>
                             </div>
                             <div class="field">
                                 <label>Role:</label>

@@ -1,16 +1,17 @@
-import React from "react";
+import React from 'react';
 import SideNavBar from '../../SideNavBar/SideNavBar';
+import UnitHero from './UnitHero/UnitHero';
 import Profile from '../../Profile/Profile';
-import EmpPayHero from "./EmpPayHero/EmpPayHero";
 
-const EmployeePayroll = () =>{
+const Unit = () =>{
     return(
         <>
             <SideNavBar />
-            <EmpPayHero />
+            <UnitHero />
             <Profile />
+        
         </>
     )
 }
 
-export default EmployeePayroll
+export default Unit;

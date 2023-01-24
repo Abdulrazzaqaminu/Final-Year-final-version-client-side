@@ -1,0 +1,6 @@
+.single_employee_container .single_employee_info .profile_icon .remove{
+    position: absolute;
+    right: 148px;
+    white-space: nowrap;
+    width: 130px;
+}

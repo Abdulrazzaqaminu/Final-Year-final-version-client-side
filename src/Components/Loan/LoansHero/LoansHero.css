@@ -16,12 +16,19 @@
     /* background: red; */
     width: 100%;
     height: 93%;
-    padding: 5px;
     border-radius: 7px;
+    overflow-x: auto;
 }
 
-.loans_container .loan-form:hover{
-  box-shadow: none;
+.loans_container .loan-form::-webkit-scrollbar{
+    display: none;
+}
+
+.loans_container .loan-form form{
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 2px;
+    margin-bottom: -10px;
 }
 
 .loans_container .loan-form form .field{

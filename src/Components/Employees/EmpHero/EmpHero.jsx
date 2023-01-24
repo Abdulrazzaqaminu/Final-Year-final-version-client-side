@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from 'react-router-dom';
+import Button from "../../Button/Button";
 import './EmpHero.css'
 
 
@@ -19,6 +21,7 @@ const EmpHero = () =>{
                                 <th>Unit</th>
                                 <th>Position</th>
                                 <th>Grade</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,6 +39,11 @@ const EmpHero = () =>{
                                 <td>Software</td>
                                 <td>2</td>
                                 <td>3</td>
+                                <td>
+                                    <Link to="/employees/:employee_id">
+                                        <Button>View</Button>
+                                    </Link>
+                                </td>
                             </tr>
                             <tr>
                                 <td>0001</td>
@@ -51,6 +59,11 @@ const EmpHero = () =>{
                                 <td>Software</td>
                                 <td>2</td>
                                 <td>3</td>
+                                <td>
+                                    <Link to="/employees/:employee_id">
+                                        <Button>View</Button>
+                                    </Link>
+                                </td>
                             </tr>
                             <tr>
                                 <td>0001</td>
@@ -66,6 +79,11 @@ const EmpHero = () =>{
                                 <td>Software</td>
                                 <td>2</td>
                                 <td>3</td>
+                                <td>
+                                    <Link to="/employees/:employee_id">
+                                        <Button>View</Button>
+                                    </Link>
+                                </td>
                             </tr>
                             <tr>
                                 <td>0001</td>
@@ -81,6 +99,11 @@ const EmpHero = () =>{
                                 <td>Software</td>
                                 <td>2</td>
                                 <td>3</td>
+                                <td>
+                                    <Link to="/employees/:employee_id">
+                                        <Button>View</Button>
+                                    </Link>
+                                </td>
                             </tr>
                             <tr>
                                 <td>0001</td>
@@ -96,6 +119,11 @@ const EmpHero = () =>{
                                 <td>Software</td>
                                 <td>2</td>
                                 <td>3</td>
+                                <td>
+                                    <Link to="/employees/:employee_id">
+                                        <Button>View</Button>
+                                    </Link>
+                                </td>
                             </tr>
                             <tr>
                                 <td>0001</td>
@@ -111,8 +139,52 @@ const EmpHero = () =>{
                                 <td>Software</td>
                                 <td>2</td>
                                 <td>3</td>
+                                <td>
+                                    <Link to="/employees/:employee_id">
+                                        <Button>View</Button>
+                                    </Link>
+                                </td>
                             </tr>
-                   
+                            <tr>
+                                <td>0001</td>
+                                <td>
+                                    <div className="name_email">
+                                        <p>Abdulrazzaq <b>AMINU</b></p>
+                                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
+                                    </div>
+                                </td>
+                                <td>2002-08-08</td>
+                                <td>08156259871</td>
+                                <td>IT</td>
+                                <td>Software</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>
+                                    <Link to="/employees/:employee_id">
+                                        <Button>View</Button>
+                                    </Link>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>0001</td>
+                                <td>
+                                    <div className="name_email">
+                                        <p>Abdulrazzaq <b>AMINU</b></p>
+                                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
+                                    </div>
+                                </td>
+                                <td>2002-08-08</td>
+                                <td>08156259871</td>
+                                <td>IT</td>
+                                <td>Software</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>
+                                    <Link to="/employees/:employee_id">
+                                        <Button>View</Button>
+                                    </Link>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div> 

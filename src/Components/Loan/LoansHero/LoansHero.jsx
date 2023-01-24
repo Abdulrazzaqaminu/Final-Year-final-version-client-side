@@ -28,6 +28,24 @@ const LoansHero = () =>{
                                 onChange={(e) => setAssign(e.target.value)}
                                 required={true}
                             />
+                            <TextInput 
+                                type="text"
+                                value={assign}
+                                onChange={(e) => setAssign(e.target.value)}
+                                required={true}
+                            />
+                            <TextInput 
+                                type="text"
+                                value={assign}
+                                onChange={(e) => setAssign(e.target.value)}
+                                required={true}
+                            />
+                            <TextInput 
+                                type="text"
+                                value={assign}
+                                onChange={(e) => setAssign(e.target.value)}
+                                required={true}
+                            />
                         </div>
                         <div className="field">
                             <label>Amount:</label>
@@ -78,7 +96,7 @@ const LoansHero = () =>{
                     </form>
                 </div>
                 <div className="loan-table">
-                <table>
+                    <table>
                         <thead>
                             <tr>
                                 <th>Staff ID</th>

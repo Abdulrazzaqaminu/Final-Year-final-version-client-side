@@ -29,7 +29,7 @@ const PayrollHero = () =>{
                                 <td>2022-12-25</td>
                                 <td>NGN 100,00</td>
                                 <td>NGN 2,000,000</td>
-                                <td><Link to='/employee_payroll/0001' className="salary">Salary</Link></td>
+                                <td><Link to='/payroll/employee_salary/:employee_id' className="salary">Salary</Link></td>
                             </tr>
                             <tr>
                                 <td>0001</td>
@@ -42,7 +42,7 @@ const PayrollHero = () =>{
                                 <td>2022-12-25</td>
                                 <td>NGN 100,00</td>
                                 <td>NGN 2,000,000</td>
-                                <td><Link to='/employee_payroll/0001' className="salary">Salary</Link></td>
+                                <td><Link to='/payroll/employee_salary/:employee_id' className="salary">Salary</Link></td>
                             </tr>
                             <tr>
                                 <td>0001</td>
@@ -55,7 +55,7 @@ const PayrollHero = () =>{
                                 <td>2022-12-25</td>
                                 <td>NGN 100,00</td>
                                 <td>NGN 2,000,000</td>
-                                <td><Link to='/employee_payroll/0001' className="salary">Salary</Link></td>
+                                <td><Link to='/payroll/employee_salary/:employee_id' className="salary">Salary</Link></td>
                             </tr>
                             <tr>
                                 <td>0001</td>
@@ -68,7 +68,7 @@ const PayrollHero = () =>{
                                 <td>2022-12-25</td>
                                 <td>NGN 100,00</td>
                                 <td>NGN 2,000,000</td>
-                                <td><Link to='/employee_payroll/0001' className="salary">Salary</Link></td>
+                                <td><Link to='/payroll/employee_salary/:employee_id' className="salary">Salary</Link></td>
                             </tr>
                             <tr>
                                 <td>0001</td>
@@ -81,7 +81,7 @@ const PayrollHero = () =>{
                                 <td>2022-12-25</td>
                                 <td>NGN 100,00</td>
                                 <td>NGN 2,000,000</td>
-                                <td><Link to='/employee_payroll/0001' className="salary">Salary</Link></td>
+                                <td><Link to='/payroll/employee_salary/:employee_id' className="salary">Salary</Link></td>
                             </tr>
                             <tr>
                                 <td>0001</td>
@@ -94,7 +94,7 @@ const PayrollHero = () =>{
                                 <td>2022-12-25</td>
                                 <td>NGN 100,00</td>
                                 <td>NGN 2,000,000</td>
-                                <td><Link to='/employee_payroll/0001' className="salary">Salary</Link></td>
+                                <td><Link to='/payroll/employee_salary/:employee_id' className="salary">Salary</Link></td>
                             </tr>
                             <tr>
                                 <td>0001</td>
@@ -107,7 +107,7 @@ const PayrollHero = () =>{
                                 <td>2022-12-25</td>
                                 <td>NGN 100,00</td>
                                 <td>NGN 2,000,000</td>
-                                <td><Link to='/employee_payroll/0001' className="salary">Salary</Link></td>
+                                <td><Link to='/payroll/employee_salary/:employee_id' className="salary">Salary</Link></td>
                             </tr>
                             <tr>
                                 <td>0001</td>
@@ -120,7 +120,7 @@ const PayrollHero = () =>{
                                 <td>2022-12-25</td>
                                 <td>NGN 100,00</td>
                                 <td>NGN 2,000,000</td>
-                                <td><Link to='/employee_payroll/0001' className="salary">Salary</Link></td>
+                                <td><Link to='/payroll/employee_salary/:employee_id' className="salary">Salary</Link></td>
                             </tr>
                             <tr>
                                 <td>0001</td>
@@ -133,7 +133,7 @@ const PayrollHero = () =>{
                                 <td>2022-12-25</td>
                                 <td>NGN 100,00</td>
                                 <td>NGN 2,000,000</td>
-                                <td><Link to='/employee_payroll/0001' className="salary">Salary</Link></td>
+                                <td><Link to='/payroll/employee_salary/:employee_id' className="salary">Salary</Link></td>
                             </tr>
                             <tr>
                                 <td>0001</td>
@@ -146,7 +146,7 @@ const PayrollHero = () =>{
                                 <td>2022-12-25</td>
                                 <td>NGN 100,00</td>
                                 <td>NGN 2,000,000</td>
-                                <td><Link to='/employee_payroll/0001' className="salary">Salary</Link></td>
+                                <td><Link to='/payroll/employee_salary/:employee_id' className="salary">Salary</Link></td>
                             </tr>
                         </tbody>
                     </table>

@@ -1,7 +1,6 @@
 import * as BsIcons from 'react-icons/bs';
 import * as CgIcons from 'react-icons/cg';
 
-
 const SingleCard = [
     {
         cardTile: "Employees",

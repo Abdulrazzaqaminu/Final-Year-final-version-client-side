@@ -7,8 +7,8 @@ const Department = () =>{
     return(
         <>
             <SideNavBar />
-            <Profile />
             <DeptHero />
+            <Profile />
         </>
     )
 }

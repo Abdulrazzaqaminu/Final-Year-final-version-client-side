@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react';
 import SideNavBar from '../../SideNavBar/SideNavBar';
+import SingleEmpHero from './SingleEmpHero/SingleEmpHero';
 import Profile from '../../Profile/Profile';
-import EmpPayHero from "./EmpPayHero/EmpPayHero";
 
-const EmployeePayroll = () =>{
+const SingleEmployee = () =>{
     return(
         <>
             <SideNavBar />
-            <EmpPayHero />
+            <SingleEmpHero />
             <Profile />
         </>
     )
 }
 
-export default EmployeePayroll
+export default SingleEmployee;
