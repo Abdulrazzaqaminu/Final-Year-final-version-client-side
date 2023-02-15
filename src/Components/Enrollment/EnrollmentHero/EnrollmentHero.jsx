@@ -7,6 +7,7 @@ import selectDept from "../../Select/selectDept";
 import selectUnit from '../../Select/selectUnit';
 import selectPosition from '../../Select/selectPosition';
 import selectGrade from '../../Select/selectGrade';
+import selectType from "../../Select/selectType";
 import { useState } from "react";
 
 const EnrollmentHero = () =>{
@@ -22,40 +23,50 @@ const EnrollmentHero = () =>{
     const [street, setStreet] = useState("");
 
     // department select
-    const [selectedDept, setSelecedtDept] = useState();
+    const [selectedDept, setSelectedDept] = useState();
     const onChangeDeptSelect = (e) =>{
         const selectedOption = e.target.value;
         const selectedDeptOption = selectDept.filter((d) => d.id === selectedOption)[0];
         // console.log(selectedDeptOption)
-        setSelecedtDept(selectedDeptOption);
+        setSelectedDept(selectedDeptOption);
     }
 
     // unit select
-    const [selectedUnit, setSelecedtUnit] = useState();
+    const [selectedUnit, setSelectedUnit] = useState();
     const onChangeUnitSelect = (e) =>{
         const selectedOption = e.target.value;
         const selectedUnitOption = selectUnit.filter((d) => d.id === selectedOption)[0];
         // console.log(selectedUnitOption)
-        setSelecedtUnit(selectedUnitOption);
+        setSelectedUnit(selectedUnitOption);
     }
 
     // position select
-    const [selectedPosition, setSelecedtPosition] = useState();
+    const [selectedPosition, setSelectedPosition] = useState();
     const onChangePositionSelect = (e) =>{
         const selectedOption = e.target.value;
         const selectedPositionOption = selectPosition.filter((d) => d.id === selectedOption)[0];
         // console.log(selectedPositionOption)
-        setSelecedtPosition(selectedPositionOption);
+        setSelectedPosition(selectedPositionOption);
     }
 
     // grade select
-    const [selectedGrade, setSelecedtGrade] = useState();
+    const [selectedGrade, setSelectedGrade] = useState();
     const onChangeGradeSelect = (e) =>{
         const selectedOption = e.target.value;
         const selectedGradeOption = selectGrade.filter((d) => d.id === selectedOption)[0];
         // console.log(selectedGradeOption)
-        setSelecedtGrade(selectedGradeOption);
+        setSelectedGrade(selectedGradeOption);
     }
+
+    // employee type select
+    const [selectedType, setSelectedType] = useState();
+    const onChangeTypeSelect = (e) => {
+        const selectedOption = e.target.value;
+        const selectedTypeOption = selectType.filter((d) => d.id === selectedOption)[0];
+        // console.log(selectedTypeOption)
+        setSelectedType(selectedTypeOption);
+    }
+
     return(
         <>
         <div className="enrollment-container">
@@ -169,6 +180,16 @@ const EnrollmentHero = () =>{
                     />
                 </div>
                 <div className="field address">
+                <label>Employee Type:</label>
+                    <SelectField required={true} value={selectedType?.id} onChange={(e) => onChangeTypeSelect(e)}>
+                        {
+                            selectType.map((type) =>(
+                                <option key={type.id} value={type.id}>{type.employee_type}</option>
+                            ))
+                        }
+                    </SelectField>
+                </div>
+                <div className="field address">
                     <label>Address:</label>
                     <TextInput 
                         type="text"
@@ -179,7 +200,6 @@ const EnrollmentHero = () =>{
                     />
                 </div>
                 <div className="field">
-                    <br />
                 {/* <label>City: </label> */}
                 <TextInput 
                         type="text"
@@ -199,7 +219,6 @@ const EnrollmentHero = () =>{
                         required={true}
                     />
                 </div>
-                <br />
                 <Button type="submit">Enroll</Button>
             </form>
         </div>
