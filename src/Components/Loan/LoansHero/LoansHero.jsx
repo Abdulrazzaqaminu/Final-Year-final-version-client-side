@@ -1,6 +1,7 @@
 import React from "react";
 import './LoansHero.css';
 import TextInput from "../../TextInput/TextInput";
+import Loans from "../../DataTables/Loans";
 import Button from "../../Button/Button";
 import { useState } from "react";
 
@@ -96,111 +97,7 @@ const LoansHero = () =>{
                     </form>
                 </div>
                 <div className="loan-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Staff ID</th>
-                                <th>Name</th>
-                                <th>Amount</th>
-                                <th>Approval Date</th>
-                                <th>Duration</th>
-                                <th>Loan Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>0001</td>
-                                <td>
-                                    <div className="name_email">
-                                        <p>Abdulrazzaq <b>AMINU</b></p>
-                                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                                    </div>
-                                </td>
-                                <td>NGN 100,000</td>
-                                <td>2002-08-08</td>
-                                <td>2002-08-08 - 2002-08-08</td>
-                                <td>Collected for Personal reasons</td>
-                            </tr>
-                            <tr>
-                                <td>0001</td>
-                                <td>
-                                    <div className="name_email">
-                                        <p>Abdulrazzaq <b>AMINU</b></p>
-                                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                                    </div>
-                                </td>
-                                <td>NGN 100,000</td>
-                                <td>2002-08-08</td>
-                                <td>2002-08-08 - 2002-08-08</td>
-                                <td>Collected for Personal reasons</td>
-                            </tr>
-                            <tr>
-                                <td>0001</td>
-                                <td>
-                                    <div className="name_email">
-                                        <p>Abdulrazzaq <b>AMINU</b></p>
-                                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                                    </div>
-                                </td>
-                                <td>NGN 100,000</td>
-                                <td>2002-08-08</td>
-                                <td>2002-08-08 - 2002-08-08</td>
-                                <td>Collected for Personal reasons</td>
-                            </tr>
-                            <tr>
-                                <td>0001</td>
-                                <td>
-                                    <div className="name_email">
-                                        <p>Abdulrazzaq <b>AMINU</b></p>
-                                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                                    </div>
-                                </td>
-                                <td>NGN 100,000</td>
-                                <td>2002-08-08</td>
-                                <td>2002-08-08 - 2002-08-08</td>
-                                <td>Collected for Personal reasons</td>
-                            </tr>
-                            <tr>
-                                <td>0001</td>
-                                <td>
-                                    <div className="name_email">
-                                        <p>Abdulrazzaq <b>AMINU</b></p>
-                                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                                    </div>
-                                </td>
-                                <td>NGN 100,000</td>
-                                <td>2002-08-08</td>
-                                <td>2002-08-08 - 2002-08-08</td>
-                                <td>Collected for Personal reasons</td>
-                            </tr>
-                            <tr>
-                                <td>0001</td>
-                                <td>
-                                    <div className="name_email">
-                                        <p>Abdulrazzaq <b>AMINU</b></p>
-                                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                                    </div>
-                                </td>
-                                <td>NGN 100,000</td>
-                                <td>2002-08-08</td>
-                                <td>2002-08-08 - 2002-08-08</td>
-                                <td>Collected for Personal reasons</td>
-                            </tr>
-                            <tr>
-                                <td>0001</td>
-                                <td>
-                                    <div className="name_email">
-                                        <p>Abdulrazzaq <b>AMINU</b></p>
-                                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                                    </div>
-                                </td>
-                                <td>NGN 100,000</td>
-                                <td>2002-08-08</td>
-                                <td>2002-08-08 - 2002-08-08</td>
-                                <td>Collected for Personal reasons</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <Loans />
                 </div>
             </div>
         </>

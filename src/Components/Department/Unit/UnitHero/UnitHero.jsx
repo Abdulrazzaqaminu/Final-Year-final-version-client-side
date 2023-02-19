@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from "react";
 import TextInput from '../../../TextInput/TextInput';
 import Button from '../../../Button/Button';
+import Unit from '../../../DataTables/Unit';
 import './UnitHero.css';
 
 const UnitHero = () =>{
@@ -15,47 +16,7 @@ const UnitHero = () =>{
         <>
             <div className='unit_container'>
                 <div className="unit_table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Unit Name</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Software Engineering</td>
-                                <td><Button>Edit</Button></td>
-                                <td><Button>Delete</Button></td>
-                            </tr>
-                            <tr>
-                                <td>Software Engineering</td>
-                                <td><Button>Edit</Button></td>
-                                <td><Button>Delete</Button></td>
-                            </tr>
-                            <tr>
-                                <td>Software Engineering</td>
-                                <td><Button>Edit</Button></td>
-                                <td><Button>Delete</Button></td>
-                            </tr>
-                            <tr>
-                                <td>Software Engineering</td>
-                                <td><Button>Edit</Button></td>
-                                <td><Button>Delete</Button></td>
-                            </tr>
-                            <tr>
-                                <td>Software Engineering</td>
-                                <td><Button>Edit</Button></td>
-                                <td><Button>Delete</Button></td>
-                            </tr>
-                            <tr>
-                                <td>Software Engineering</td>
-                                <td><Button>Edit</Button></td>
-                                <td><Button>Delete</Button></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <Unit />
                 </div>
                 <div className="unit_form">
                     <div className="unit_department">

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import './DeptHero.css';
 import TextInput from "../../TextInput/TextInput";
+import Department from "../../DataTables/Department";
 import Button from "../../Button/Button";
 
 const DeptHero = () =>{
@@ -67,135 +68,7 @@ const DeptHero = () =>{
                     </div>
                 </div>
                 <div className="dept-right">
-                    <table>
-                        <thead>
-                            <h2>Departments</h2>
-                            <tr>
-                                <th>Department Name</th>
-                                <th>Department Head</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>                    
-                            <tr>
-                                <td>Administration</td>
-                                <td>
-                                    <Link className="hod" to="/department/hod/:hod_id">
-                                        Abdulrazzaq Aminu
-                                        <small>
-                                            <p className="text-muted">abdulrazzaqaminu@gmail.com</p>
-                                        </small> 
-                                    </Link> 
-                                </td>
-                                <td><Button>HOD</Button></td>
-                                <td>
-                                    <Link to="/department/:departmentID/units">  
-                                        <Button className="units">Units</Button>
-                                    </Link>
-                                </td>
-                                <td><Button className="edit">Edit</Button></td>
-                                <td><Button>Delete</Button></td>
-                            </tr>                                                                                                                                                           
-                            <tr>
-                                <td>Administration</td>
-                                <td>
-                                    <Link className="hod" to="/department/hod/:hod_id">
-                                        Abdulrazzaq Aminu
-                                        <small>
-                                            <p className="text-muted">abdulrazzaqaminu@gmail.com</p>
-                                        </small> 
-                                    </Link> 
-                                </td>
-                                <td><Button>HOD</Button></td>
-                                <td>
-                                    <Link to="/department/:departmentID/units">  
-                                        <Button className="units">Units</Button>
-                                    </Link>
-                                </td>
-                                <td><Button className="edit">Edit</Button></td>
-                                <td><Button>Delete</Button></td>
-                            </tr>                                                                                                                                                           
-                            <tr>
-                                <td>Administration</td>
-                                <td>
-                                    <Link className="hod" to="/department/hod/:hod_id">
-                                        Abdulrazzaq Aminu
-                                        <small>
-                                            <p className="text-muted">abdulrazzaqaminu@gmail.com</p>
-                                        </small> 
-                                    </Link> 
-                                </td>
-                                <td><Button>HOD</Button></td>
-                                <td>
-                                    <Link to="/department/:departmentID/units">  
-                                        <Button className="units">Units</Button>
-                                    </Link>
-                                </td>
-                                <td><Button className="edit">Edit</Button></td>
-                                <td><Button>Delete</Button></td>
-                            </tr>                                                                                                                                                           
-                            <tr>
-                                <td>Administration</td>
-                                <td>
-                                    <Link className="hod" to="/department/hod/:hod_id">
-                                        Abdulrazzaq Aminu
-                                        <small>
-                                            <p className="text-muted">abdulrazzaqaminu@gmail.com</p>
-                                        </small> 
-                                    </Link> 
-                                </td>
-                                <td><Button>HOD</Button></td>
-                                <td>
-                                    <Link to="/department/:departmentID/units">  
-                                        <Button className="units">Units</Button>
-                                    </Link>
-                                </td>
-                                <td><Button className="edit">Edit</Button></td>
-                                <td><Button>Delete</Button></td>
-                            </tr>                                                                                                                                                           
-                            <tr>
-                                <td>Administration</td>
-                                <td>
-                                    <Link className="hod" to="/department/hod/:hod_id">
-                                        Abdulrazzaq Aminu
-                                        <small>
-                                            <p className="text-muted">abdulrazzaqaminu@gmail.com</p>
-                                        </small> 
-                                    </Link> 
-                                </td>
-                                <td><Button>HOD</Button></td>
-                                <td>
-                                    <Link to="/department/:departmentID/units">  
-                                        <Button className="units">Units</Button>
-                                    </Link>
-                                </td>
-                                <td><Button className="edit">Edit</Button></td>
-                                <td><Button>Delete</Button></td>
-                            </tr>                                                                                                                                                           
-                            <tr>
-                                <td>Administration</td>
-                                <td>
-                                    <Link className="hod" to="/department/hod/:hod_id">
-                                        Abdulrazzaq Aminu
-                                        <small>
-                                            <p className="text-muted">abdulrazzaqaminu@gmail.com</p>
-                                        </small> 
-                                    </Link> 
-                                </td>
-                                <td><Button>HOD</Button></td>
-                                <td>
-                                    <Link to="/department/:departmentID/units">  
-                                        <Button className="units">Units</Button>
-                                    </Link>
-                                </td>
-                                <td><Button className="edit">Edit</Button></td>
-                                <td><Button>Delete</Button></td>
-                            </tr>                                                                                                                                                           
-                        </tbody>
-                    </table>
+                    <Department />
                 </div>
             </div>
         </>

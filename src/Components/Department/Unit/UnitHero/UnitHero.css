@@ -11,48 +11,13 @@
 
 .unit_container .unit_table{
     /* background: blue; */
+    display: flex;
+    flex-direction: column;
+    /* background: red; */
     width: 100%;
-    height: 93%;
-    overflow: auto;
-    border-radius: 6px;
-    background: var(--color-white);
+    height: 73vh;
     box-shadow: var(--box-shadow);
-    transition: all 300ms ease;
-}
-
-.unit_container .unit_table:hover{
-    box-shadow: none;
-}
- 
-.unit_container .unit_table::-webkit-scrollbar{
-    display: none;
-}
-
-.unit_container .unit_table table{
-    padding: 15px 5px;
-    transition: all 300ms ease;
-    white-space: nowrap;
-    /* text-align: center; */
-    width: 100%;
-    height: 100%;
-    /* background: pink; */
-}
-
-.unit_container .unit_table table tbody td{
-    height: 2.8rem;
-    border-bottom: 1px solid var(--color-light);
-    color: var(--color-dark-variant);
-    white-space: nowrap;
-    padding: 0 30px;
-}
-
-.unit_container .unit_table table tbody tr:last-child td{
-    border: none;
-}
-
-.unit_container .unit_table table thead th{
-    text-align: left;
-    padding: 0 30px;
+    border-radius: 5px;
 }
 
 .unit_container .unit_form{

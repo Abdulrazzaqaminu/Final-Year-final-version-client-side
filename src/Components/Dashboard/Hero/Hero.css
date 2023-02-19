@@ -20,3 +20,14 @@ main .insights{
     grid-template-columns: repeat(4, 1fr);
     gap: 3rem;
 }
+
+main .attendance-table{
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    /* background: red; */
+    width: 100%;
+    height: 55vh;
+    box-shadow: var(--box-shadow);
+    border-radius: 5px;
+} 

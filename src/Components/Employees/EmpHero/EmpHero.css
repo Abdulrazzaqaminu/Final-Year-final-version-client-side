@@ -1,55 +1,17 @@
 .emp-container{
-    margin: 110px 30px;
-    height: 70%;
+    height: 56vh;
     width: 95%;
-    /* background: red; */
-}
-
-.emp-container h2{
-    margin-bottom: 10px;
 }
 
 .emp-container .table{
-    height: 100%;
-    /* background: blue; */
-    overflow: auto;
-    border-radius: var(--border-radius-1);
-    box-shadow: var(--box-shadow);
-    transition: all 300ms ease;
-}
-
-.emp-container .table:hover{
-    box-shadow: none;
-}
-
-.emp-container .table::-webkit-scrollbar{
-    display: none;
-}
-
-.emp-container table{
-    background: var(--color-white);
-    padding: var(--card-padding);
-    transition: all 300ms ease;
-    white-space: nowrap;
-    /* text-align: center; */
+    display: flex;
+    flex-direction: column;
+    margin: 110px 30px;
+    height: 76vh;
     width: 100%;
-    height: 100%;
-    /* background: pink; */
-}
-
-.emp-container table tbody td{
-    height: 2.8rem;
-    border-bottom: 1px solid var(--color-light);
-    color: var(--color-dark-variant);
-    white-space: nowrap;
-    padding: 0 30px;
-}
-
-.emp-container table tbody tr:last-child td{
-    border: none;
-}
-
-.emp-container table thead th{
-    text-align: left;
-    padding: 0 30px;
+    /* background: blue; */
+    /* background: red; */
+    box-shadow: var(--box-shadow);
+    border-radius: 5px;
+    /* background: red; */
 }
