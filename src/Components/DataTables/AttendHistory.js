@@ -3,8 +3,8 @@ import './Datatable.css'
 import DataTable from "react-data-table-component";
 import useFetch from "../../hooks/useFetch";
 
-const Attendance = () =>{
-    const {data, loading, error, reFetch} = useFetch(`http://127.0.0.1:4040/api/dashboard`);
+const AttendHistory = () => {
+    const {data, loading, error, reFetch} = useFetch(`http://127.0.0.1:4040/api/attendance/attendance_report`);
 
     const attendanceColumn = [
         {
@@ -33,20 +33,16 @@ const Attendance = () =>{
             sortable: true
         },
     ]
-
-    const entry = data.Entry_Attendance;
-    const exit = data.Exit_Attendance;
-    const attendnace = entry?.concat(exit);
-
+    
     return(
         <>
             {loading ?
-                ("Loading please wait") :
+                ("Loading please wait"): 
                 (
-                    <DataTable
-                        columns={attendanceColumn}
-                        data={
-                            attendnace?.map(att => (
+                    <DataTable 
+                        columns = {attendanceColumn}
+                        data = {
+                            data?.map(att => (
                                 {
                                     staff_ID: att.staff_ID,
                                     name: <>
@@ -61,7 +57,7 @@ const Attendance = () =>{
                                                 (<p>{att.in_time}</p>),
                                     exit_time: att.out_time === "Still In" ? 
                                                 (<p className="green">{att.out_time}</p>) :
-                                                (<p>{att.out_time}</p>)            
+                                                (<p>{att.out_time}</p>)
                                 }
                             ))
                         }
@@ -75,4 +71,4 @@ const Attendance = () =>{
     )
 }
 
-export default Attendance;
+export default AttendHistory;

@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import './ReportHero.css';
 import TextInput from "../../../TextInput/TextInput";
-import Attendnace from "../../../DataTables/Attendance";
+import AttendHistory from "../../../DataTables/AttendHistory";
 import Button from "../../../Button/Button";
 
 const ReportHero = () =>{
@@ -32,7 +32,7 @@ const ReportHero = () =>{
                     </form>
                 </div>
                 <div className="report-table">
-                    <Attendnace />
+                    <AttendHistory />
                 </div>
             </div>
         </>

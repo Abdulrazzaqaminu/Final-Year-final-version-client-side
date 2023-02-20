@@ -5,3 +5,17 @@
 .datatables::-webkit-scrollbar{
     display: none;
 }
+
+.green{
+    background-color: rgb(211, 245, 211);
+    color: green;
+    padding: 3px 10px;
+    border-radius: 5px;
+}
+
+.red {
+    background-color: rgb(252, 216, 216);
+    color: red;
+    padding: 3px 10px;
+    border-radius: 5px;
+}

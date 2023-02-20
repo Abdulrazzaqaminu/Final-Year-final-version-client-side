@@ -1,8 +1,11 @@
 import './Datatable.css'
 import {Link} from 'react-router-dom';
 import DataTable from 'react-data-table-component';
+import useFetch from '../../hooks/useFetch';
 
 const Payroll = () => {
+    const {data, loading, error, reFetch} = useFetch(`http://127.0.0.1:4040/api/payroll`);
+
     const employeeColumn = [
         {
             name: "Staff ID",
@@ -15,8 +18,8 @@ const Payroll = () => {
             sortable: true
         },
         {
-            name: "Enrollment Date",
-            selector: row => row.enrollment_date,
+            name: "Employee Type",
+            selector: row => row.employee_type,
             sortable: true
         },
         {
@@ -26,7 +29,7 @@ const Payroll = () => {
         },
         {
             name: "Annual Gross",
-            selector: row => row.gross,
+            selector: row => row.annual_gross,
             sortable: true
         },
         {
@@ -35,149 +38,39 @@ const Payroll = () => {
             sortable: true
         },
     ]
-    const employeeData = [
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            enrollment_date: "2022-12-25",
-            loans: "NGN 100,00",
-            gross: "NGN 2,000,000",
-            more: <Link to='/payroll/employee_salary/:employee_id' className="salary">Salary</Link>
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            enrollment_date: "2022-12-25",
-            loans: "NGN 100,00",
-            gross: "NGN 2,000,000",
-            more: <Link to='/payroll/employee_salary/:employee_id' className="salary">Salary</Link>
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            enrollment_date: "2022-12-25",
-            loans: "NGN 100,00",
-            gross: "NGN 2,000,000",
-            more: <Link to='/payroll/employee_salary/:employee_id' className="salary">Salary</Link>
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            enrollment_date: "2022-12-25",
-            loans: "NGN 100,00",
-            gross: "NGN 2,000,000",
-            more: <Link to='/payroll/employee_salary/:employee_id' className="salary">Salary</Link>
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            enrollment_date: "2022-12-25",
-            loans: "NGN 100,00",
-            gross: "NGN 2,000,000",
-            more: <Link to='/payroll/employee_salary/:employee_id' className="salary">Salary</Link>
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            enrollment_date: "2022-12-25",
-            loans: "NGN 100,00",
-            gross: "NGN 2,000,000",
-            more: <Link to='/payroll/employee_salary/:employee_id' className="salary">Salary</Link>
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            enrollment_date: "2022-12-25",
-            loans: "NGN 100,00",
-            gross: "NGN 2,000,000",
-            more: <Link to='/payroll/employee_salary/:employee_id' className="salary">Salary</Link>
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            enrollment_date: "2022-12-25",
-            loans: "NGN 100,00",
-            gross: "NGN 2,000,000",
-            more: <Link to='/payroll/employee_salary/:employee_id' className="salary">Salary</Link>
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            enrollment_date: "2022-12-25",
-            loans: "NGN 100,00",
-            gross: "NGN 2,000,000",
-            more: <Link to='/payroll/employee_salary/:employee_id' className="salary">Salary</Link>
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            enrollment_date: "2022-12-25",
-            loans: "NGN 100,00",
-            gross: "NGN 2,000,000",
-            more: <Link to='/payroll/employee_salary/:employee_id' className="salary">Salary</Link>
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            enrollment_date: "2022-12-25",
-            loans: "NGN 100,00",
-            gross: "NGN 2,000,000",
-            more: <Link to='/payroll/employee_salary/:employee_id' className="salary">Salary</Link>
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            enrollment_date: "2022-12-25",
-            loans: "NGN 100,00",
-            gross: "NGN 2,000,000",
-            more: <Link to='/payroll/employee_salary/:employee_id' className="salary">Salary</Link>
-        },
-    ]
+
     return(
         <>
-            <DataTable
-                columns={employeeColumn}
-                data={employeeData}
-                fixedHeader
-                pagination
-                className='datatables'
-            />
+            {loading ? 
+                ("Loading please wait") : 
+                (
+                    <DataTable
+                        columns={employeeColumn}
+                        data = {
+                            data?.map(payroll => (
+                                {
+                                    staff_ID: payroll.staff_ID,
+                                    name: <div className="name_email">
+                                            <p>{payroll.first_name} <b>{payroll.last_name}</b></p>
+                                            <small className="text-muted">{payroll.email}</small>
+                                        </div>,
+                                    employee_type: payroll.employee_type,
+                                    loans: payroll.loans.length === 0 ?
+                                            ("No loans") :
+                                            (
+                                               `NGN ${(payroll.loans).toLocaleString()}`
+                                            ),
+                                    annual_gross: `NGN ${(payroll.annual_gross).toLocaleString()}`,
+                                    more: <Link to={`/payroll/employee_salary/${payroll.employee_id}`}className="salary">Salary</Link>
+                                }
+                            ))
+                        }
+                        fixedHeader
+                        pagination
+                        className='datatables'
+                    />
+                )
+            }
         </>
     )
 }

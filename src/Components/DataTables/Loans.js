@@ -1,7 +1,12 @@
 import './Datatable.css'
 import DataTable from 'react-data-table-component'
+import useFetch from '../../hooks/useFetch'
+import {Link} from 'react-router-dom';
+import Button from '../Button/Button';
 
 const Loans = () => {
+    const {data, loading, error, reFetch} = useFetch(`http://127.0.0.1:4040/api/loans`);
+    console.log(data);
     const employeeColumn = [
         {
             name: "Staff ID",
@@ -33,150 +38,52 @@ const Loans = () => {
             selector: row => row.desc,
             sortable: true
         },
-    ]
-    const employeeData = [
         {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            amount: "NGN 100,00",
-            approval_date: "2022-12-25",
-            duration: "2002-08-08 - 2002-08-08",
-            desc: "Collected for Personal reasons"
+            name: "",
+            selector: row => row.view,
+            sortable: true
         },
         {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            amount: "NGN 100,00",
-            approval_date: "2022-12-25",
-            duration: "2002-08-08 - 2002-08-08",
-            desc: "Collected for Personal reasons"
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            amount: "NGN 100,00",
-            approval_date: "2022-12-25",
-            duration: "2002-08-08 - 2002-08-08",
-            desc: "Collected for Personal reasons"
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            amount: "NGN 100,00",
-            approval_date: "2022-12-25",
-            duration: "2002-08-08 - 2002-08-08",
-            desc: "Collected for Personal reasons"
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            amount: "NGN 100,00",
-            approval_date: "2022-12-25",
-            duration: "2002-08-08 - 2002-08-08",
-            desc: "Collected for Personal reasons"
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            amount: "NGN 100,00",
-            approval_date: "2022-12-25",
-            duration: "2002-08-08 - 2002-08-08",
-            desc: "Collected for Personal reasons"
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            amount: "NGN 100,00",
-            approval_date: "2022-12-25",
-            duration: "2002-08-08 - 2002-08-08",
-            desc: "Collected for Personal reasons"
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            amount: "NGN 100,00",
-            approval_date: "2022-12-25",
-            duration: "2002-08-08 - 2002-08-08",
-            desc: "Collected for Personal reasons"
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            amount: "NGN 100,00",
-            approval_date: "2022-12-25",
-            duration: "2002-08-08 - 2002-08-08",
-            desc: "Collected for Personal reasons"
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            amount: "NGN 100,00",
-            approval_date: "2022-12-25",
-            duration: "2002-08-08 - 2002-08-08",
-            desc: "Collected for Personal reasons"
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            amount: "NGN 100,00",
-            approval_date: "2022-12-25",
-            duration: "2002-08-08 - 2002-08-08",
-            desc: "Collected for Personal reasons"
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            amount: "NGN 100,00",
-            approval_date: "2022-12-25",
-            duration: "2002-08-08 - 2002-08-08",
-            desc: "Collected for Personal reasons"
+            name: "",
+            selector: row => row.pay_off,
+            sortable: true
         },
     ]
+
     return(
         <>
-            <DataTable
-                columns={employeeColumn}
-                data={employeeData}
-                fixedHeader
-                pagination
-                className='datatables'
-            />
+            { loading ? 
+                ("Loading please wait") :
+                (
+                    <DataTable
+                        columns={employeeColumn}
+                        data={
+                            data?.map(loan => (
+                                {
+                                    staff_ID: loan.staff_ID,
+                                    name: <div className="name_email">
+                                            <p>{loan.first_name} <b>{loan.last_name}</b></p>
+                                            <small className="text-muted">{loan.email}</small>
+                                        </div>,
+                                    amount: `NGN ${(loan.loan_amount).toLocaleString()}`,
+                                    approval_date: loan.approval_date,
+                                    duration: <div className="name_email">
+                                                <p>{loan.loan_duration.from} -</p>
+                                                <p>{loan.loan_duration.to}</p>
+                                            </div>,
+                                    desc: loan.loan_details,
+                                    view: <Link to={`/loans/${loan.employee_ID}`}><Button>View</Button></Link>,
+                                    pay_off: <Link to={`/loans/pay_off/${loan.employee_ID}`}><Button>Pay Off</Button></Link>
+                                }
+                            ))
+                        }
+                        fixedHeader
+                        pagination
+                        className='datatables'
+                    />
+                )
+
+            }
         </>
     )
 }

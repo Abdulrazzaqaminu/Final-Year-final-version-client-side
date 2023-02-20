@@ -3,8 +3,11 @@ import { Link } from "react-router-dom";
 import Button from "../Button/Button";
 import DataTable from 'react-data-table-component';
 import { useState } from 'react';
+import useFetch from '../../hooks/useFetch';
 
 const Employees = () => {
+    const {data, loading, error, reFetch} = useFetch(`http://127.0.0.1:4040/api/enrollment`);
+
     const employeeColumn = [
         {
             name: "Staff ID",
@@ -47,197 +50,19 @@ const Employees = () => {
             sortable: true
         },
         {
+            name: "Annual Gross",
+            selector: row => row.gross,
+            sortable: true
+        },
+        {
+            name: "Employee Type",
+            selector: row => row.employee_type,
+            sortable: true
+        },
+        {
             name: "More",
             selector: row => row.more,
             sortable: true
-        },
-    ]
-    const employeeData = [
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            dob: "2002-08-08",
-            phone_number: "08156259871",
-            department: "Marketing and Sales",
-            unit: "Procurement",
-            position: 3,
-            grade: 2,
-            more: <Link to="/employees/:employee_id">
-                    <Button>View</Button>
-                </Link>,
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            email: "abdulrazzaq@gmail.com",
-            dob: "2002-08-08",
-            phone_number: "08156259871",
-            department: "Marketing and Sales",
-            unit: "Procurement",
-            position: 3,
-            grade: 2,
-            more: <Link to="/employees/:employee_id">
-                    <Button>View</Button>
-                </Link>,
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            email: "abdulrazzaq@gmail.com",
-            dob: "2002-08-08",
-            phone_number: "08156259871",
-            department: "Marketing and Sales",
-            unit: "Procurement",
-            position: 3,
-            grade: 2,
-            more: <Link to="/employees/:employee_id">
-                    <Button>View</Button>
-                </Link>,
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            email: "abdulrazzaq@gmail.com",
-            dob: "2002-08-08",
-            phone_number: "08156259871",
-            department: "Marketing and Sales",
-            unit: "Procurement",
-            position: 3,
-            grade: 2,
-            more: <Link to="/employees/:employee_id">
-                    <Button>View</Button>
-                </Link>,
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            email: "abdulrazzaq@gmail.com",
-            dob: "2002-08-08",
-            phone_number: "08156259871",
-            department: "Marketing and Sales",
-            unit: "Procurement",
-            position: 3,
-            grade: 2,
-            more: <Link to="/employees/:employee_id">
-                    <Button>View</Button>
-                </Link>,
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            email: "abdulrazzaq@gmail.com",
-            dob: "2002-08-08",
-            phone_number: "08156259871",
-            department: "Marketing and Sales",
-            unit: "Procurement",
-            position: 3,
-            grade: 2,
-            more: <Link to="/employees/:employee_id">
-                    <Button>View</Button>
-                </Link>,
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            email: "abdulrazzaq@gmail.com",
-            dob: "2002-08-08",
-            phone_number: "08156259871",
-            department: "Marketing and Sales",
-            unit: "Procurement",
-            position: 3,
-            grade: 2,
-            more: <Link to="/employees/:employee_id">
-                    <Button>View</Button>
-                </Link>,
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            email: "abdulrazzaq@gmail.com",
-            dob: "2002-08-08",
-            phone_number: "08156259871",
-            department: "Marketing and Sales",
-            unit: "Procurement",
-            position: 3,
-            grade: 2,
-            more: <Link to="/employees/:employee_id">
-                    <Button>View</Button>
-                </Link>,
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            email: "abdulrazzaq@gmail.com",
-            dob: "2002-08-08",
-            phone_number: "08156259871",
-            department: "Marketing and Sales",
-            unit: "Procurement",
-            position: 3,
-            grade: 2,
-            more: <Link to="/employees/:employee_id">
-                    <Button>View</Button>
-                </Link>,
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            email: "abdulrazzaq@gmail.com",
-            dob: "2002-08-08",
-            phone_number: "08156259871",
-            department: "Marketing and Sales",
-            unit: "Procurement",
-            position: 3,
-            grade: 2,
-            more: <Link to="/employees/:employee_id">
-                    <Button>View</Button>
-                </Link>,
-        },
-        {
-            staff_ID: "0001",
-            name:   <div className="name_email">
-                        <p>Abdulrazzaq <b>AMINU</b></p>
-                        <small className="text-muted">abdulrazzaqaminu@gmail.com</small>
-                    </div>,
-            email: "abdulrazzaq@gmail.com",
-            dob: "2002-08-08",
-            phone_number: "08156259871",
-            department: "Marketing and Sales",
-            unit: "Procurement",
-            position: 3,
-            grade: 2,
-            more: <Link to="/employees/:employee_id">
-                    <Button>View</Button>
-                </Link>,
         },
     ]
     
@@ -245,7 +70,28 @@ const Employees = () => {
         <>
             <DataTable
                 columns={employeeColumn}
-                data={employeeData}
+                data={
+                    data?.map(employee => (
+                        {
+                            staff_ID: employee.staff_ID,
+                            name: <div className="name_email">
+                                    <p>{employee.first_name} <b>{employee.last_name}</b></p>
+                                    <small className="text-muted">{employee.email}</small>
+                                </div>,
+                            dob: employee.date_of_birth,
+                            phone_number: employee.phone_number,
+                            department: employee.department,
+                            unit: employee.unit,
+                            position: employee.position,
+                            grade: employee.grade,
+                            gross: `NGN ${(employee.gross_salary).toLocaleString()}`,
+                            employee_type: employee.employee_type,
+                            more: <Link to={`/employees/${employee._id}`}>
+                                    <Button>View</Button>
+                                </Link>
+                        }
+                    ))
+                }
                 fixedHeader
                 pagination
                 className='datatables'
