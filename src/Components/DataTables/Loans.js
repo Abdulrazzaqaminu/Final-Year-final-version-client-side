@@ -6,7 +6,7 @@ import Button from '../Button/Button';
 
 const Loans = () => {
     const {data, loading, error, reFetch} = useFetch(`http://127.0.0.1:4040/api/loans`);
-    console.log(data);
+
     const employeeColumn = [
         {
             name: "Staff ID",
@@ -38,16 +38,11 @@ const Loans = () => {
             selector: row => row.desc,
             sortable: true
         },
-        {
-            name: "",
-            selector: row => row.view,
-            sortable: true
-        },
-        {
-            name: "",
-            selector: row => row.pay_off,
-            sortable: true
-        },
+        // {
+        //     name: "",
+        //     selector: row => row.pay_off,
+        //     sortable: true
+        // },
     ]
 
     return(
@@ -72,8 +67,7 @@ const Loans = () => {
                                                 <p>{loan.loan_duration.to}</p>
                                             </div>,
                                     desc: loan.loan_details,
-                                    view: <Link to={`/loans/${loan.employee_ID}`}><Button>View</Button></Link>,
-                                    pay_off: <Link to={`/loans/pay_off/${loan.employee_ID}`}><Button>Pay Off</Button></Link>
+                                    // pay_off: <Link to={`/loans/pay_off/${loan.employee_ID}`}><Button>Pay Off</Button></Link>
                                 }
                             ))
                         }

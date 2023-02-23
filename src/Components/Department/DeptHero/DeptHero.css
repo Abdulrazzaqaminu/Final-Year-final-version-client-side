@@ -25,6 +25,10 @@
     margin-bottom: 19px;
 }
 
+.dept-container .dept-left .dept-left-top form input{
+    margin-bottom: -0.1px;
+}
+
 .dept-container .dept-left .dept-left-top form:hover{
     box-shadow: none;
 }
@@ -37,7 +41,7 @@
     box-shadow: var(--box-shadow);
     transition: all 300ms ease;
     border-radius: 5px;
-    margin-top: -5px;
+    margin-top: 20px;
 }
 
 .dept-container .dept-left .dept-left-middle form:hover{
@@ -52,7 +56,7 @@
     box-shadow: var(--box-shadow);
     transition: all 300ms ease;
     border-radius: 5px;
-    margin-top: 13px;
+    margin-top: 35px;
     height: 10rem;
     overflow-y: auto;
 }
@@ -64,11 +68,13 @@
 .dept-container .dept-left .dept-left-bottom form .dept_name{
     width: 100%;
     height: 2rem;
+    margin-top: 30px;
 }
 
 .dept-container .dept-left .dept-left-bottom form .emp_email{
     width: 100%;
     height: 2rem;
+    margin-bottom: -20px;
 }
 
 .dept-container .dept-left .dept-left-bottom form::-webkit-scrollbar{
@@ -88,7 +94,7 @@
     flex-direction: column;
     /* background: red; */
     width: 54%;
-    height: 80vh;
+    height: 78vh;
     box-shadow: var(--box-shadow);
     border-radius: 5px;
 }
@@ -101,6 +107,11 @@
 .units{
     color: purple;
     background-color: rgb(251, 240, 255);
+}
+
+.assign{
+    color: green;
+    background-color: rgb(226, 240, 226);
 }
 
 .hod{

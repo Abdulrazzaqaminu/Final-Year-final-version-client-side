@@ -2,6 +2,7 @@ import './Datatable.css'
 import {Link} from 'react-router-dom';
 import DataTable from 'react-data-table-component';
 import useFetch from '../../hooks/useFetch';
+import Button from '../Button/Button';
 
 const Payroll = () => {
     const {data, loading, error, reFetch} = useFetch(`http://127.0.0.1:4040/api/payroll`);
@@ -61,7 +62,7 @@ const Payroll = () => {
                                                `NGN ${(payroll.loans).toLocaleString()}`
                                             ),
                                     annual_gross: `NGN ${(payroll.annual_gross).toLocaleString()}`,
-                                    more: <Link to={`/payroll/employee_salary/${payroll.employee_id}`}className="salary">Salary</Link>
+                                    more: <Link to={`/payroll/employee_salary/${payroll.employee_id}`}><Button>Salary</Button></Link>
                                 }
                             ))
                         }

@@ -1,12 +1,6 @@
 .search-by-date-time{
-    margin: 100px 0;
+    margin: 100px 15px;
 }
-
-.search-by-date-time form input{
-    margin: 0 15px;
-    text-align: center;
-}
-
 .report-table{
     position: absolute;
     display: flex;
@@ -20,4 +14,17 @@
     box-shadow: var(--box-shadow);
     border-radius: 5px;
     /* background: red; */
+}
+
+.daterange{
+    position: absolute;
+    z-index: 10;
+}
+
+.headerSearchText {
+    color: var(--color-info-dark);
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px;
+    border: 0.5px solid rgb(215, 215, 215);
 }

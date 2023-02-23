@@ -2,9 +2,10 @@ import React from "react";
 import './Datatable.css'
 import DataTable from "react-data-table-component";
 import useFetch from "../../hooks/useFetch";
+import { useState } from "react";
 
-const AttendHistory = () => {
-    const {data, loading, error, reFetch} = useFetch(`http://127.0.0.1:4040/api/attendance/attendance_report`);
+const AttendHistory = ({from, to}) => {
+    const {data, loading, error, reFetch} = useFetch(`http://127.0.0.1:4040/api/attendance/attendance_report?from=${from}&to=${to}`);
 
     const attendanceColumn = [
         {
