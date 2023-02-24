@@ -9,8 +9,14 @@ import axios from "axios";
 import { useDepartmentContext } from "../../../hooks/useDepartmentContext";
 
 const DeptHero = () =>{
-    const { departments, dispatch } = useDepartmentContext()
-    const [ loading, setLoading ] = useState([false])
+    const {departments, dispatch} = useDepartmentContext()
+    const [loading, setLoading] = useState([false])
+    
+    const [edit_dept, setEdit_Dept] = useState("");
+    const [create_dept, setCreate_Dept] = useState("");
+    const [dept_name, setDept] = useState("");
+    const [email, setEmail] = useState("");
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchDepartments = async () => {
@@ -26,11 +32,6 @@ const DeptHero = () =>{
         fetchDepartments();
     }, []);
 
-    const [edit_dept, setEdit_Dept] = useState("");
-    const [create_dept, setCreate_Dept] = useState("");
-    const [dept_name, setDept] = useState("");
-    const [email, setEmail] = useState("");
-    const [error, setError] = useState(null);
     const handleSubmit = async (e) =>{
         e.preventDefault()
     }
@@ -101,23 +102,27 @@ const DeptHero = () =>{
     }
 
     const createDept = async () => {
-        try {
-            const response = await axios.post(`http://127.0.0.1:4040/api/department`, {dept_name: create_dept}, {
-                headers: {
-                  // 'application/json' is the modern content-type for JSON, but some
-                  // older servers may use 'text/json'.
-                  // See: http://bit.ly/text-json
-                  'content-type': 'application/json'
+        if(create_dept === "") {
+            return "Cannot create department without value"
+        } else {
+            try {
+                const response = await axios.post(`http://127.0.0.1:4040/api/department`, {dept_name: create_dept}, {
+                    headers: {
+                      // 'application/json' is the modern content-type for JSON, but some
+                      // older servers may use 'text/json'.
+                      // See: http://bit.ly/text-json
+                      'content-type': 'application/json'
+                    }
+                });
+                if(response) {
+                    setCreate_Dept('')
+                    setError(null);
+                    dispatch({type: "CREATE_DEPARTMENT", payload: response.data})
                 }
-            });
-            if(response) {
-                setCreate_Dept('')
-                setError(null);
-                dispatch({type: "CREATE_DEPARTMENT", payload: response.data})
+            } catch (error) {
+                setError(error);
+                return error
             }
-        } catch (error) {
-            setError(error);
-            return error
         }
     }
 
