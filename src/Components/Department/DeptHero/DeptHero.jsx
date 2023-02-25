@@ -68,12 +68,12 @@ const DeptHero = () =>{
         },
     ]
 
-    const edit = async (id) => {
+    const edit = async (Department_id) => {
         if(edit_dept === ""){
             return "Cannot edit without value"
         } else {
             try {
-                const response = await axios.put(`http://127.0.0.1:4040/api/department/${id}`, {
+                const response = await axios.put(`http://127.0.0.1:4040/api/department/${Department_id}`, {
                     dept_name: edit_dept
                 });
                 if(response) {
@@ -88,9 +88,9 @@ const DeptHero = () =>{
         }
     }
 
-    const del = async (id) => {
+    const del = async (Department_ID) => {
        try {
-        const response = await axios.delete(`http://127.0.0.1:4040/api/department/${id}`);
+        const response = await axios.delete(`http://127.0.0.1:4040/api/department/${Department_ID}`);
         if(response) {
             setError(null);
             dispatch({type: "DELETE_DEPARTMENT", payload: response.data})
@@ -126,12 +126,12 @@ const DeptHero = () =>{
         }
     }
 
-    const assign = async (id) => {
+    const assign = async (Hod_ID) => {
         if(email === "") {
             return "Cannot assign empty hod"
         } else {
             try {
-                const response = await axios.put(`http://127.0.0.1:4040/api/hod/${id}`, {dept_HOD_email: email}, {
+                const response = await axios.put(`http://127.0.0.1:4040/api/hod/${Hod_ID}`, {dept_HOD_email: email}, {
                     headers: {
                       // 'application/json' is the modern content-type for JSON, but some
                       // older servers may use 'text/json'.
@@ -155,15 +155,13 @@ const DeptHero = () =>{
             <div className="dept-container">
                 <div className="dept-left">
                     <div className="dept-left-top">
-                        <form action="">
-                            <h2>Edit Department</h2>
-                            <TextInput 
-                                type="text"
-                                placeholder="Name of dept"
-                                value={edit_dept}
-                                onChange={(e) => setEdit_Dept(e.target.value)}
-                            />
-                        </form>
+                        <h2>Edit Department</h2>
+                        <TextInput 
+                            type="text"
+                            placeholder="Name of dept"
+                            value={edit_dept}
+                            onChange={(e) => setEdit_Dept(e.target.value)}
+                        />
                     </div>
                     <div className="dept-left-middle">
                         <form action="" onSubmit={handleSubmit}>

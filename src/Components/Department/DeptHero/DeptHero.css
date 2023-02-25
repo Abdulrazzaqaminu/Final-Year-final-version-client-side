@@ -14,7 +14,7 @@
     border-radius: 5px;
 }
 
-.dept-container .dept-left .dept-left-top form{
+.dept-container .dept-left .dept-left-top{
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -25,11 +25,11 @@
     margin-bottom: 19px;
 }
 
-.dept-container .dept-left .dept-left-top form input{
+.dept-container .dept-left .dept-left-top input{
     margin-bottom: -0.1px;
 }
 
-.dept-container .dept-left .dept-left-top form:hover{
+.dept-container .dept-left .dept-left-top:hover{
     box-shadow: none;
 }
 

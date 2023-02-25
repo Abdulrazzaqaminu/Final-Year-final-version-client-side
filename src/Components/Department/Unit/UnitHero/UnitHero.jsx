@@ -15,17 +15,15 @@ const UnitHero = () =>{
     const [error, setError] = useState(null);
     const [update, setUpdate] = useState("");
     const [create, setCreate] = useState("");
-
+    const [dept_id, setDept_id] = useState("");
 
     const location = useLocation();
     const Department_ID = location.pathname.split("/")[2];
-
     useEffect(() => {
         const fetchUnits = async () => {
             setLoading(true);
             try {
                 const response = await axios.get(`http://127.0.0.1:4040/api/unit/${Department_ID}`);
-                // console.log(response.data)
                 dispatch({type: "ALL_UNITS", payload: response.data})
             } catch (error) {
                 setError(error);

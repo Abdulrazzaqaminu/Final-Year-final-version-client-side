@@ -1,18 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import * as MdIcons from 'react-icons/md';
 import TextInput from "../../../TextInput/TextInput";
 import Button from "../../../Button/Button";
 import './HodHero.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useFetch from '../../../../hooks/useFetch';
+import axios from "axios";
 
 const HodHero = () =>{
     const location = useLocation();
     const HOD_ID = location.pathname.split("/")[3];
-    const {data, loading, error, reFetch} = useFetch(`http://127.0.0.1:4040/api/enrollment/${HOD_ID}`);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate()
+    const {data, loading, reFetch} = useFetch(`http://127.0.0.1:4040/api/enrollment/${HOD_ID}`);
 
-    const removeHOD = (id) => {
-        console.log(id);
+    const removeHOD = async (Hod_ID) => {
+        try {
+            const response = await axios.delete(`http://127.0.0.1:4040/api/hod/${Hod_ID}`)
+            if(response) {
+                navigate("/department");
+            }
+        } catch (error) {
+            setError(error)
+        }
     }
     return(
         <>
