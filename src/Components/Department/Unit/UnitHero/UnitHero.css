@@ -49,6 +49,7 @@
 .unit_container .unit_form .unit_department input{
     width: 100%;
     margin-top: 20px;
+    text-transform: uppercase;
 }
 
 .unit_container .unit_form .unit_update{

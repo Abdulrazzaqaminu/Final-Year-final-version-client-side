@@ -20,7 +20,7 @@ export const departmentReducer = (state, action) => {
                 if(existing_dept) {
                     return {...state}
                 } else {
-                    const unit_name = (state.departments.map((dept) => dept.unit?.map((name) => name?.unit_name))).filter((x) => x !== undefined)
+                    const unit_name = (state.departments.map((dept) => dept?.unit?.map((name) => name?.unit_name))).filter((x) => x !== undefined)
                     if(JSON.stringify(unit_name).includes(new_dept_name.unit_name)) {
                         return {...state}
                     } else {
@@ -28,7 +28,8 @@ export const departmentReducer = (state, action) => {
                             ...state, 
                             departments: [new_dept_name,...state.departments]
                         }
-                    }              
+                    }
+
                     // all_department.unit.map((all_units) => {
                     //     console.log(all_units)
                             // if(all_units.unit_name === new_dept_name.dept_name) {

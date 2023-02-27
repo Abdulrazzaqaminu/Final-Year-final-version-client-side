@@ -25,6 +25,12 @@
     padding: 11px;
     margin-bottom: -10px;
 }
+.acct-hero_container .acct_update form .field input{
+    text-transform: capitalize;
+}
+.acct-hero_container .acct_update form .field input.email{
+    text-transform: lowercase;
+}
 
 .acct-hero_container .acct_info{
     /* background: purple; */
@@ -83,4 +89,10 @@
     padding: 2px;
     align-items: center;
     justify-content: space-between;
+}
+.acct-hero_container .acct_info .acct_org_info form .field input{
+    text-transform: capitalize;
+}
+.acct-hero_container .acct_info .acct_org_info form .field input.email{
+    text-transform: lowercase;
 }

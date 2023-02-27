@@ -46,6 +46,7 @@ const LoansHero = () =>{
                                 value={assign}
                                 onChange={(e) => setAssign(e.target.value)}
                                 required={true}
+                                className = "email"
                             />
                         </div>
                         <div className="field">

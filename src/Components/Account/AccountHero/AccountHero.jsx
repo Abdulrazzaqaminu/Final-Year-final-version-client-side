@@ -45,6 +45,7 @@ const AccountHero = () =>{
                                 value={email}
                                 placeholder="abdulrazzaqaminu@gmail.com"
                                 onChange={(e) => setEmail(e.target.value)}
+                                className = "email"
                             />
                         </div>
                         <div class="field">
@@ -85,7 +86,7 @@ const AccountHero = () =>{
                             </div>
                             <div class="field">
                                 <label>Email:</label>
-                                <input type="text" placeholder="abdulrazzaqaminu@gmail.com" name="state" disabled/>
+                                <input type="text" placeholder="abdulrazzaqaminu@gmail.com" className="email" name="state" disabled/>
                             </div>
                             <div class="field">
                                 <label>Role:</label>

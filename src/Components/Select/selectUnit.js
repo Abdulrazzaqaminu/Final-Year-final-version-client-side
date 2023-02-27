@@ -4,21 +4,25 @@ const selectUnit = [
         unitName: "Choose..."
     },
     {
-        id: "Software Developmemt",
-        unitName: "Software Developmemt"
+        id: "PROCUREMENT",
+        unitName: "PROCUREMENT"
     },
     {
-        id: "Retails",
-        unitName: "Retails"
+        id: "HEALTH AND SAFETY",
+        unitName: "HEALTH AND SAFETY"
     },
     {
-        id: "UI/UX Design",
-        unitName: "UI/UX Design"
+        id: "RECRUITMENT",
+        unitName: "RECRUITMENT"
     },
     {
-        id: "Network Engineering",
-        unitName: "Network Engineering"
-    }
+        id: "CUSTOMER SERVICE",
+        unitName: "CUSTOMER SERVICE"
+    },
+    {
+        id: "AUDIT",
+        unitName: "AUDIT"
+    },
 ]
 
 export default selectUnit;

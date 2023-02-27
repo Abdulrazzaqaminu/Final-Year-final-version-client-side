@@ -1,3 +1,74 @@
+.transfer .cancel {
+    position: absolute;
+    right: 20px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+.transfer .cancel:hover{
+    color: red;
+    transition: 0.2s ease;
+}
+.transfer_button {
+    position: absolute;
+    right: 48%;
+    top: 89%;
+    z-index: 10;
+}
+
+.transfer {
+    position: absolute;
+    z-index: 20;
+    background: var(--color-white);
+    box-shadow: var(--box-shadow);
+    right: 32%;
+    top: 25%;
+    width: 30%;
+    height: 52%;
+    border-radius: 5px;
+}
+.transfer .field{
+    padding: 0px 15px;
+    margin-top: 12px;
+}
+
+.transfer .field input{
+    width: 100%;
+}
+.transfer .field input.email{
+    text-transform: lowercase;
+}
+
+.error_message{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 25px;
+    right: 32%;
+    background-color: rgb(248, 233, 233);
+    color: var(--color-danger);
+    border: 1px solid red;
+    border-radius: 5px;
+    width: 30vw;
+    height: 8vh;
+    transition: 0.5s ease-in;
+}
+.success_message{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 30px;
+    right: 32%;
+    background-color: rgb(230, 255, 230);
+    color: green;
+    border: 1px solid green;
+    border-radius: 5px;
+    width: 30vw;
+    height: 8vh;
+    transition: 0.5s ease-in;
+}
 .single_employee_container{
     display: grid;
     grid-template-columns: 40% 50%;
@@ -24,6 +95,19 @@
     grid-template-columns: 1fr;
     padding: 11px;
     margin-bottom: -10px;
+}
+
+.single_employee_container .single_employee_update form .field input,select{
+    background: var(--color-info-light);
+    outline: none;
+    border: none;
+    height: 2rem;
+    padding: 0 10px;
+    font-size: 1rem;
+    border-radius: var(--border-radius-1);
+}
+.single_employee_container .single_employee_update form .field select{
+    margin: 10px 0px;
 }
 
 .single_employee_container .single_employee_info{
@@ -83,4 +167,31 @@
     padding: 2px;
     align-items: center;
     justify-content: space-between;
+}
+.single_employee_container .single_employee_info .single_employee_org_info form .field input{
+   text-transform: capitalize;
+}
+.single_employee_container .single_employee_info .single_employee_org_info form .field input.email{
+   text-transform: lowercase;
+}
+
+input.error {
+    border: 1px solid var(--color-danger);
+    background-color: rgb(248, 234, 234);
+    color: var(--color-danger);
+}
+select.error {
+    border: 1px solid var(--color-danger);
+    background-color: rgb(248, 234, 234);
+    color: var(--color-danger);
+}
+
+.move{
+    color: blue;
+    background-color: rgb(227, 227, 252);
+    padding: 8px;
+    border-radius: 5px;
+    width: 6vw;
+    border: none;
+    cursor: pointer;
 }

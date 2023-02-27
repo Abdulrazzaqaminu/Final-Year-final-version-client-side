@@ -105,6 +105,7 @@ const EnrollmentHero = () =>{
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required={true}
+                        className = "email"
                     />
                 </div>
                 <div className="field dob">
@@ -154,7 +155,7 @@ const EnrollmentHero = () =>{
                         <SelectField required={true} value={selectedPosition?.id} onChange={(e) => onChangePositionSelect(e)}>
                             {
                                 selectPosition.map((position) =>(
-                                    <option key={position.id} value={position.id}>{position.position}</option>
+                                    <option key={position.id} value={position.position}>{position.position}</option>
                                 ))
                             }
                         </SelectField>
@@ -164,7 +165,7 @@ const EnrollmentHero = () =>{
                         <SelectField required={true} value={selectedGrade?.id} onChange={(e) => onChangeGradeSelect(e)}>
                             {
                                 selectGrade.map((grade) =>(
-                                    <option key={grade.id} value={grade.id}>{grade.grade}</option>
+                                    <option key={grade.id} value={grade.grade}>{grade.grade}</option>
                                 ))
                             }
                         </SelectField>

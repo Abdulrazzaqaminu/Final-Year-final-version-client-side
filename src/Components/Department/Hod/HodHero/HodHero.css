@@ -4,3 +4,6 @@
     white-space: nowrap;
     width: 130px;
 }
+.single_employee_container .single_employee_info input.email{
+    text-transform: lowercase;
+}

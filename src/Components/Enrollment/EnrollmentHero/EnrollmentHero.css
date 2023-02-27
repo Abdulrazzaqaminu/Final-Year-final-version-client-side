@@ -50,7 +50,7 @@
     border-radius: var(--border-radius-1);
 }
   
-.enrollment-container form .field textarea{
+/* .enrollment-container form .field textarea{
     width: 201.9%;
     height: 80px;
     background: var(--color-info-light);
@@ -61,8 +61,21 @@
     font-size: 1rem;
     border-radius: var(--border-radius-1);
 }
-  
-.enrollment-container form .field input,select{
+   */
+.enrollment-container form .field input{
+    background: var(--color-info-light);
+    outline: none;
+    border: none;
+    height: 2rem;
+    padding: 0 10px;
+    font-size: 1rem;
+    border-radius: var(--border-radius-1);
+    text-transform: capitalize;
+}
+.enrollment-container form .field input.email{
+    text-transform: lowercase;
+}
+.enrollment-container form .field select{
     background: var(--color-info-light);
     outline: none;
     border: none;

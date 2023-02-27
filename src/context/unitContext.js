@@ -26,7 +26,6 @@ export const unitsReducer = (state, action) => {
 
             const new_unit_name = Object.values(new_unit);
             if(state.units.length === 0) {
-                console.log("empty array")
                 if(new_unit?.Message === "unit name already exists") {
                     return {...state}
                     // console.log("A unit in a different dept has the same name");

@@ -4,17 +4,21 @@ const selectDept = [
         deptName: "Choose..."
     },
     {
-        id: "IT",
-        deptName: "IT"
+        id: "MARKETING AND SALES",
+        deptName: "MARKETING AND SALES"
     },
     {
-        id: "Business",
-        deptName: "Business"
+        id: "HUMAN RESOURCE",
+        deptName: "HUMAN RESOURCE"
     },
     {
-        id: "Research & Developmemt",
-        deptName: "Research & Developmemt"
-    }
+        id: "INFORMATION AND TECHNOLOGY",
+        deptName: "INFORMATION AND TECHNOLOGY"
+    },
+    {
+        id: "ACCOUNTING AND FINANCE",
+        deptName: "ACCOUNTING AND FINANCE"
+    },
 ];
 
 export default selectDept;

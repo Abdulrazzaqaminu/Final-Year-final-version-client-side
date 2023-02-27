@@ -14,8 +14,8 @@ const DeptHero = () =>{
     
     const [edit_dept, setEdit_Dept] = useState("");
     const [create_dept, setCreate_Dept] = useState("");
-    const [dept_name, setDept] = useState("");
     const [email, setEmail] = useState("");
+
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -158,7 +158,6 @@ const DeptHero = () =>{
                         <h2>Edit Department</h2>
                         <TextInput 
                             type="text"
-                            placeholder="Name of dept"
                             value={edit_dept}
                             onChange={(e) => setEdit_Dept(e.target.value)}
                         />
@@ -168,7 +167,6 @@ const DeptHero = () =>{
                             <h2>Create new Department</h2>
                             <TextInput 
                                 type="text"
-                                placeholder="Name of dept"
                                 value={create_dept}
                                 required = {true}
                                 onChange={(e) => setCreate_Dept(e.target.value)}
@@ -184,7 +182,6 @@ const DeptHero = () =>{
                                 placeholder="Enter employee's email below"
                                 disabled={true}
                                 className="dept_name"
-                                onChange={(e) => setDept(e.target.value)}
                             />
                             <TextInput 
                                 type="text"

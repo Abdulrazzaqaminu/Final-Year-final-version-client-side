@@ -65,7 +65,7 @@ const HodHero = () =>{
                             <label>Annual Gross:</label>
                             <TextInput 
                                 type="text"
-                                placeholder={data[0]?.gross_salary}
+                                placeholder={`NGN ${(data[0]?.gross_salary)?.toLocaleString()}`}
                                 disabled={true}
                             />
                         </div>
@@ -99,7 +99,7 @@ const HodHero = () =>{
                             </div>
                             <div className="field">
                                 <label>Email:</label>
-                                <input type="text" placeholder={data[0]?.email} disabled/>
+                                <input type="text" className="email" placeholder={data[0]?.email} disabled/>
                             </div>
                             <div className="field">
                                 <label>Department:</label>

@@ -93,4 +93,5 @@
 
 .record_container .recording_section form .field .date_time input{
     width: 174px;  
+    /* text-transform: capitalize; */
 }
