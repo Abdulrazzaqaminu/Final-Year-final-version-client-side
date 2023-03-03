@@ -4,6 +4,7 @@ import App from './App';
 import { DepartmentContextProvider } from './context/deptContext';
 import { UnitsContextProvider } from './context/unitContext';
 import { EmployeeContextProvider } from './context/empContext';
+import { LoanContextProvider } from './context/loanContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -11,7 +12,9 @@ root.render(
     <DepartmentContextProvider>
       <UnitsContextProvider>
         <EmployeeContextProvider>
-          <App />
+          <LoanContextProvider>
+            <App />
+          </LoanContextProvider>
         </EmployeeContextProvider>
       </UnitsContextProvider>
     </DepartmentContextProvider>

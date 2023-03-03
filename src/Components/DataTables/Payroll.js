@@ -42,34 +42,44 @@ const Payroll = () => {
 
     return(
         <>
+            
             {loading ? 
                 ("Loading please wait") : 
                 (
-                    <DataTable
-                        columns={employeeColumn}
-                        data = {
-                            data?.map(payroll => (
-                                {
-                                    staff_ID: payroll.staff_ID,
-                                    name: <div className="name_email">
-                                            <p>{payroll.first_name} <b>{payroll.last_name}</b></p>
-                                            <small className="text-muted">{payroll.email}</small>
-                                        </div>,
-                                    employee_type: payroll.employee_type,
-                                    loans: payroll.loans.length === 0 ?
-                                            ("No loans") :
-                                            (
-                                               `NGN ${(payroll.loans).toLocaleString()}`
-                                            ),
-                                    annual_gross: `NGN ${(payroll.annual_gross).toLocaleString()}`,
-                                    more: <Link to={`/payroll/employee_salary/${payroll.employee_id}`}><Button>Salary</Button></Link>
-                                }
-                            ))
+                    <>
+                        {error &&
+                            (
+                                <div className="error_message">
+                                    {error}
+                                </div>
+                            )
                         }
-                        fixedHeader
-                        pagination
-                        className='datatables'
-                    />
+                        <DataTable
+                            columns={employeeColumn}
+                            data = {
+                                data?.map(payroll => (
+                                    {
+                                        staff_ID: payroll.staff_ID,
+                                        name: <div className="name_email">
+                                                <p>{payroll.first_name} <b>{payroll.last_name}</b></p>
+                                                <small className="text-muted">{payroll.email}</small>
+                                            </div>,
+                                        employee_type: payroll.employee_type,
+                                        loans: payroll.loans.length === 0 ?
+                                                ("No loans") :
+                                                (
+                                                `NGN ${(payroll.loans).toLocaleString()}`
+                                                ),
+                                        annual_gross: `NGN ${(payroll.annual_gross).toLocaleString()}`,
+                                        more: <Link to={`/payroll/employee_salary/${payroll.employee_id}`}><Button>Salary</Button></Link>
+                                    }
+                                ))
+                            }
+                            fixedHeader
+                            pagination
+                            className='datatables'
+                        />
+                    </>
                 )
             }
         </>

@@ -73,35 +73,49 @@ const Employees = () => {
     
     return(
         <>
-            <DataTable
-                columns={employeeColumn}
-                data={
-                    data?.map(employee => (
-                        {
-                            staff_ID: employee.staff_ID,
-                            name: <div className="name_email">
-                                    <p>{employee.first_name} <b>{employee.last_name}</b></p>
-                                    <small className="text-muted">{employee.email}</small>
-                                </div>,
-                            dob: employee.date_of_birth,
-                            phone_number: employee.phone_number,
-                            department: employee.department,
-                            unit: employee.unit,
-                            position: employee.position,
-                            grade: employee.grade,
-                            gross: `NGN ${(employee.gross_salary).toLocaleString()}`,
-                            employee_type: employee.employee_type,
-                            status: <span className={employee.status === "Active" ? "green" : "red"}>{employee.status}</span>,
-                            more: <Link to={`/employees/${employee._id}`}>
-                                    <Button>View</Button>
-                                </Link>
+            {loading ?
+                ("Loading please wait") :
+                (
+                    <>
+                        {error &&
+                            (
+                                <div className="error_message">
+                                    {error}
+                                </div>
+                            )
                         }
-                    ))
-                }
-                fixedHeader
-                pagination
-                className='datatables'
-            />
+                        <DataTable
+                            columns={employeeColumn}
+                            data={
+                                data?.map(employee => (
+                                    {
+                                        staff_ID: employee.staff_ID,
+                                        name: <div className="name_email">
+                                                <p>{employee.first_name} <b>{employee.last_name}</b></p>
+                                                <small className="text-muted">{employee.email}</small>
+                                            </div>,
+                                        dob: employee.date_of_birth,
+                                        phone_number: employee.phone_number,
+                                        department: employee.department,
+                                        unit: employee.unit,
+                                        position: employee.position,
+                                        grade: employee.grade,
+                                        gross: `NGN ${(employee.gross_salary).toLocaleString()}`,
+                                        employee_type: employee.employee_type,
+                                        status: <span className={employee.status === "Active" ? "green" : "red"}>{employee.status}</span>,
+                                        more: <Link to={`/employees/${employee._id}`}>
+                                                <Button>View</Button>
+                                            </Link>
+                                    }
+                                ))
+                            }
+                            fixedHeader
+                            pagination
+                            className='datatables'
+                        />
+                    </>
+                )
+            }
         </>
     )
 }

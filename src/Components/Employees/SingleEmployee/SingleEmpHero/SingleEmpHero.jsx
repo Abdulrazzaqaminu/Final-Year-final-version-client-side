@@ -17,7 +17,8 @@ const SingleEmpHero = () =>{
     const [moveStaff_ID, setMoveStaff_ID] = useState("");
     const [moveUnit, setMoveUnit] = useState("");
     const [moveDept, setMoveDept] = useState("");
-    const [click, setClick] = useState(false)
+    const [click, setClick] = useState(false);
+    const [edit, setEdit] = useState(false);
 
     const [position, setPosition] = useState("")
     const [grade, setGrade] = useState("")
@@ -31,9 +32,25 @@ const SingleEmpHero = () =>{
     
     const [loading, setLoading] = useState(null)
 
-    const handleSubmit = async (e) =>{
-        e.preventDefault()
-    }
+    const numberOnly = (e) => {
+        const regex = /^[0-9\b]+$/;
+        if ((e.target.value) === "" || regex.test(e.target.value)) {
+          setPhoneNumber(e.target.value);
+        }
+    };
+    const firstNamelettersOnly = (e) => {
+        const regex = /^[a-zA-Z'\b]+$/;
+        if ((e.target.value) === ""  || regex.test(e.target.value)) {
+          setFirstName(e.target.value);
+        }
+    };
+    const lastNamelettersOnly = (e) => {
+        const regex = /^[a-zA-Z'\b]+$/;
+        if ((e.target.value) === ""  || regex.test(e.target.value)) {
+          setLastName(e.target.value);
+        }
+    };
+    const first_name_capitalize = first_name.charAt(0).toUpperCase() + first_name.slice(1).toLowerCase();
 
     useEffect(() => {
         const fetchDepartments = async () => {
@@ -49,16 +66,28 @@ const SingleEmpHero = () =>{
         fetchDepartments();
     }, []);
 
-    const transferWindow = () => {
+    const transferwindow = () => {
         setClick(current => !current)
         setMoveStaff_ID(employee?.staff_ID)
+        setError(null)
     }
 
-    const update = async (id) => {
-        try {
-            const response = await axios.put(`http://127.0.0.1:4040/api/enrollment/${id}`, 
+    const editwindow = () => {
+        setEdit(current => !current)
+        setError(null)
+        setPhoneNumber(employee?.phone_number[0])
+        setFirstName(employee?.first_name[0])
+        setLastName(employee?.last_name[0])
+        setPosition(employee?.position[0])
+        setGrade(employee?.grade[0])
+    }
+
+    const handleSubmitEdit = async (e) =>{
+        e.preventDefault()  
+        try {            
+            await axios.put(`http://127.0.0.1:4040/api/enrollment/${Employee_ID}`, 
             {
-                first_name: first_name,
+                first_name: first_name_capitalize,
                 last_name: last_name,
                 phone_number: phone_number,
                 position: position,
@@ -80,21 +109,21 @@ const SingleEmpHero = () =>{
                 setSuccess(response.data.Message)
                 setEmptyFields([])
                 setError(null);
+                dispatch({type: "EDIT_EMPLOYEE", payload: response.data})
             })
             .catch((error) => {
-                if(error.response) {
-                    setError(error.response.data.error)
-                    setEmptyFields(error.response.data.emptyFields)
-                }
-            })
+                setError(error.response.data.Message)
+                setEmptyFields(error.response.data.emptyFields)
+            })  
         } catch (error) {
             setError(error)
         }
     }
 
-    const transfer = async () => {
+    const handleSubmitTransfer = async (e) => {
+        e.preventDefault()
         try {
-            const response = await axios.post("http://127.0.0.1:4040/api/department/transfer_employee", 
+            await axios.post("http://127.0.0.1:4040/api/department/transfer_employee", 
             {
                 staff_ID: moveStaff_ID,
                 dept_name: moveDept,
@@ -105,37 +134,25 @@ const SingleEmpHero = () =>{
                     'Content-Type': 'application/json'
                 }
             }).then((response) => {
+                console.log(response)
+                setClick(false)
                 setShow(true)
                 setTimeout(() => {
                     setShow(false)
                 }, 2000)
-                console.log(response)
                 setSuccess(response.data.Message)
                 setError(null)
                 setEmptyFields([]);
-                // setMoveStaff_ID('')
-                // setMoveDept('')
-                // setMoveUnit('')
+                setMoveStaff_ID('')
+                setMoveDept('')
+                setMoveUnit('')
             }).catch((error) => {
                 setError(error.response.data.Message)
                 setEmptyFields(error.response.data.emptyFields)
-                console.log(error.response.data)
             })
         } catch (error) {
             setError(error)
         }
-        // const requestOptions = {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({ 
-        //         staff_ID: moveStaff_ID,
-        //         dept_name: moveDept,
-        //         unit_name: moveUnit
-        //     })
-        // };
-        // fetch("http://127.0.0.1:4040/api/department/transfer_employee", requestOptions)
-        // .then(response => console.log(response.data.Message.json()))
-        // .catch(error => console.log(error))
     }
 
     const unenroll = async () => {
@@ -148,6 +165,7 @@ const SingleEmpHero = () =>{
             setError(error);
         }
     }
+
     return(
         <>
             {error &&
@@ -169,97 +187,164 @@ const SingleEmpHero = () =>{
                 click && 
                 (
                     <div className="transfer">
-                        <span className="cancel" onClick={transferWindow}>x</span>
-                        <div className="field">
-                            <label >Staff ID</label>
-                            <TextInput 
-                                type="text"
-                                value={moveStaff_ID}
-                                disabled={true}
-                                onChange={(e) => setMoveStaff_ID(e.target.value)}
-                                className = {emptyFields?.includes("staff_ID") ? "error" : ""}
-                            />
-                        </div>
-                        <div className="field">
-                            <label >Department</label>
-                            <TextInput 
-                                type="text"
-                                value={moveDept}
-                                onChange={(e) => setMoveDept(e.target.value)}
-                                className = {emptyFields?.includes("dept_name") ? "error" : ""}
-                            />
-                        </div>
-                        <div className="field">
-                            <label >Unit Name</label>
-                            <TextInput 
-                                type="text"
-                                value={moveUnit}
-                                onChange={(e) => setMoveUnit(e.target.value)}
-                                className = {emptyFields?.includes("unit_name") ? "error" : ""}
-                            />
-                            <Button type="submit" onClick={transfer}>Submit</Button>
-                        </div>
+                        <form onSubmit={handleSubmitTransfer}>
+                            <span className="cancel" onClick={transferwindow}>x</span>
+                            <div className="field">
+                                <label >Staff ID</label>
+                                <TextInput 
+                                    type="text"
+                                    value={moveStaff_ID}
+                                    disabled={true}
+                                    onChange={(e) => setMoveStaff_ID(e.target.value)}
+                                    className = {emptyFields?.includes("staff_ID") ? "error" : ""}
+                                />
+                            </div>
+                            <div className="field">
+                                <label >Department</label>
+                                <select id="" value={moveDept} className = {emptyFields?.includes("dept_name") ? "error" : ""} onChange={(e) => setMoveDept(e.target.value)}>
+                                    <option value="" disabled hidden>Choose...</option>
+                                    <option value="ACCOUNTING AND FINANCE">ACCOUNTING AND FINANCE</option>
+                                    <option value="HUMAN RESOURCES">HUMAN RESOURCES</option>
+                                    <option value="INFORMATION AND TECHNOLOGY">INFORMATION AND TECHNOLOGY</option>
+                                    <option value="MARKETING AND SALES">MARKETING AND SALES</option>
+                                </select>
+                            </div>
+                            
+                            <div className="field">
+                                <label >Unit Name</label>
+                                <select id="" value={moveUnit} className = {emptyFields?.includes("unit_name") ? "error" : ""} onChange={(e) => setMoveUnit(e.target.value)}>
+                                    <option value="" disabled hidden>Choose...</option>
+                                    <option value="AUDIT">AUDIT</option>
+                                    <option value="CUSTOMER SERVICE">CUSTOMER SERVICE</option>
+                                    <option value="HEALTH AND SAFETY">HEALTH AND SAFETY</option>
+                                    <option value="PROCUREMENT">PROCUREMENT</option>
+                                    <option value="RECRUITMENT">RECRUITMENT</option>
+                                </select>
+                                <Button type="submit">Submit</Button>
+                            </div>
+                        </form>
+                    </div>
+                )
+            }
+            {
+                edit && 
+                (
+                    <div className="edit">
+                        <form onSubmit={handleSubmitEdit}>
+                            <span className="cancel" onClick={editwindow}>x</span>
+                            <div className="field">
+                                <label >First Name</label>
+                                <TextInput 
+                                    type="text"
+                                    value={first_name}
+                                    onChange={firstNamelettersOnly}
+                                    className = {emptyFields?.includes("first_name") ? "error" : ""}
+                                />
+                            </div>
+                            <div className="field">
+                                <label >Last Name</label>
+                                <TextInput 
+                                    type="text"
+                                    value={last_name}
+                                    onChange={lastNamelettersOnly}
+                                    className = {`last_name ${emptyFields?.includes("last_name") ? "error" : ""}`}
+                                />
+                            </div>
+                            <div className="field">
+                                <label >Phone Number</label>
+                                <TextInput 
+                                    type="text"
+                                    value={phone_number}
+                                    onChange={numberOnly}
+                                    maxLength={11}
+                                    minLength = {11}
+                                    className = {emptyFields?.includes("phone_number") ? "error" : ""}
+                                />
+                            </div>
+                            <div className="field">
+                                <label>Position:</label>
+                                <select id="" value={position} className = {emptyFields?.includes("position") ? "error" : ""} required={true} onChange={(e) => setPosition(e.target.value)}>
+                                    <option value="" disabled hidden>{employee?.position}</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                            </div>
+                            <div className="field">
+                                <label>Grade:</label>
+                                <select id="" value={grade} className = {emptyFields?.includes("grade") ? "error" : ""} required={true} onChange={(e) => setGrade(e.target.value)}>
+                                    <option value="" disabled hidden>{employee?.grade}</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                                <Button type="submit" >Submit</Button>
+                            </div>
+                        </form>
                     </div>
                 )
             }
             <div className="single_employee_container">
                 <div className="single_employee_update">
-                    <form action="" onSubmit={handleSubmit}>
-                        <div className="field">
-                            <label>Department:</label>
-                            <TextInput 
-                                type="text"
-                                placeholder = {employee?.department}
-                                disabled = {true}
-                            />
+                    <div className="field">
+                        <label>Department:</label>
+                        <TextInput 
+                            type="text"
+                            placeholder = {employee?.department}
+                            disabled = {true}
+                        />
+                    </div>
+                    <div className="field">
+                        <label>Unit:</label>
+                        <TextInput 
+                            type="text"
+                            disabled = {true}
+                            placeholder = {employee?.unit}
+                        />
+                    </div>
+                    <div className="field">
+                        <label>Phone Number:</label>
+                        <TextInput 
+                            type="text"
+                            value={phone_number}
+                            placeholder = {employee?.phone_number}
+                            disabled={true}
+                        />
+                    </div>
+                    <div className="field">
+                        <label>Position:</label>
+                        <select id="" value={employee?.position} disabled={true} className = {emptyFields?.includes("position") ? "error" : ""} required={true} onChange={(e) => setPosition(e.target.value)}>
+                            <option value="" disabled hidden>{employee?.position}</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                    <div className="field">
+                        <label>Grade:</label>
+                        <select id="" value={employee?.grade} disabled={true} className = {emptyFields?.includes("grade") ? "error" : ""} required={true} onChange={(e) => setGrade(e.target.value)}>
+                            <option value="" disabled hidden>{employee?.grade}</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                        <Button type="submit" disabled = {employee?.status == "Terminated" ? true : false} onClick = {editwindow}>Update</Button>
+                        <div className="transfer_button">
+                            {
+                                employee?.status == "Terminated" ? 
+                                ("") :
+                                (
+                                    <span className="move" onClick={transferwindow}>Transfer</span>
+                                )
+                            }
+                            
                         </div>
-                        <div className="field">
-                            <label>Unit:</label>
-                            <TextInput 
-                                type="text"
-                                disabled = {true}
-                                placeholder = {employee?.unit}
-                            />
-                        </div>
-                        <div className="field">
-                            <label>Phone Number:</label>
-                            <TextInput 
-                                type="text"
-                                value={phone_number}
-                                placeholder = {employee?.phone_number}
-                                required = {true}
-                                onChange={(e) => setPhoneNumber(e.target.value)}
-                                className = {emptyFields?.includes("phone_number") ? "error" : ""}
-                            />
-                        </div>
-                        <div className="field">
-                            <label>Position:</label>
-                            <select id="" value={position} className = {emptyFields?.includes("position") ? "error" : ""} required={true} onChange={(e) => setPosition(e.target.value)}>
-                                <option value="" disabled hidden>{employee?.position}</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
-                        </div>
-                        <div className="field">
-                            <label>Grade:</label>
-                            <select id="" value={grade} className = {emptyFields?.includes("grade") ? "error" : ""} required={true} onChange={(e) => setGrade(e.target.value)}>
-                                <option value="" disabled hidden>{employee?.grade}</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
-                            <Button type="submit" onClick = {() => update(employee?.employee_ID)}>Update</Button>
-                            <div className="transfer_button">
-                                <span className="move" onClick={transferWindow}>Transfer</span>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
                 <div className="single_employee_info">
                     <div className="profile_icon">
                         <div className="icon"><MdIcons.MdAccountCircle /> </div>
-                        <Button type="submit" className="uneroll" onClick={unenroll}>Unenroll</Button>
+                        <Button type="submit" disabled = {employee?.status == "Terminated" ? true : false} className="uneroll" onClick={unenroll}>Unenroll</Button>
                     </div>
                     <div className="single_employee_org_info">
                         <form>
@@ -271,22 +356,18 @@ const SingleEmpHero = () =>{
                                 <label>First Name:</label>
                                 <TextInput 
                                     type="text"
-                                    value={first_name}
+                                    disabled={true}
+                                    value={first_name_capitalize}
                                     placeholder = {employee?.first_name}
-                                    required = {true}
-                                    onChange={(e) => setFirstName(e.target.value)}
-                                    className = {emptyFields?.includes("first_name") ? "error" : ""}
                                 />
                             </div>
                             <div className="field">
                                 <label>Last Name:</label>
                                 <TextInput 
                                     type="text"
-                                    value={last_name}
+                                    value={(last_name).toUpperCase()}
                                     placeholder = {employee?.last_name}
-                                    required = {true}
-                                    onChange={(e) => setLastName(e.target.value)}
-                                    className = {emptyFields?.includes("last_name") ? "error" : ""}
+                                    disabled={true}
                                 />
                             </div>
                             <div className="field">
@@ -295,7 +376,7 @@ const SingleEmpHero = () =>{
                             </div>
                             <div className="field">
                                 <label>Status:</label>
-                                <input type="text" placeholder = {employee?.status} disabled/>
+                                <input type="text" className={employee?.status == "Terminated" ? "error" : "green"} placeholder = {employee?.status} disabled/>
                             </div>
                         </form>
                     </div>

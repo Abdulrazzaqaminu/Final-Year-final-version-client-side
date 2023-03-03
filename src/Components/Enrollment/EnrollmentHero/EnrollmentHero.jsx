@@ -2,228 +2,309 @@ import React from "react";
 import './EnrollmentHero.css'
 import TextInput from "../../TextInput/TextInput";
 import Button from "../../Button/Button";
-import SelectField from "../../Select/SelectField";
-import selectDept from "../../Select/selectDept";
-import selectUnit from '../../Select/selectUnit';
-import selectPosition from '../../Select/selectPosition';
-import selectGrade from '../../Select/selectGrade';
-import selectType from "../../Select/selectType";
 import { useState } from "react";
+import validator from 'validator'
+import axios from "axios";
 
 const EnrollmentHero = () =>{
     const [staffid, setStaffid] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
+    const [emailError, setEmailError] = useState('')
+
     const [dob, setDob] = useState("");
+    const [department, setDepartment] = useState("");
+    const [unit, setUnit] = useState("");
+    const [position, setPosition] = useState("");
+    const [grade, setGrade] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [enrollDate, setEnrollDate] = useState("");
+    const [employee_type, setEmployee_Type] = useState("");
     const [state, setState] = useState("");
     const [city, setCity] = useState("");
     const [street, setStreet] = useState("");
 
-    // department select
-    const [selectedDept, setSelectedDept] = useState();
-    const onChangeDeptSelect = (e) =>{
-        const selectedOption = e.target.value;
-        const selectedDeptOption = selectDept.filter((d) => d.id === selectedOption)[0];
-        // console.log(selectedDeptOption)
-        setSelectedDept(selectedDeptOption);
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null)
+    const [show, setShow] = useState(false)
+    const [emptyFields, setEmptyFields] = useState([])
+    
+    const first_name_capitalize = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+    const state_capitalize = state.charAt(0).toUpperCase() + state.slice(1).toLowerCase();
+    const city_capitalize = city.charAt(0).toUpperCase() + city.slice(1).toLowerCase();
+
+    const numberOnly = (e) => {
+        const regex = /^[0-9\b]+$/;
+        if ((e.target.value) === "" || regex.test(e.target.value)) {
+          setPhoneNumber(e.target.value);
+        }
+    };
+    const Staff_IDnumberOnly = (e) => {
+        const regex = /^[0-9\b]+$/;
+        if ((e.target.value) === "" || regex.test(e.target.value)) {
+          setStaffid(e.target.value);
+        }
+    };
+    const firstNamelettersOnly = (e) => {
+        const regex = /^[a-zA-Z'\b]+$/;
+        if ((e.target.value) === "" || regex.test(e.target.value)) {
+          setFirstName(e.target.value);
+        }
+    };
+    const lastNamelettersOnly = (e) => {
+        const regex = /^[a-zA-Z'\b]+$/;
+        if ((e.target.value) === "" || regex.test(e.target.value)) {
+          setLastName(e.target.value);
+        }
+    };
+    const statelettersOnly = (e) => {
+        const regex = /^[a-zA-Z\b]+$/;
+        if ((e.target.value) === "" || regex.test(e.target.value)) {
+          setState(e.target.value);
+        }
+    };
+    const citylettersOnly = (e) => {
+        const regex = /^[a-zA-Z\b]+$/;
+        if ((e.target.value) === "" || regex.test(e.target.value)) {
+          setCity(e.target.value);
+        }
+    };
+    const validateEmail = (e) => {
+        var email = e.target.value
+        const regex = /^[a-zA-Z@.\b]+$/;
+        if ((e.target.value) === "" || regex.test(e.target.value)) {
+            setEmail(e.target.value);
+            if(!email){
+                setEmailError('Required')
+            }
+            else if (validator.isEmail(email)) {
+              setEmailError('')
+            } else {
+              setEmailError('Enter valid Email!')
+            }
+        }
+    }
+    console.log(email)
+    const streetlettersOnly = (e) => {
+        const regex = /^[a-zA-Z0-9\b\s]+$/;
+        if ((e.target.value) === "" || regex.test(e.target.value)) {
+            setStreet(e.target.value);
+        }
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        try {
+            await axios.post("http://127.0.0.1:4040/api/enrollment", 
+                {
+                    staff_ID: staffid, first_name: first_name_capitalize, last_name: lastName, email: email, 
+                    date_of_birth: dob, phone_number: phoneNumber, department: department, unit: unit, 
+                    position: position, grade: grade, enrollment_date: enrollDate, employee_type: employee_type, 
+                    address: {
+                        state: state_capitalize,
+                        city: city_capitalize,
+                        street: street
+                    }
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }
+            ).then((response) => {
+                setShow(true)
+                setTimeout(() => {
+                    setShow(false)
+                }, 2000)
+                setSuccess(response.data.Message)
+                setEmptyFields([])
+                setError(null);
+            }).catch((error) => {
+                setError(error.response.data.Message)
+                setTimeout(() => {
+                    setError(null)
+                }, 5000)
+                setEmptyFields(error.response.data.emptyFields)
+            })
+        } catch (error) {
+            setError(error);
+        }
     }
 
-    // unit select
-    const [selectedUnit, setSelectedUnit] = useState();
-    const onChangeUnitSelect = (e) =>{
-        const selectedOption = e.target.value;
-        const selectedUnitOption = selectUnit.filter((d) => d.id === selectedOption)[0];
-        // console.log(selectedUnitOption)
-        setSelectedUnit(selectedUnitOption);
-    }
-
-    // position select
-    const [selectedPosition, setSelectedPosition] = useState();
-    const onChangePositionSelect = (e) =>{
-        const selectedOption = e.target.value;
-        const selectedPositionOption = selectPosition.filter((d) => d.id === selectedOption)[0];
-        // console.log(selectedPositionOption)
-        setSelectedPosition(selectedPositionOption);
-    }
-
-    // grade select
-    const [selectedGrade, setSelectedGrade] = useState();
-    const onChangeGradeSelect = (e) =>{
-        const selectedOption = e.target.value;
-        const selectedGradeOption = selectGrade.filter((d) => d.id === selectedOption)[0];
-        // console.log(selectedGradeOption)
-        setSelectedGrade(selectedGradeOption);
-    }
-
-    // employee type select
-    const [selectedType, setSelectedType] = useState();
-    const onChangeTypeSelect = (e) => {
-        const selectedOption = e.target.value;
-        const selectedTypeOption = selectType.filter((d) => d.id === selectedOption)[0];
-        // console.log(selectedTypeOption)
-        setSelectedType(selectedTypeOption);
-    }
-
+    
     return(
         <>
-        <div className="enrollment-container">
-            <form action="">
-                <div className="field">
-                    <label>Staff ID:</label>
-                    <TextInput 
-                        type="text"
-                        value={staffid}
-                        onChange={(e) => setStaffid(e.target.value)}
-                        required={true}
-                    />
-                </div>
-                <div className="field">
-                    <label>First Name:</label>
-                    <TextInput 
-                        type="text"
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                        required={true}
-                    />
-                </div>
-                <div className="field">
-                    <label>Last Name:</label>
-                    <TextInput 
-                        type="text"
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
-                        required={true}
-                    />
-                </div>
-                <div className="field ">
-                    <label>Email:</label>
-                    <TextInput 
-                        type="text"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required={true}
-                        className = "email"
-                    />
-                </div>
-                <div className="field dob">
-                    <label>Date Of Birth:</label>
-                    <TextInput 
-                        type="date"
-                        value={dob}
-                        onChange={(e) => setDob(e.target.value)}
-                        required={true}
-                    />
-                </div>
-                <div className="field ">
-                    <label>Phone Number:</label>
-                    <TextInput 
-                        type="text"
-                        value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
-                        required={true}
-                        maxLength={11}
-                    />
-                </div>
-                <div className="field selectables">
-                    <div className="field">    
-                        <label>Dept:</label>
-                        <SelectField required={true} value={selectedDept?.id} onChange={(e) => onChangeDeptSelect(e)}>
-                            {
-                                selectDept.map((dept) =>(
-                                    <option key={dept.id} value={dept.id}>{dept.deptName}</option>
-                                ))
-                            }
-                        </SelectField>
+            {error &&
+                (
+                    <div className="error_message">
+                        {error}
                     </div>
-
+                )
+            }
+            {show ?
+                (
+                    <div className="success_message">
+                        {success}
+                    </div>
+                ) :
+                ("")
+            }
+            <div className="enrollment-container">
+                <form action="" onSubmit={handleSubmit}>
                     <div className="field">
-                        <label>Unit:</label>
-                        <SelectField required={true} value={selectedUnit?.id} onChange={(e) => onChangeUnitSelect(e)}>
-                            {
-                                selectUnit.map((unit) =>(
-                                    <option key={unit.id} value={unit.id}>{unit.unitName}</option>
-                                ))
-                            }
-                        </SelectField>
+                        <label>Staff ID:</label>
+                        <TextInput 
+                            type="text"
+                            value={staffid}
+                            onChange={Staff_IDnumberOnly}
+                            maxLength={4}
+                            minLength = {4}
+                            className = {emptyFields?.includes("staff_ID") ? "error" : ""}
+                        />
                     </div>
+                    <div className="field">
+                        <label>First Name:</label>
+                        <TextInput 
+                            type="text"
+                            value={firstName}
+                            onChange={firstNamelettersOnly}
+                            className = {emptyFields?.includes("first_name") ? "error" : ""}
+                        />
+                    </div>
+                    <div className="field">
+                        <label>Last Name:</label>
+                        <TextInput 
+                            type="text"
+                            value={lastName}
+                            onChange={lastNamelettersOnly}
+                            className = {emptyFields?.includes("last_name") ? "error" : ""}
+                        />
+                    </div>
+                    <div className="field ">
+                        <label>Email:</label>
+                        <TextInput 
+                            type="text"
+                            value={email}
+                            className={`email ${emptyFields?.includes("emp_email") ? "error" : ""}`}
+                            onChange={validateEmail}
+                        />
+                        <span className="email_span">
+                            {emailError}
+                        </span>
+                    </div>
+                    <div className="field dob">
+                        <label>Date Of Birth:</label>
+                        <TextInput 
+                            type="date"
+                            value={dob}
+                            onChange={(e) => setDob(e.target.value)}
+                            className = {emptyFields?.includes("date_of_birth") ? "error" : ""}
+                        />
+                    </div>
+                    <div className="field ">
+                        <label>Phone Number:</label>
+                        <TextInput 
+                            type="text"
+                            value={phoneNumber}
+                            onChange={numberOnly}
+                            maxLength={11}
+                            minLength = {11}
+                            className = {emptyFields?.includes("phone_number") ? "error" : ""}
+                        />
+                    </div>
+                    <div className="field selectables">
+                        <div className="field">    
+                            <label>Department:</label>
+                            <select id="" value={department} className = {emptyFields?.includes("department") ? "error" : ""} onChange={(e) => setDepartment(e.target.value)}>
+                                <option value="" disabled hidden>Choose...</option>
+                                <option value="ACCOUNTING AND FINANCE">ACCOUNTING AND FINANCE</option>
+                                <option value="HUMAN RESOURCES">HUMAN RESOURCES</option>
+                                <option value="INFORMATION AND TECHNOLOGY">INFORMATION AND TECHNOLOGY</option>
+                                <option value="MARKETING AND SALES">MARKETING AND SALES</option>
+                            </select>
+                        </div>
 
-                    <div className="field ">
-                        <label>Position:</label>
-                        <SelectField required={true} value={selectedPosition?.id} onChange={(e) => onChangePositionSelect(e)}>
-                            {
-                                selectPosition.map((position) =>(
-                                    <option key={position.id} value={position.position}>{position.position}</option>
-                                ))
-                            }
-                        </SelectField>
+                        <div className="field">
+                            <label>Unit:</label>
+                            <select id="" value={unit} className = {emptyFields?.includes("unit") ? "error" : ""} onChange={(e) => setUnit(e.target.value)}>
+                                <option value="" disabled hidden>Choose...</option>
+                                <option value="AUDIT">AUDIT</option>
+                                <option value="CUSTOMER SERVICE">CUSTOMER SERVICE</option>
+                                <option value="HEALTH AND SAFETY">HEALTH AND SAFETY</option>
+                                <option value="PROCUREMENT">PROCUREMENT</option>
+                                <option value="RECRUITMENT">RECRUITMENT</option>
+                            </select>
+                        </div>
+
+                        <div className="field ">
+                            <label>Position:</label>
+                            <select id="" value={position} className = {emptyFields?.includes("position") ? "error" : ""} onChange={(e) => setPosition(e.target.value)}>
+                                <option value="" disabled hidden>Choose...</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+                        <div className="field ">
+                            <label>Grade:</label>
+                            <select id="" value={grade} className = {emptyFields?.includes("grade") ? "error" : ""} onChange={(e) => setGrade(e.target.value)}>
+                                <option value="" disabled hidden>Choose...</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
                     </div>
-                    <div className="field ">
-                        <label>Grade:</label>
-                        <SelectField required={true} value={selectedGrade?.id} onChange={(e) => onChangeGradeSelect(e)}>
-                            {
-                                selectGrade.map((grade) =>(
-                                    <option key={grade.id} value={grade.grade}>{grade.grade}</option>
-                                ))
-                            }
-                        </SelectField>
+                    <div className="field">
+                        <label>Enrollment date:</label>
+                        <TextInput 
+                            type="date"
+                            value={enrollDate}
+                            onChange={(e) => setEnrollDate(e.target.value)}
+                            className = {emptyFields?.includes("enrollment_date") ? "error" : ""}
+                        />
                     </div>
-                </div>
-                <div className="field">
-                    <label>Enrollment date:</label>
+                    <div className="field address">
+                        <label>Employee Type:</label>
+                        <select id="" value={employee_type} className = {emptyFields?.includes("employee_type") ? "error" : ""} onChange={(e) => setEmployee_Type(e.target.value)}>
+                            <option value="" disabled hidden>Choose...</option>
+                            <option value="Full-Time">Full-Time</option>
+                            <option value="Contracted">Contracted</option>
+                        </select>
+                    </div>
+                    <div className="field address">
+                        <label>Address:</label>
+                        <TextInput 
+                            type="text"
+                            value={state}
+                            onChange={statelettersOnly}
+                            placeholder="state"
+                            className = {emptyFields?.includes("state") ? "error" : ""}
+                        />
+                    </div>
+                    <div className="field">
                     <TextInput 
-                        type="date"
-                        value={enrollDate}
-                        onChange={(e) => setEnrollDate(e.target.value)}
-                        required={true}
-                    />
-                </div>
-                <div className="field address">
-                <label>Employee Type:</label>
-                    <SelectField required={true} value={selectedType?.id} onChange={(e) => onChangeTypeSelect(e)}>
-                        {
-                            selectType.map((type) =>(
-                                <option key={type.id} value={type.id}>{type.employee_type}</option>
-                            ))
-                        }
-                    </SelectField>
-                </div>
-                <div className="field address">
-                    <label>Address:</label>
+                            type="text"
+                            value={city}
+                            onChange={citylettersOnly}
+                            placeholder="city"
+                            className = {emptyFields?.includes("city") ? "error" : ""}
+                        />
+                    </div>
+                    <div className="field">
                     <TextInput 
-                        type="text"
-                        value={state}
-                        onChange={(e) => setState(e.target.value)}
-                        placeholder="state"
-                        required={true}
-                    />
-                </div>
-                <div className="field">
-                {/* <label>City: </label> */}
-                <TextInput 
-                        type="text"
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}
-                        placeholder="city"
-                        required={true}
-                    />
-                </div>
-                <div className="field">
-                <TextInput 
-                        type="text"
-                        value={street}
-                        onChange={(e) => setStreet(e.target.value)}
-                        placeholder="street"
-                        className="street"
-                        required={true}
-                    />
-                </div>
-                <Button type="submit">Enroll</Button>
-            </form>
-        </div>
-           
+                            type="text"
+                            value={street}
+                            onChange={streetlettersOnly}
+                            placeholder="street"
+                            className= {`street ${emptyFields?.includes("street") ? "error" : ""}`}
+                            
+                        />
+                    </div>
+                    <Button type="submit">Enroll</Button>
+                </form>
+            </div>   
         </>
     )
 }

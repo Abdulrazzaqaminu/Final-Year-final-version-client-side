@@ -9,43 +9,13 @@ export const departmentReducer = (state, action) => {
                 departments: action.payload
             }
         case "CREATE_DEPARTMENT" :
-            const new_dept_name = action.payload;
-            if(state.departments === null) {
-                return {  
-                    departments: [new_dept_name]
-                } 
-            } 
-            else {
-                const existing_dept = state.departments.find((exits) => exits.dept_name === new_dept_name.dept_name);
-                if(existing_dept) {
-                    return {...state}
-                } else {
-                    const unit_name = (state.departments.map((dept) => dept?.unit?.map((name) => name?.unit_name))).filter((x) => x !== undefined)
-                    if(JSON.stringify(unit_name).includes(new_dept_name.unit_name)) {
-                        return {...state}
-                    } else {
-                        return {
-                            ...state, 
-                            departments: [new_dept_name,...state.departments]
-                        }
-                    }
-
-                    // all_department.unit.map((all_units) => {
-                    //     console.log(all_units)
-                            // if(all_units.unit_name === new_dept_name.dept_name) {
-                            //     return {...state}
-                            // } else {
-                            //     return {
-                            //         ...state, 
-                            //         departments: [new_dept_name,...state.departments]
-                            //     }
-                            // }
-                    //     }
-                    // )
-                }
-            }     
+            const new_dept_name = action.payload.DepartmentSaved;
+            return {
+                ...state, 
+                departments: [new_dept_name,...state.departments]
+            }
         case "EDIT_DEPARTMENT" :
-            const Departmentupdated = action.payload;
+            const Departmentupdated = action.payload.updated_department;
             const AllDepartments = state.departments.map((dept) => {
                 if (dept._id === Departmentupdated._id) {
                     
@@ -60,7 +30,7 @@ export const departmentReducer = (state, action) => {
             }
         case "DELETE_DEPARTMENT" :
             return {
-                departments: state.departments.filter((depts) => depts._id !== action.payload._id)
+                departments: state.departments.filter((depts) => depts._id !== action.payload.deleted_depts._id)
             }
         default:
             return state

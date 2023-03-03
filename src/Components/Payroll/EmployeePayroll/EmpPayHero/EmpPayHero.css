@@ -1,27 +1,54 @@
 .empPayroll-container{
-    height: 80vh;
-    width: 60vw;
-    /* background: red; */
-    overflow: auto;
-    margin: 100px 30px;
-    border-radius: var(--border-radius-1);
+  height: 80vh;
+  width: 60vw;
+  overflow: auto;
+  position: fixed;
+  margin: 100px 300px;
+  border-radius: var(--border-radius-1);
 }
 .empPayroll-container::-webkit-scrollbar{
-    display: none;
+  display: none;
 }
 
 .empPayroll-container form{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    background:var(--color-white);
-    width: 60vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background:var(--color-white);
+  width: 60vw;
 }
 
 .empPayroll-container form .field{
   display: grid;
   grid-template-columns: 1fr;
-  /* gap: 1px; */
   padding: 10px;
+}
+
+.empPayroll-container form .hours{
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  gap: 15px;
+  padding: 10px;
+}
+
+.empPayroll-container form .hours .hours_worked input{
+  width: 100%;
+  padding: 10px;
+  display: flex;
+}
+
+.empPayroll-container form .hours .over_time {
+  white-space: nowrap;
+}
+
+.empPayroll-container form .hours .over_time input{
+  display: flex;
+  width: 100%;
+  padding: 10px;
+}
+
+.empPayroll-container form .hours .field input{
+  width: 100px;
 }
 
 .empPayroll-container form .field input{
@@ -34,6 +61,11 @@
   padding: 0 10px;
   font-size: 1rem;
   border-radius: var(--border-radius-1);
+  text-transform: capitalize;
+}
+
+.empPayroll-container form .field.email input{
+  text-transform: lowercase;
 }
 .empPayroll-container form button{
   padding: 8px;

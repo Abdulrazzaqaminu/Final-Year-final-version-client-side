@@ -38,28 +38,26 @@ const ReportHero = () =>{
         <>
             <div className="report-container">
                 <div className="search-by-date-time">
-                <span
-                  onClick={() => setOpenDate(!openDate)}
-                  className="headerSearchText"
-                >{`${format(date[0].startDate, "yyyy-MM-dd")} to ${format(
-                  date[0].endDate,
-                  "yyyy-MM-dd"
-                )}`}</span>
-                {openDate && (
-                    <div>
-                        <DateRange
-                          editableDateInputs={true}
-                          onChange={(item) => setDate([item.selection])}
-                          moveRangeOnFirstSelection={false}
-                          ranges={date}
-                          className="daterange"
-                        />
-                    </div>
-                )}
-                    {/* <DateRange
-                        value= {date}
-                        onChange = {setDate}
-                    /> */}
+                    <span
+                    onClick={() => setOpenDate(!openDate)}
+                    className="headerSearchText"
+                    >
+                        {`${format(date[0].startDate, "yyyy-MM-dd")} to ${format(
+                            date[0].endDate,
+                            "yyyy-MM-dd"
+                        )}`}
+                    </span>
+                    {openDate && (
+                        <div>
+                            <DateRange
+                            editableDateInputs={true}
+                            onChange={(item) => setDate([item.selection])}
+                            moveRangeOnFirstSelection={false}
+                            ranges={date}
+                            className="daterange"
+                            />
+                        </div>
+                    )}
                 </div>
                 <div className="report-table">
                     <AttendHistory

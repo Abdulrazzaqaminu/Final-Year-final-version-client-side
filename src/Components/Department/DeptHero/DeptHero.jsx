@@ -10,20 +10,33 @@ import { useDepartmentContext } from "../../../hooks/useDepartmentContext";
 
 const DeptHero = () =>{
     const {departments, dispatch} = useDepartmentContext()
-    const [loading, setLoading] = useState([false])
+    const [loading, setLoading] = useState(false)
+    const [emptyFields, setEmptyFields] = useState([])
     
     const [edit_dept, setEdit_Dept] = useState("");
     const [create_dept, setCreate_Dept] = useState("");
     const [email, setEmail] = useState("");
 
     const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
+    const [show, setShow] = useState(false)
 
     useEffect(() => {
         const fetchDepartments = async () => {
             setLoading(true);
             try {
-                const response = await axios.get("http://127.0.0.1:4040/api/department");
-                dispatch({type: "ALL_DEPARTMENTS", payload: response.data})
+                await axios.get("http://127.0.0.1:4040/api/department")
+                .then((response) => {
+                    setError(null)
+                    dispatch({type: "ALL_DEPARTMENTS", payload: response.data})
+                })
+                .catch((error) => {
+                    setError(error.response.data.Message)
+                    setTimeout(() => {
+                        setError(null)
+                    }, 5000)
+                    dispatch({type: "ALL_DEPARTMENTS", payload: error.response.data.dept})
+                })
             } catch (error) {
                 setError(error);
             }
@@ -32,9 +45,29 @@ const DeptHero = () =>{
         fetchDepartments();
     }, []);
 
+    const editlettersOnly = (e) => {
+        const regex = /^[a-zA-Z\b\s]+$/
+        if ((e.target.value) === "" || regex.test(e.target.value)) {
+            setEdit_Dept(e.target.value);
+        }
+    };
+    const createlettersOnly = (e) => {
+        const regex = /^[a-zA-Z\b\s]+$/;
+        if ((e.target.value) === "" || regex.test(e.target.value)) {
+            setCreate_Dept(e.target.value);
+        }
+    };
+    const emaillettersOnly = (e) => {
+        const regex = /^[a-zA-Z@.\b]+$/;
+        if ((e.target.value) === "" || regex.test(e.target.value)) {
+            setEmail(e.target.value);
+        }
+    };
+
     const handleSubmit = async (e) =>{
         e.preventDefault()
     }
+
     const departmentColumn = [
         {
             name: "Department Name",
@@ -69,32 +102,54 @@ const DeptHero = () =>{
     ]
 
     const edit = async (Department_id) => {
-        if(edit_dept === ""){
-            return "Cannot edit without value"
-        } else {
-            try {
-                const response = await axios.put(`http://127.0.0.1:4040/api/department/${Department_id}`, {
-                    dept_name: edit_dept
-                });
-                if(response) {
-                    setEdit_Dept('')
-                    setError(null);
-                    dispatch({type: "EDIT_DEPARTMENT", payload: response.data})
-                }
-            } catch (error) {
-                setError(error);
-                return error
-            }
+        try {
+            await axios.put(`http://127.0.0.1:4040/api/department/${Department_id}`, {
+                dept_name: edit_dept
+            }).then((response) => {
+                setShow(true)
+                setTimeout(() => {
+                    setShow(false)
+                }, 3000)
+                setError(null)
+                setSuccess(response.data.Message)
+                setEmptyFields([])
+                setEdit_Dept("")
+                dispatch({type: "EDIT_DEPARTMENT", payload: response.data})
+            }).catch((error) => {
+                setError(error.response.data.Message)
+                setTimeout(() => {
+                    setError(null)
+                }, 5000)
+                setEmptyFields(error.response.data.emptyFields)
+            })
+            // if(response) {
+            //     setEdit_Dept('')
+            //     setError(null);
+            //     dispatch({type: "EDIT_DEPARTMENT", payload: response.data})
+            // }
+        } catch (error) {
+            setError(error);
         }
     }
 
     const del = async (Department_ID) => {
        try {
-        const response = await axios.delete(`http://127.0.0.1:4040/api/department/${Department_ID}`);
-        if(response) {
-            setError(null);
+        await axios.delete(`http://127.0.0.1:4040/api/department/${Department_ID}`)
+        .then((response) => {
+            setShow(true)
+            setTimeout(() => {
+                setShow(false)
+            }, 3000)
+            setError(null)
+            setSuccess(response.data.Message)
             dispatch({type: "DELETE_DEPARTMENT", payload: response.data})
-        }
+        })
+        .catch((error) => {
+            setError(error.response.data.Message)
+            setTimeout(() => {
+                setError(null)
+            }, 5000)
+        })
        } catch (error) {
             setError(error);
             return error;
@@ -102,56 +157,90 @@ const DeptHero = () =>{
     }
 
     const createDept = async () => {
-        if(create_dept === "") {
-            return "Cannot create department without value"
-        } else {
-            try {
-                const response = await axios.post(`http://127.0.0.1:4040/api/department`, {dept_name: create_dept}, {
-                    headers: {
-                      // 'application/json' is the modern content-type for JSON, but some
-                      // older servers may use 'text/json'.
-                      // See: http://bit.ly/text-json
-                      'content-type': 'application/json'
-                    }
-                });
-                if(response) {
-                    setCreate_Dept('')
-                    setError(null);
-                    dispatch({type: "CREATE_DEPARTMENT", payload: response.data})
+        try {
+            await axios.post(`http://127.0.0.1:4040/api/department`, {dept_name: create_dept}, {
+                headers: {
+                    // 'application/json' is the modern content-type for JSON, but some
+                    // older servers may use 'text/json'.
+                    // See: http://bit.ly/text-json
+                    'content-type': 'application/json'
                 }
-            } catch (error) {
-                setError(error);
-                return error
-            }
+            }).then((response) => {
+                setShow(true)
+                setTimeout(() => {
+                    setShow(false)
+                }, 3000)
+                setError(null)
+                setSuccess(response.data.Message)
+                setEmptyFields([])
+                setCreate_Dept("")
+                dispatch({type: "CREATE_DEPARTMENT", payload: response.data})
+            }).catch((error) => {
+                setError(error.response.data.Message)
+                setTimeout(() => {
+                    setError(null)
+                }, 5000)
+                setEmptyFields(error.response.data.emptyFields)
+            })
+        } catch (error) {
+            setError(error);
+            return error
         }
     }
 
     const assign = async (Hod_ID) => {
-        if(email === "") {
-            return "Cannot assign empty hod"
-        } else {
-            try {
-                const response = await axios.put(`http://127.0.0.1:4040/api/hod/${Hod_ID}`, {dept_HOD_email: email}, {
-                    headers: {
-                      // 'application/json' is the modern content-type for JSON, but some
-                      // older servers may use 'text/json'.
-                      // See: http://bit.ly/text-json
-                      'content-type': 'application/json'
-                    }});
-                if(response) {
-                    setEmail('');
-                    setError(null);
+        try {
+            await axios.put(`http://127.0.0.1:4040/api/hod/${Hod_ID}`, {dept_HOD_email: email}, {
+                headers: {
+                    // 'application/json' is the modern content-type for JSON, but some
+                    // older servers may use 'text/json'.
+                    // See: http://bit.ly/text-json
+                    'content-type': 'application/json'
+                }}).then((response) => {
+                    setShow(true)
+                    setTimeout(() => {
+                        setShow(false)
+                    }, 3000)
+                    setError(null)
+                    setSuccess(response.data.Message)
+                    setEmptyFields([])
+                    setEmail("")
                     dispatch({type: "EDIT_DEPARTMENT", payload: response.data})
-                }
-            } catch (error) {
-                setError(error);
-                return error
-            }
+                }).catch((error) => {
+                    setError(error.response.data.Message)
+                    setTimeout(() => {
+                        setError(null)
+                    }, 5000)
+                    setEmptyFields(error.response.data.emptyFields)
+                })
+            // if(response) {
+            //     setEmail('');
+            //     setError(null);
+            //     dispatch({type: "EDIT_DEPARTMENT", payload: response.data})
+            // }
+        } catch (error) {
+            setError(error);
+            return error
         }
     }
     
     return(
         <>
+            {error &&
+                (
+                    <div className="error_message">
+                        {error}
+                    </div>
+                )
+            }
+            {show ?
+                (
+                    <div className="success_message">
+                        {success}
+                    </div>
+                ) :
+                ("")
+            }
             <div className="dept-container">
                 <div className="dept-left">
                     <div className="dept-left-top">
@@ -159,7 +248,8 @@ const DeptHero = () =>{
                         <TextInput 
                             type="text"
                             value={edit_dept}
-                            onChange={(e) => setEdit_Dept(e.target.value)}
+                            onChange={editlettersOnly}
+                            className = {emptyFields?.includes("edit_dept_name") ? "error" : ""}
                         />
                     </div>
                     <div className="dept-left-middle">
@@ -168,8 +258,8 @@ const DeptHero = () =>{
                             <TextInput 
                                 type="text"
                                 value={create_dept}
-                                required = {true}
-                                onChange={(e) => setCreate_Dept(e.target.value)}
+                                onChange={createlettersOnly}
+                                className = {emptyFields?.includes("dept_name") ? "error" : ""}
                             />
                             <Button type="submit" onClick={createDept}>Create</Button>
                         </form>
@@ -186,9 +276,8 @@ const DeptHero = () =>{
                             <TextInput 
                                 type="text"
                                 value={email}
-                                required = {true}
-                                className="emp_email"
-                                onChange={(e) => setEmail(e.target.value)}
+                                onChange={emaillettersOnly}
+                                className={`emp_email ${emptyFields?.includes("hod_email") ? "error" : ""}`}
                             />
                         </form>
                     </div>

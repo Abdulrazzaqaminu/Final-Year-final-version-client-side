@@ -39,6 +39,51 @@
     text-transform: lowercase;
 }
 
+/* edit */
+.edit .cancel {
+    position: absolute;
+    right: 20px;
+    font-size: 20px;
+    cursor: pointer;
+    color: black;
+    transition: 0.2s ease;
+}
+.edit .cancel:hover{
+    color: red;
+    transition: 0.2s ease;
+}
+.edit {
+    position: absolute;
+    z-index: 20;
+    background: var(--color-white);
+    box-shadow: var(--box-shadow);
+    right: 32%;
+    top: 25%;
+    width: 30%;
+    height: 52%;
+    overflow: auto;
+    border-radius: 5px;
+}
+.edit button {
+    margin-bottom: 10px;
+}
+.edit::-webkit-scrollbar {
+    display: none;
+}
+.edit .field{
+    padding: 0px 15px;
+    margin-top: 12px;
+}
+
+.edit .field input{
+    width: 100%;
+    text-transform: capitalize;
+    color: black;
+}
+.edit .field label{
+    color: black;
+}
+
 .error_message{
     position: absolute;
     display: flex;
@@ -90,14 +135,14 @@
     border-radius: 7px;
 }
 
-.single_employee_container .single_employee_update form .field{
+.single_employee_container .single_employee_update .field{
     display: grid;
     grid-template-columns: 1fr;
     padding: 11px;
     margin-bottom: -10px;
 }
 
-.single_employee_container .single_employee_update form .field input,select{
+.single_employee_container .single_employee_update .field input,select{
     background: var(--color-info-light);
     outline: none;
     border: none;
@@ -106,8 +151,11 @@
     font-size: 1rem;
     border-radius: var(--border-radius-1);
 }
-.single_employee_container .single_employee_update form .field select{
+.single_employee_container .single_employee_update .field select{
     margin: 10px 0px;
+}
+.single_employee_container .single_employee_update .field button{
+    margin: 15px 0px;
 }
 
 .single_employee_container .single_employee_info{
@@ -175,12 +223,22 @@
    text-transform: lowercase;
 }
 
-input.error {
+.single_employee_container .field input[type="text"].error {
     border: 1px solid var(--color-danger);
     background-color: rgb(248, 234, 234);
     color: var(--color-danger);
 }
-select.error {
+.transfer form select.error {
+    border: 1px solid var(--color-danger);
+    background-color: rgb(248, 234, 234);
+    color: var(--color-danger);
+}
+.edit form input.error {
+    border: 1px solid var(--color-danger);
+    background-color: rgb(248, 234, 234);
+    color: var(--color-danger);
+}
+.edit form select.error {
     border: 1px solid var(--color-danger);
     background-color: rgb(248, 234, 234);
     color: var(--color-danger);
@@ -194,4 +252,37 @@ select.error {
     width: 6vw;
     border: none;
     cursor: pointer;
+}
+
+.transfer .field select{
+    background: var(--color-info-light);
+    outline: none;
+    border: none;
+    height: 2rem;
+    padding: 0 10px;
+    font-size: 1rem;
+    margin: 9px 0px;
+    width: 100%;
+    border-radius: var(--border-radius-1);
+}
+.edit .field select{
+    background: var(--color-info-light);
+    outline: none;
+    border: none;
+    height: 2rem;
+    padding: 0 10px;
+    font-size: 1rem;
+    margin: 9px 0px;
+    width: 100%;
+    border-radius: var(--border-radius-1);
+}
+
+.edit form .field button{
+    margin-top: 20px;
+}
+.edit form .field .last_name{
+    text-transform: uppercase;
+}
+.transfer form .field button{
+    margin-top: 20px;
 }

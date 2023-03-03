@@ -3,7 +3,7 @@
     grid-template-columns: 55% 42.8%;
     gap: 20px;
     width: 100%;
-    height: 80vh;
+    height: 50vh;
     margin: 100px 30px;
     /* background: red; */
 }
@@ -42,6 +42,9 @@
     position: absolute;
     bottom: 40px;
     margin-left: 10px;
+}
+.record_container .qr_reader .qr_container button{
+    margin-top: 15px;
 }
 
 .record_container .qr_reader .scan{
@@ -83,6 +86,9 @@
     grid-template-columns: 1fr;
     padding: 10px;
     margin-bottom: -10px;
+}
+.record_container .recording_section form .field button{
+ margin: 15px 0;
 }
 
 .record_container .recording_section form .field .date_time{

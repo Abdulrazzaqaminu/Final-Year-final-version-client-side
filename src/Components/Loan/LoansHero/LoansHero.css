@@ -49,16 +49,28 @@
 }
 
 .loans_container .loan-form form .field .duration{
-    display: grid;
-    grid-template-columns: 1fr 1fr;   
-    gap: 8px;
+    margin: 10px 0px;
 }
 
-.loans_container .loan-form form .field .duration input{
-    width: 134px;  
-    text-align: center;
-    text-transform: capitalize;
+.loans_container .loan-form form .field .duration .dates{
+    display: inline-block;
+    color: var(--color-info-dark);
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 8px;
+    width: 100%;
+    background: var(--color-info-light);
+    border: 0.5px solid rgb(215, 215, 215);
+    white-space: nowrap;
+    text-align: left;
 }
+.loans_container .loan-form form .field .duration .daterange{
+    position: absolute;
+    z-index: 10;
+    top: 25%;
+    right: 20%;
+}
+
 .loans_container .loan-form form .field input.email{
     text-transform: lowercase;
 }
@@ -76,4 +88,10 @@
     /* background: blue; */
     /* background: red; */
     /* background: red; */
+}
+
+.loan-form form .field textarea.error{
+    border: 1px solid var(--color-danger);
+    background-color: rgb(248, 234, 234);
+    color: var(--color-danger);
 }
