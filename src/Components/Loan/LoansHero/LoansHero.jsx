@@ -247,7 +247,7 @@ const LoansHero = () =>{
                         </div>
                         <div className="field">
                             <label>Loan Details:</label>
-                            <textarea name="" value={loanDesc} className = {emptyFields?.includes("loan_details") ? "error" : ""} onChange={desclettersOnly} id="" cols="30" rows="4"></textarea>
+                            <textarea name="" value={loanDesc} className = {emptyFields?.includes("loan_details") ? "error" : ""} onChange={desclettersOnly} id="" cols="30" rows="2"></textarea>
                             <br />
                             <Button type="submit" onClick={loan_payment}>Submit</Button>
                         </div>

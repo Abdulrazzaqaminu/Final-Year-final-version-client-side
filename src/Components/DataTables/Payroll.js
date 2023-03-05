@@ -49,8 +49,10 @@ const Payroll = () => {
                     <>
                         {error &&
                             (
-                                <div className="error_message">
-                                    {error}
+                                <div className="error">
+                                    <span className='error_message'>
+                                        {error}
+                                    </span>
                                 </div>
                             )
                         }

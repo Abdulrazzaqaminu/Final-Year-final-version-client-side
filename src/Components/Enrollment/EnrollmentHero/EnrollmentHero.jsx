@@ -85,7 +85,6 @@ const EnrollmentHero = () =>{
             }
         }
     }
-    console.log(email)
     const streetlettersOnly = (e) => {
         const regex = /^[a-zA-Z0-9\b\s]+$/;
         if ((e.target.value) === "" || regex.test(e.target.value)) {

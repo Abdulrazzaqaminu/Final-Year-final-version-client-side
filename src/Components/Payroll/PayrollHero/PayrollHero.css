@@ -25,3 +25,7 @@
     cursor: pointer;
     background: rgb(236, 212, 212);
 }
+
+.error .error_message {
+    margin-top: 10px;
+}
