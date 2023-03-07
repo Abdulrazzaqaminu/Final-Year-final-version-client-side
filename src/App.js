@@ -12,6 +12,7 @@ import RecordAttendance from './Components/Attendance/RecordAttendance/RecordAtt
 import Enrollment from './Components/Enrollment/Enrollment';
 import Payroll from './Components/Payroll/Payroll';
 import Loans from './Components/Loan/Loans';
+import Leave from './Components/Leave/Leave'
 import EmployeePayroll from './Components/Payroll/EmployeePayroll/EmployeePayroll';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
             <Route exact path="/enrollment" element={<Enrollment />} />
             <Route exact path="/payroll" element={<Payroll />} />
             <Route exact path="/loans" element={<Loans />} />
+            <Route exact path="/leave" element={<Leave />} />
             <Route exact path="/payroll/employee_salary/:employee_id" element={<EmployeePayroll />} />
             <Route exact path="/Account" element={<Account />} />
           </Routes>

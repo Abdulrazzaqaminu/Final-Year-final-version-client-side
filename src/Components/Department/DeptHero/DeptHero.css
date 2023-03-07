@@ -18,7 +18,7 @@
 .dept-container .dept-left .dept-left-top{
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    padding: 10px 8px;
     background: var(--color-white);
     box-shadow: var(--box-shadow);
     transition: all 300ms ease;
@@ -38,7 +38,7 @@
 .dept-container .dept-left .dept-left-middle form{
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    padding: 10px 8px;
     background: var(--color-white);
     box-shadow: var(--box-shadow);
     transition: all 300ms ease;
@@ -53,7 +53,7 @@
 .dept-container .dept-left .dept-left-bottom form{
     display: flex;
     flex-direction: column;
-    padding: 5px 10px;
+    padding: 5px 8px;
     background: var(--color-white);
     box-shadow: var(--box-shadow);
     transition: all 300ms ease;

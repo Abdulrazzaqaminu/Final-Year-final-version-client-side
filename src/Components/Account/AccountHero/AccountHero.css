@@ -22,11 +22,11 @@
 .acct-hero_container .acct_update form .field{
     display: grid;
     grid-template-columns: 1fr;
-    padding: 11px;
+    padding: 11px 8px;
     margin-bottom: -10px;
 }
 .acct-hero_container .acct_update form .field button{
-    margin-top: 15px;
+    margin-top: 25px;
 }
 .acct-hero_container .acct_update form .field input{
     text-transform: capitalize;

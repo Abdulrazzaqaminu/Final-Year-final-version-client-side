@@ -1,4 +1,4 @@
-.loans_container{
+.leave_container{
     display: grid;
     grid-template-columns: 35% 60%;
     gap: 10px;
@@ -9,54 +9,48 @@
     margin: 95px 30px;
 }
 
-.loans_container .loan-form{
+.leave_container .leave_form{
     background: var(--color-white);
     box-shadow: var(--box-shadow);
     transition: all 300ms ease;
     /* background: red; */
     width: 100%;
-    height: 75vh;
+    height: 60vh;
     border-radius: 7px;
-    overflow-x: auto;
 }
 
-.loans_container .loan-form::-webkit-scrollbar{
-    display: none;
-}
-
-.loans_container .loan-form form{
+.leave_container .leave_form form{
     display: grid;
     grid-template-columns: 1fr;
     padding: 2px;
     margin-bottom: -10px;
 }
 
-.loans_container .loan-form form .field{
+.leave_container .leave_form form .field{
     display: grid;
     grid-template-columns: 1fr;
     padding: 6px;
     margin-bottom: -10px;
 }
 
-.loans_container .loan-form form button{
-    margin-top: 5px;
-}
-
-.loans_container .loan-form form .field textarea{
-    background: var(--color-info-light);
-    outline: none;
-    padding: 10px;
-    border: none;
-    font-size: 1rem;
-    border-radius: var(--border-radius-1);
-    text-transform: capitalize;
-}
-
-.loans_container .loan-form form .field .duration{
+.leave_container .leave_form form .field select{
     margin: 10px 0px;
 }
 
-.loans_container .loan-form form .field .duration .dates{
+.leave_container .leave_form form .field select.error{
+    border: 1px solid var(--color-danger);
+    background-color: rgb(248, 234, 234);
+    color: var(--color-danger);
+}
+.leave_container .leave_form form button{
+   margin-top: 15px;
+}
+
+.leave_container .leave_form form .field .duration{
+    margin: 10px 0px;
+}
+
+.leave_container .leave_form form .field .duration .dates{
     display: inline-block;
     color: var(--color-info-dark);
     border-radius: 5px;
@@ -68,13 +62,14 @@
     white-space: nowrap;
     text-align: left;
 }
-.loans_container .loan-form form .field .duration .daterange{
+.leave_container .leave_form form .field .duration .daterange{
     position: absolute;
     z-index: 10;
     top: 25%;
     right: 20%;
 }
-.loans_container .loan-table{
+
+.leave_container .leave_table{
     /* background: blue; */
     display: flex;
     flex-direction: column;
@@ -87,10 +82,4 @@
     /* background: blue; */
     /* background: red; */
     /* background: red; */
-}
-
-.loan-form form .field textarea.error{
-    border: 1px solid var(--color-danger);
-    background-color: rgb(248, 234, 234);
-    color: var(--color-danger);
 }

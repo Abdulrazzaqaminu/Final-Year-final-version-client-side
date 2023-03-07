@@ -1,9 +1,9 @@
 import React from "react";
-import './LoansHero.css';
+import './LeaveHero.css'
 import TextInput from "../../TextInput/TextInput";
 import Button from "../../Button/Button";
 import { useState, useEffect } from "react";
-import { useLoanContext } from "../../../hooks/useLoanContext"
+import { useLeaveContext } from "../../../hooks/useLeaveContext"
 import axios from "axios"
 import DataTable from "react-data-table-component";
 import { DateRange } from "react-date-range";
@@ -11,19 +11,17 @@ import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
 
-
-const LoansHero = () =>{
-    const {loans, dispatch} = useLoanContext();
+const LeaveHero = () => {
+    const {leave, dispatch} = useLeaveContext();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
     const [show, setShow] = useState(false);
     const [emptyFields, setEmptyFields] = useState([]);
 
-    const [assign, setAssign] = useState("");
-    const [amount, setAmount] = useState("");
     const [approval, setApproval] = useState("");
-    const [loanDesc, setLoanDesc] = useState("");
+    const [leave_type, setLeave_Type] = useState("");
+    const [staff_ID, setStaff_ID] = useState("");
     const [openDate, setOpenDate] = useState(false);
     const [date, setDate] = useState([
         {
@@ -44,10 +42,8 @@ const LoansHero = () =>{
     const to_month = End_Date.toLocaleString("default", {month: "2-digit"}).substr(0,2).replace('T', ' ');
     const to_year = End_Date.toLocaleString("default", {year: "numeric"}).substr(0,4).replace('T', ' ');
     
-    const range_from = `${from_year}-${from_month}-${from_day}`;
-    const range_to = `${to_year}-${to_month}-${to_day}`;
-
-    const loan_desc_capitalize = loanDesc.charAt(0).toUpperCase() + loanDesc.slice(1).toLowerCase();
+    const start = `${from_year}-${from_month}-${from_day}`;
+    const end = `${to_year}-${to_month}-${to_day}`;
 
     const employeeColumn = [
         {
@@ -61,8 +57,8 @@ const LoansHero = () =>{
             sortable: true
         },
         {
-            name: "Amount",
-            selector: row => row.amount,
+            name: "Leave Type",
+            selector: row => row.leave_type,
             sortable: true
         },
         {
@@ -76,74 +72,63 @@ const LoansHero = () =>{
             sortable: true
         },
         {
-            name: "Loan Description",
-            selector: row => row.desc,
+            name: "Paid Leave",
+            selector: row => row.paid,
             sortable: true
         },
-        // {
-        //     name: "",
-        //     selector: row => row.pay_off,
-        //     sortable: true
-        // },
+        {
+            name: "Status",
+            selector: row => row.status,
+            sortable: true
+        },
     ]
 
     const staff_Id_numberOnly = (e) => {
         const regex = /^[0-9\b]+$/;
         if ((e.target.value) === "" || regex.test(e.target.value)) {
-          setAssign(e.target.value);
-        }
-    };
-    const amount_numberOnly = (e) => {
-        const regex = /^[0-9\b]+$/;
-        if ((e.target.value) === "" || regex.test(e.target.value)) {
-          setAmount(e.target.value);
-        }
-    };
-    const desclettersOnly = (e) => {
-        const regex = /^[a-zA-Z\b\s]+$/
-        if ((e.target.value) === "" || regex.test(e.target.value)) {
-            setLoanDesc(e.target.value);
+            setStaff_ID(e.target.value);
         }
     };
 
     useEffect(() => {
-        const fetchLoans = async () => {
+        const fetchLeaves = async () => {
             setLoading(true);
             try {
-                await axios.get("http://127.0.0.1:4040/api/loans")
+                await axios.get("http://127.0.0.1:4040/api/leave")
                 .then((response) => {
                     setError(null)
-                    dispatch({type: "GET_ALL_LOANS", payload: response.data})
-                }).catch((error) => {
+                    dispatch({type: "GET_LEAVES", payload: response.data})
+                })
+                .catch((error) => {
                     setError(error.response.data.Message)
                     setTimeout(() => {
                         setError(null)
                     }, 3000)
-                    dispatch({type: "GET_ALL_LOANS", payload: error.response.data.loan})
+                    dispatch({type: "GET_LEAVES", payload: error.response.data.leave})
                 })
             } catch (error) {
                 setError(error);
             }
             setLoading(false);
         }
-        fetchLoans();
-    }, []);
+        fetchLeaves();
+    }, [])
 
     const handleSubmit = async (e) =>{
         e.preventDefault()
     }
-    const loan_payment = async () => {
+
+    const leave_request = async () => {
         try {
-            await axios.post("http://127.0.0.1:4040/api/loans", 
-                {
-                    staff_ID: assign,
-                    loan_amount: amount,
+            await axios.post("http://127.0.0.1:4040/api/leave",
+                {                 
+                    staff_ID: staff_ID,
+                    leave_type: leave_type,
                     approval_date: approval,
-                    loan_duration: {
-                        from: range_from,
-                        to: range_to
-                    },
-                    loan_details: loan_desc_capitalize
+                    duration: {
+                        start: start,
+                        end: end
+                    }
                 },
                 {
                     headers: {
@@ -158,7 +143,7 @@ const LoansHero = () =>{
                 setError(null)
                 setSuccess(response.data.Message)
                 setEmptyFields([])
-                dispatch({type: "LOAN_PAYMENT", payload: response.data})
+                dispatch({type: "REQUEST_LEAVE", payload: response.data})
             }).catch((error) => {
                 setError(error.response.data.Message)
                 setTimeout(() => {
@@ -188,28 +173,32 @@ const LoansHero = () =>{
                 ) :
                 ("")
             }
-            <div className="loans_container">
-                <div className="loan-form">
-                    <form action="" onSubmit={handleSubmit}>
+            <div className="leave_container">
+                <div className="leave_form">
+                    <form onSubmit={handleSubmit}>
                         <div className="field">
-                            <label>Assign To (Staff ID):</label>
+                            <label>Staff ID:</label>
                             <TextInput 
                                 type="text"
-                                value={assign}
-                                onChange={staff_Id_numberOnly}
+                                value={staff_ID}
                                 maxLength={4}
                                 minLength = {4}
+                                onChange={staff_Id_numberOnly}
                                 className = {emptyFields?.includes("staff_ID") ? "error" : ""}
                             />
                         </div>
                         <div className="field">
-                            <label>Amount:</label>
-                            <TextInput 
-                                type="text"
-                                value={amount}
-                                onChange={amount_numberOnly}
-                                className = {emptyFields?.includes("loan_amount") ? "error" : ""}
-                            />
+                            <label>Leave Type:</label>
+                            <select id="" value={leave_type} onChange={(e) => setLeave_Type(e.target.value)} className = {emptyFields?.includes("leave_type") ? "error" : ""}>
+                                <option value="" disabled hidden>Choose...</option>
+                                <option value="Bereavement leave">Bereavement leave</option>
+                                <option value="Sabbatical leave">Sabbatical leave</option>
+                                <option value="Compassionate leave">Compassionate leave</option>
+                                <option value="Casual leave">Casual leave</option>
+                                <option value="Maternity leave">Maternity leave</option>
+                                <option value="Paternity leave">Paternity leave</option>
+                                <option value="Sick leave">Sick leave</option>
+                            </select>
                         </div>
                         <div className="field">
                             <label>Approval Date:</label>
@@ -244,37 +233,32 @@ const LoansHero = () =>{
                                     </div>
                                 )}
                             </div>
-                        </div>
-                        <div className="field">
-                            <label>Loan Details:</label>
-                            <textarea name="" value={loanDesc} className = {emptyFields?.includes("loan_details") ? "error" : ""} onChange={desclettersOnly} id="" cols="30" rows="2"></textarea>
-                            <br />
-                            <Button type="submit" onClick={loan_payment}>Submit</Button>
+                            <Button type="submit" onClick={leave_request}>Submit</Button>
                         </div>
                     </form>
                 </div>
-                <div className="loan-table">
-                    { loading ? 
+                <div className="leave_table">
+                    { loading ?
                         ("Loading please wait") :
                         (
                             <DataTable
                                 columns={employeeColumn}
                                 data={
-                                    loans?.map((loan) => (
+                                    leave?.map((leave) => (
                                         {
-                                            staff_ID: loan?.staff_ID,
+                                            staff_ID: leave?.staff_ID,
                                             name: <div className="name_email">
-                                                    <p>{loan?.first_name} <b>{loan?.last_name}</b></p>
-                                                    <small className="text-muted">{loan?.email}</small>
+                                                    <p>{leave?.first_name} <b>{leave?.last_name}</b></p>
+                                                    <small className="text-muted">{leave?.email}</small>
                                                 </div>,
-                                            amount: `NGN ${(loan?.loan_amount).toLocaleString()}`,
-                                            approval_date: loan?.approval_date,
+                                            leave_type: leave?.leave_type,
+                                            approval_date: leave?.approval_date,
                                             duration: <div className="name_email">
-                                                        <p>{loan?.loan_duration.from} -</p>
-                                                        <p>{loan?.loan_duration.to}</p>
+                                                        <p>{leave?.leave_duration.start} -</p>
+                                                        <p>{leave?.leave_duration.end}</p>
                                                     </div>,
-                                            desc: loan?.loan_details,
-                                            // pay_off: <Link to={`/loans/pay_off/${loan.employee_ID}`}><Button>Pay Off</Button></Link>
+                                            paid: <p>{leave?.paid === true ? "Yes" : "No"}</p>,
+                                            status: <p className={leave?.status === "On Leave" ? "warning" : ""}>{leave?.status}</p>
                                         }
                                     ))
                                 }
@@ -283,6 +267,7 @@ const LoansHero = () =>{
                                 className='datatables'
                             />
                         )
+
                     }
                 </div>
             </div>
@@ -290,4 +275,4 @@ const LoansHero = () =>{
     )
 }
 
-export default LoansHero;
+export default LeaveHero;

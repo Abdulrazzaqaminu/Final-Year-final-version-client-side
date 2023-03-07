@@ -72,6 +72,13 @@ const SidebarDate = [
         iconOpened: <RiIcons.RiArrowUpSFill />,
     },
     {
+        title: "Leave",
+        path: "/leave",
+        icon: <MdIcons.MdExitToApp /> ,
+        iconClosed: <RiIcons.RiArrowDownSFill />,
+        iconOpened: <RiIcons.RiArrowUpSFill />,
+    },
+    {
         title: "Logout",
         path: "/Logout",
         icon: <FiIcons.FiLogOut /> ,

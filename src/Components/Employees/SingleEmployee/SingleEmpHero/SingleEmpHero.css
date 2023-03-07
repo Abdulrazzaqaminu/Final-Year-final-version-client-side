@@ -12,7 +12,7 @@
 .transfer_button {
     position: absolute;
     right: 48%;
-    top: 89%;
+    top: 90%;
     z-index: 10;
 }
 
@@ -28,7 +28,7 @@
     border-radius: 5px;
 }
 .transfer .field{
-    padding: 0px 15px;
+    padding: 0px 8px;
     margin-top: 12px;
 }
 
@@ -71,7 +71,7 @@
     display: none;
 }
 .edit .field{
-    padding: 0px 15px;
+    padding: 0px 8px;
     margin-top: 12px;
 }
 
@@ -138,7 +138,7 @@
 .single_employee_container .single_employee_update .field{
     display: grid;
     grid-template-columns: 1fr;
-    padding: 11px;
+    padding: 11px 8px;
     margin-bottom: -10px;
 }
 
@@ -155,7 +155,7 @@
     margin: 10px 0px;
 }
 .single_employee_container .single_employee_update .field button{
-    margin: 15px 0px;
+    margin: 22px 0px;
 }
 
 .single_employee_container .single_employee_info{
@@ -265,6 +265,7 @@
     width: 100%;
     border-radius: var(--border-radius-1);
 }
+
 .edit .field select{
     background: var(--color-info-light);
     outline: none;
@@ -278,7 +279,7 @@
 }
 
 .edit form .field button{
-    margin-top: 20px;
+    margin-top: 25px;
 }
 .edit form .field .last_name{
     text-transform: uppercase;
