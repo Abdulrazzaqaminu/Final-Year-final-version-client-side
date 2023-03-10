@@ -64,6 +64,23 @@
   text-transform: capitalize;
 }
 
+.empPayroll-container form .field .field input{
+  background: var(--color-info-light);
+  color: var(--color-muted);
+  outline: none;
+  border: none;
+  width: 105.6%;
+  margin-left: -9px;
+  height: 2rem;
+  font-size: 1rem;
+  border-radius: var(--border-radius-1);
+  text-transform: capitalize;
+}
+.empPayroll-container form .field .field label{
+  margin-left: -9px;
+}
+
+
 .empPayroll-container form .field.email input{
   text-transform: lowercase;
 }
@@ -77,3 +94,26 @@
   cursor: pointer;
   background: rgb(236, 212, 212);
 }
+
+.empPayroll-container form .pay{
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  gap: 15px;
+}
+
+.empPayroll-container form .pay .salary_pay input{
+  width: 100%;
+  padding: 10px;
+  display: flex;
+}
+
+.empPayroll-container form .pay .leave_pay {
+  white-space: nowrap;
+}
+
+.empPayroll-container form .pay .leave_pay input{
+  display: flex;
+  width: 100%;
+  padding: 10px;
+} 

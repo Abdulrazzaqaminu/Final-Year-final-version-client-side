@@ -2,7 +2,7 @@ import React from "react";
 import './EnrollmentHero.css'
 import TextInput from "../../TextInput/TextInput";
 import Button from "../../Button/Button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import validator from 'validator'
 import axios from "axios";
 
@@ -33,6 +33,18 @@ const EnrollmentHero = () =>{
     const first_name_capitalize = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
     const state_capitalize = state.charAt(0).toUpperCase() + state.slice(1).toLowerCase();
     const city_capitalize = city.charAt(0).toUpperCase() + city.slice(1).toLowerCase();
+
+    useEffect(() => {
+        const startTime = () => {
+        var day = new Date();
+        var time = day.getTime()
+        var timeOffSet = day.getTimezoneOffset()
+        var current_day = new Date(time - timeOffSet*60*1000).toISOString().substr(0,10).replace('T', ' ');
+        setEnrollDate(current_day);
+        setTimeout(startTime, 1000);
+        }
+        startTime();
+    }, [])
 
     const numberOnly = (e) => {
         const regex = /^[0-9\b]+$/;
@@ -177,7 +189,7 @@ const EnrollmentHero = () =>{
                             type="text"
                             value={lastName}
                             onChange={lastNamelettersOnly}
-                            className = {emptyFields?.includes("last_name") ? "error" : ""}
+                            className = {`last_name ${emptyFields?.includes("last_name") ? "error" : ""}`}
                         />
                     </div>
                     <div className="field ">
@@ -258,9 +270,9 @@ const EnrollmentHero = () =>{
                     <div className="field">
                         <label>Enrollment date:</label>
                         <TextInput 
-                            type="date"
+                            type="text"
                             value={enrollDate}
-                            onChange={(e) => setEnrollDate(e.target.value)}
+                            disabled={true}
                             className = {emptyFields?.includes("enrollment_date") ? "error" : ""}
                         />
                     </div>

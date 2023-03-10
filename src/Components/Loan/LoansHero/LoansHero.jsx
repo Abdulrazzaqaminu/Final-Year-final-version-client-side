@@ -127,6 +127,15 @@ const LoansHero = () =>{
             setLoading(false);
         }
         fetchLoans();
+        const startTime = () => {
+            var day = new Date();
+            var time = day.getTime()
+            var timeOffSet = day.getTimezoneOffset()
+            var current_day = new Date(time - timeOffSet*60*1000).toISOString().substr(0,10).replace('T', ' ');
+            setApproval(current_day);
+            setTimeout(startTime, 1000);
+        }
+        startTime();
     }, []);
 
     const handleSubmit = async (e) =>{
@@ -214,9 +223,9 @@ const LoansHero = () =>{
                         <div className="field">
                             <label>Approval Date:</label>
                             <TextInput 
-                                type="date"
+                                type="text"
                                 value={approval}
-                                onChange={(e) => setApproval(e.target.value)}
+                                disabled={true}
                                 className = {emptyFields?.includes("approval_date") ? "error" : ""}
                             />
                         </div>

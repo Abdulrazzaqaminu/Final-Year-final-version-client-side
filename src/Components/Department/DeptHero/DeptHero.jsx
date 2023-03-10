@@ -244,7 +244,7 @@ const DeptHero = () =>{
             <div className="dept-container">
                 <div className="dept-left">
                     <div className="dept-left-top">
-                        <h2>Edit Department</h2>
+                        <label>Edit Department</label>
                         <TextInput 
                             type="text"
                             value={edit_dept}
@@ -254,7 +254,7 @@ const DeptHero = () =>{
                     </div>
                     <div className="dept-left-middle">
                         <form action="" onSubmit={handleSubmit}>
-                            <h2>Create new Department</h2>
+                            <label>Create new Department</label>
                             <TextInput 
                                 type="text"
                                 value={create_dept}
@@ -266,7 +266,7 @@ const DeptHero = () =>{
                     </div>
                     <div className="dept-left-bottom">
                         <form action="" onSubmit={handleSubmit}>
-                        <h2>Assign HOD</h2>
+                        <label>Assign HOD</label>
                             <TextInput 
                                 type="text"
                                 placeholder="Enter employee's email below"

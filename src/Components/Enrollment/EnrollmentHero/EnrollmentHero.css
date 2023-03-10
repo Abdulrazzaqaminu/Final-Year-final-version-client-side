@@ -79,6 +79,9 @@
     text-transform: lowercase;
     margin-top: 18.8px;
 }
+.enrollment-container form .field input.last_name{
+    text-transform: uppercase;
+}
 .enrollment-container form .field select{
     background: var(--color-info-light);
     outline: none;

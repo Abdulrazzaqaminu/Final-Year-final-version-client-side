@@ -12,6 +12,7 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
 
 const LeaveHero = () => {
+
     const {leave, dispatch} = useLeaveContext();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -112,6 +113,15 @@ const LeaveHero = () => {
             setLoading(false);
         }
         fetchLeaves();
+        const startTime = () => {
+            var day = new Date();
+            var time = day.getTime()
+            var timeOffSet = day.getTimezoneOffset()
+            var current_day = new Date(time - timeOffSet*60*1000).toISOString().substr(0,10).replace('T', ' ');
+            setApproval(current_day);
+            setTimeout(startTime, 1000);
+        }
+        startTime();
     }, [])
 
     const handleSubmit = async (e) =>{
@@ -191,21 +201,22 @@ const LeaveHero = () => {
                             <label>Leave Type:</label>
                             <select id="" value={leave_type} onChange={(e) => setLeave_Type(e.target.value)} className = {emptyFields?.includes("leave_type") ? "error" : ""}>
                                 <option value="" disabled hidden>Choose...</option>
+                                <option value="Annual leave">Annual leave</option>
                                 <option value="Bereavement leave">Bereavement leave</option>
-                                <option value="Sabbatical leave">Sabbatical leave</option>
-                                <option value="Compassionate leave">Compassionate leave</option>
                                 <option value="Casual leave">Casual leave</option>
+                                <option value="Compassionate leave">Compassionate leave</option>
                                 <option value="Maternity leave">Maternity leave</option>
                                 <option value="Paternity leave">Paternity leave</option>
+                                <option value="Sabbatical leave">Sabbatical leave</option>
                                 <option value="Sick leave">Sick leave</option>
                             </select>
                         </div>
                         <div className="field">
                             <label>Approval Date:</label>
                             <TextInput 
-                                type="date"
+                                type="text"
                                 value={approval}
-                                onChange={(e) => setApproval(e.target.value)}
+                                disabled={true}
                                 className = {emptyFields?.includes("approval_date") ? "error" : ""}
                             />
                         </div>
@@ -258,7 +269,7 @@ const LeaveHero = () => {
                                                         <p>{leave?.leave_duration.end}</p>
                                                     </div>,
                                             paid: <p>{leave?.paid === true ? "Yes" : "No"}</p>,
-                                            status: <p className={leave?.status === "On Leave" ? "warning" : ""}>{leave?.status}</p>
+                                            status: <p className={leave?.status === "On Leave" ? "warning" : leave?.status === "Active" ? "green" : ""}>{leave?.status}</p>
                                         }
                                     ))
                                 }

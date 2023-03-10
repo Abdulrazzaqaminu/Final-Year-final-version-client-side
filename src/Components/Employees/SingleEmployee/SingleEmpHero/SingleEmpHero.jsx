@@ -376,7 +376,7 @@ const SingleEmpHero = () =>{
                             </div>
                             <div className="field">
                                 <label>Status:</label>
-                                <input type="text" className={employee?.status == "Terminated" ? "error" : "green"} placeholder = {employee?.status} disabled/>
+                                <input type="text" className={employee?.status == "Terminated" ? "error" : employee?.status == "On Leave" ? "warning" : "green"} placeholder = {employee?.status} disabled/>
                             </div>
                         </form>
                     </div>

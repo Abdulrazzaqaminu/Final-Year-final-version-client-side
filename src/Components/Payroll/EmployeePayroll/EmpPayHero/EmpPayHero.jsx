@@ -14,13 +14,15 @@ const EmpPayHero = () =>{
     useEffect(() => {
         const fetchEmployeeSalary = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:4040/api/payroll/employee_salary/${Employee_ID}`)
+                await axios.get(`http://127.0.0.1:4040/api/payroll/employee_salary/${Employee_ID}`)
                 .then((response) => {
                     setSuccess(response.data)
                     setError(null);
                     setErrorInfo(null);
+                    console.log(response)
                 })
                 .catch((error) => {
+                    console.log(error)
                     setErrorInfo(error.response.data.employee)
                     setError(error.response.data.Message);
                     setTimeout(() => {
@@ -98,10 +100,21 @@ const EmpPayHero = () =>{
                     </div>
                     <div className="field">
                         {success?.Employee_Type  === "Full-Time" || errorInfo?.Employee_Type  === "Full-Time" ? 
-                            <label>Net Salary ( Per days worked )</label> :
-                            <label>Net Salary ( Per hours worked )</label>
+                            <div className="pay">
+                                <div className="salary_pay">
+                                    <label>Net Salary ( Per days )</label>
+                                    <input type="text" disabled placeholder={success?.Net_Salary || errorInfo?.Net_Salary}/>
+                                </div>
+                                <div className="leave_pay">
+                                    <label>Leave Pay</label>
+                                    <input type="text" disabled placeholder={success?.Leave_pay || errorInfo?.Leave_pay}/>
+                                </div>
+                            </div> :
+                            <div className="field">
+                                <label>Net Salary ( Per hours )</label>
+                                <input type="text" disabled placeholder={success?.Net_Salary || errorInfo?.Net_Salary}/>
+                            </div>
                         }
-                        <input type="text" disabled placeholder={success?.Net_Salary || errorInfo?.Net_Salary}/>
                     </div>
                 </form>
             </div>
