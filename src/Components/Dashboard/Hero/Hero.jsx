@@ -11,6 +11,7 @@ const Hero = () =>{
     const [seconds, setSeconds] = useState("");
     const [ampm, setAmpm] = useState("");
     const [date, setDate] = useState("");
+    
     useEffect(() => {
         const startTime = () => {
             const today = new Date();

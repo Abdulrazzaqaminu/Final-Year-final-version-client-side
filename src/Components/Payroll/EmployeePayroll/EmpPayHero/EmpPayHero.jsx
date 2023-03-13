@@ -19,10 +19,8 @@ const EmpPayHero = () =>{
                     setSuccess(response.data)
                     setError(null);
                     setErrorInfo(null);
-                    console.log(response)
                 })
                 .catch((error) => {
-                    console.log(error)
                     setErrorInfo(error.response.data.employee)
                     setError(error.response.data.Message);
                     setTimeout(() => {

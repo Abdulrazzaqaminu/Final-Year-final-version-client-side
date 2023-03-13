@@ -14,7 +14,7 @@ const ReportHero = () =>{
     const [openDate, setOpenDate] = useState(false);
     const [date, setDate] = useState([
         {
-          startDate: new Date("2023-01-01 04:12:12"),
+          startDate: new Date(),
           endDate: new Date(),
           key: "selection",
         },

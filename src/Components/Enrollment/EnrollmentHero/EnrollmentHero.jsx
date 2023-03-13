@@ -36,12 +36,12 @@ const EnrollmentHero = () =>{
 
     useEffect(() => {
         const startTime = () => {
-        var day = new Date();
-        var time = day.getTime()
-        var timeOffSet = day.getTimezoneOffset()
-        var current_day = new Date(time - timeOffSet*60*1000).toISOString().substr(0,10).replace('T', ' ');
-        setEnrollDate(current_day);
-        setTimeout(startTime, 1000);
+            var day = new Date();
+            var time = day.getTime()
+            var timeOffSet = day.getTimezoneOffset()
+            var current_day = new Date(time - timeOffSet*60*1000).toISOString().substr(0,10).replace('T', ' ');
+            setEnrollDate(current_day);
+            setTimeout(startTime, 1000);
         }
         startTime();
     }, [])
@@ -143,7 +143,6 @@ const EnrollmentHero = () =>{
         }
     }
 
-    
     return(
         <>
             {error &&

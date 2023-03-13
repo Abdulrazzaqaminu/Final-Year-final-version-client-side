@@ -9,8 +9,8 @@
 }
 
 .record_container .qr_reader{
-    background: var(--color-white);
-    box-shadow: var(--box-shadow);
+    /* background: var(--color-white); */
+    box-shadow: 0 2rem 2rem rgba(66, 67, 81, 0.28);
     transition: all 300ms ease;
     width: 100%;
     height: 80vh;
@@ -19,21 +19,33 @@
     border-radius: 6px;
 }
 
-.record_container .qr_reader .qr_container .icon{
+.record_container .qr_reader button{
+    white-space: nowrap;
+    width: auto;
+}
+
+.record_container .qr_reader #html5qr-code-full-region{
+    border: none!important;
+    z-index: 100 !important;
+    border-radius: 6px;
+    /* background: var(--color-white); */
+}
+
+/* .record_container .qr_reader .icon{
     display: grid;
     place-items: center;
     position: absolute;
-    top: 290px;
-    left: 510px;
-    font-size: 122px;
+    top: 325px;
+    left: 500px;
+    font-size: 135px;
     width: 10%;
     height: 20%;
-    /* background: var(--color-white); */
+    background: var(--color-white);
     transition: all 300ms ease;
-    /* background: red; */
-}
+    background: red;
+} */
 
-.record_container .qr_reader .qr_container .icon:hover{
+.record_container .qr_reader .icon:hover{
     box-shadow: var(--box-shadow);
     cursor: pointer;
 }
@@ -51,7 +63,8 @@
     width: 200px;
     position: absolute;
     z-index: 100;
-    margin-left: 10px;
+    top: 110px;
+    margin-left: 8px;
 }
 
 .record_container .qr_reader .scan p{
@@ -84,20 +97,16 @@
 .record_container .recording_section form .field{
     display: grid;
     grid-template-columns: 1fr;
-    padding: 10px;
-    margin-bottom: -10px;
-}
-.record_container .recording_section form .field button{
- margin: 15px 0;
+    padding: 8px;
+    margin-bottom: -7px;
 }
 
-.record_container .recording_section form .field .date_time{
-    display: grid;
-    grid-template-columns: 1fr 1fr;   
-    gap: 8px;
+.first{
+    text-transform: capitalize;
 }
-
-.record_container .recording_section form .field .date_time input{
-    width: 174px;  
-    /* text-transform: capitalize; */
+.last{
+    text-transform: uppercase;
+}
+.email_text{
+    text-transform: lowercase;
 }

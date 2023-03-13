@@ -9,7 +9,7 @@ import { LeaveContextProvider } from './context/leaveContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <DepartmentContextProvider>
       <UnitsContextProvider>
         <EmployeeContextProvider>
@@ -21,5 +21,5 @@ root.render(
         </EmployeeContextProvider>
       </UnitsContextProvider>
     </DepartmentContextProvider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
