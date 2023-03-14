@@ -104,7 +104,7 @@ const EmpPayHero = () =>{
                                     <input type="text" disabled placeholder={success?.Net_Salary || errorInfo?.Net_Salary}/>
                                 </div>
                                 <div className="leave_pay">
-                                    <label>Leave Pay</label>
+                                    <label>Total Leave Pay</label>
                                     <input type="text" disabled placeholder={success?.Leave_pay || errorInfo?.Leave_pay}/>
                                 </div>
                             </div> :

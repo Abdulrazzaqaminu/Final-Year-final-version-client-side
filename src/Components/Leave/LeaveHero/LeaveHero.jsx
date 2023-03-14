@@ -269,7 +269,7 @@ const LeaveHero = () => {
                                                         <p>{leave?.leave_duration.end}</p>
                                                     </div>,
                                             paid: <p>{leave?.paid === true ? "Yes" : "No"}</p>,
-                                            status: <p className={leave?.status === "On Leave" ? "warning" : leave?.status === "Active" ? "green" : ""}>{leave?.status}</p>
+                                            status: <p className={leave?.status === "On Leave" ? "warning" : leave?.status === "Active" ? "green" : "approved"}>{leave?.status}</p>
                                         }
                                     ))
                                 }

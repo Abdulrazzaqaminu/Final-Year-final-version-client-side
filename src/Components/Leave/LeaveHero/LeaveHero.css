@@ -83,3 +83,10 @@
     /* background: red; */
     /* background: red; */
 }
+
+.approved{
+    background-color: rgb(249, 215, 249);
+    color: purple;
+    padding: 3px 10px;
+    border-radius: 8px;
+}
