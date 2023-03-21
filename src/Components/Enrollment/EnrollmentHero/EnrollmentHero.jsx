@@ -276,7 +276,7 @@ const EnrollmentHero = () =>{
                         />
                     </div>
                     <div className="field address">
-                        <label>Employee Type:</label>
+                        <label>Employment Type:</label>
                         <select id="" value={employee_type} className = {emptyFields?.includes("employee_type") ? "error" : ""} onChange={(e) => setEmployee_Type(e.target.value)}>
                             <option value="" disabled hidden>Choose...</option>
                             <option value="Full-Time">Full-Time</option>

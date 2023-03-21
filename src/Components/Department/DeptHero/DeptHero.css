@@ -1,110 +1,207 @@
-.dept-container{
-    display: flex;
-    justify-content: space-between;
-    margin: 80px 30px;
+.dept_container{
     height: 40vh;
-    /* background: blue; */
 }
 
-.dept-container .dept-left{
+.dept{
     display: flex;
     flex-direction: column;
     /* background: red; */
-    width: 43%;
-    margin-top: 20px;
+    margin: 110px 30px;
+    height: 76vh;
+    width: 95%;
+    box-shadow: var(--box-shadow);
     border-radius: 5px;
 }
 
-.dept-container .dept-left .dept-left-top{
-    display: flex;
-    flex-direction: column;
-    padding: 10px 8px;
-    background: var(--color-white);
+.dept .plus{
+    position: absolute;
+    display: grid;
+    place-items: center;
+    padding: 8px;
+    top: 69px;
+    right: 120px;
+    font-size: 20px;
+    background-color: var(--color-white) ;
+    box-shadow: 0 0rem 2rem rgb(128, 128, 128, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.dept .dept_popup{
+    position: absolute;
+    top: 190px;
+    right: 130px;
+    z-index: 100;
+    /* height: 50%; */
+    max-height: 50%;
+    overflow: auto;
+    width: 27%;
+    background-color: var(--color-white) ;
     box-shadow: var(--box-shadow);
-    transition: all 300ms ease;
-    border-radius: 7px;
-    margin-bottom: 19px;
-}
-
-.dept-container .dept-left .dept-left-top input{
-    margin-bottom: -0.1px;
-    text-transform: uppercase;
-}
-
-.dept-container .dept-left .dept-left-top:hover{
-    box-shadow: none;
-}
-
-.dept-container .dept-left .dept-left-middle form{
-    display: flex;
-    flex-direction: column;
-    padding: 10px 8px;
-    background: var(--color-white);
-    box-shadow: var(--box-shadow);
-    transition: all 300ms ease;
     border-radius: 5px;
-    margin-top: 20px;
 }
 
-.dept-container .dept-left .dept-left-middle form:hover{
-    box-shadow: none;
-}
-
-.dept-container .dept-left .dept-left-bottom form{
-    display: flex;
-    flex-direction: column;
-    padding: 5px 8px;
-    background: var(--color-white);
-    box-shadow: var(--box-shadow);
-    transition: all 300ms ease;
-    border-radius: 5px;
-    margin-top: 35px;
-    height: 10rem;
-    overflow-y: auto;
-}
-
-.dept-container .dept-left .dept-left-bottom form input{
-    margin-right: 10px;
-    text-transform: capitalize;
-}
-
-.dept-container .dept-left .dept-left-bottom form .dept_name{
-    width: 100%;
-    height: 2rem;
-    margin-top: 30px;
-}
-
-.dept-container .dept-left .dept-left-bottom form .emp_email{
-    width: 100%;
-    height: 2rem;
-    margin-bottom: -20px;
-    text-transform: lowercase;
-}
-
-.dept-container .dept-left .dept-left-bottom form::-webkit-scrollbar{
+.dept .dept_popup::-webkit-scrollbar{
     display: none;
 }
 
-.dept-container .dept-left .dept-left-bottom form .assign{
-    position: absolute;
-    padding: 10px;
-    transition: all 300ms ease;
-    border-radius: 5px;
-    margin: 110px 0px;
+.dept .dept_popup .button{
+    margin: 20px 0px 8px 8px;
 }
 
-.dept-container .dept-right{
+span{
+    cursor: pointer;
+}
+
+.dept .dept_popup span.close{
     display: flex;
-    flex-direction: column;
-    /* background: red; */
-    width: 54%;
-    height: 72vh;
-    box-shadow: var(--box-shadow);
-    border-radius: 5px;
-    margin-top: 20px;
+    justify-content: end;
+    margin: 10px;
+    font-size: 22px;
+    color: var(--color-dark-variant);
 }
 
-.dept-right button.edit{
+.dept .dept_popup span.close .close_icon{
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+
+.dept .dept_popup span.close .close_icon:hover{
+    color: red;
+}
+
+.dept .dept_popup .field{
+    margin: 0px 8px;
+}
+
+.dept .dept_popup .field input{
+    width: 100%;
+}
+
+.dept .dept_popup .field span.add_hod{
+    font-size: 13px;
+    transition: 0.4s ease;
+}
+
+.dept .dept_popup .field span.add_hod:hover{
+   color: green;
+}
+
+.dept .dept_popup .field span.add_unit{
+    font-size: 13px;
+    transition: 0.4s ease;
+}
+
+.dept .dept_popup .field span.add_unit:hover{
+    color: green;
+}
+
+.dept .dept_popup .field span .unit_close{
+    position: absolute;
+    font-size: 15px;
+    right: 15px;
+    margin-top: 18.5px;
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+
+.dept .dept_popup .field span .unit_close:hover{
+    color: red;
+}
+
+.dept .list_units{
+    position: absolute;
+    z-index: 100;
+    width: 45%;
+    top: 161px;
+    left: 584px;
+    border-radius: 5px;
+    z-index: 200;
+    /* background-color: red; */
+    height: 67.7vh;
+    background-color: var(--color-white);
+    box-shadow: 0rem 0rem 1rem 0rem rgb(222, 222, 222)
+}
+
+.dept .list_units .datatables{
+    width: 100%;
+    height: 49.3vh;
+    overflow: auto;
+}
+
+.dept .list_units .unit_plus{
+    margin: -5px 10px;
+    background-color: var(--color-background);
+    box-shadow: 0rem 0rem 0.2rem 0rem rgb(138, 138, 138);
+    border-radius: 50%;
+    font-size: 22px;
+    cursor: pointer; 
+    transition: 0.3s ease;
+}
+
+.dept .list_units .dept_name{
+    z-index: 100;
+}
+
+.dept .list_units .unit_plus:hover{
+    box-shadow: 0rem 0rem 0.4rem 0rem rgb(138, 138, 138);
+}
+
+.dept .list_units .datatables::-webkit-scrollbar{
+    display: none;
+}
+
+.dept .list_units .unitlist_close{
+    position: absolute;
+    z-index: 100;
+    font-size: 20px;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.dept .list_units .unitlist_close:hover{
+    color: red;
+}
+
+.dept .popup{
+    position: absolute;
+    z-index: 100;
+    top: 205px;
+    right: 120px;
+    width: 25%;
+    height: 18.4%;
+    border-radius: 5px;
+    background-color: var(--color-white);
+    padding: 0px 8px;
+    box-shadow: 0rem 0rem 1rem 0.5rem rgb(222, 222, 222, 0.8)
+}
+
+.dept .popup .popup_input{
+    margin-top: 32px;
+    width: 100%;
+}
+
+.dept .popup .popup_input.email{
+    text-transform: lowercase;
+}
+
+.dept .popup .popup_close{
+    font-size: 18px;
+    position: absolute;
+    z-index: 100;
+    top: 8px;
+    right: 8px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.dept .popup .popup_close:hover{
+    color: red;
+}
+
+.dept .list_units button.edit_unit{
     width: 80px;
     height: 31px;
     padding: 10px;
@@ -114,7 +211,117 @@
     justify-content: center;
     align-items: center;
     box-shadow: none;
-    background-color: rgb(247, 247, 231) ;
+    background-color: rgb(247, 247, 231);
+}
+
+.dept .add_unit_poppup{
+    position: absolute;
+    z-index: 200;
+    top: 310px;
+    right: 120px;
+    width: 25%;
+    max-height: 43%;
+    overflow: auto;
+    border-radius: 5px;
+    background-color: var(--color-white);
+    padding: 0px 8px;
+    box-shadow: 0rem 0rem 1rem 0.5rem rgb(222, 222, 222, 0.8)
+}
+
+.dept .add_unit_poppup::-webkit-scrollbar{
+    display: none;
+}
+
+.dept .add_unit_poppup input{
+    position: relative;
+    width: 100%;
+}
+
+.dept .add_unit_poppup .popup_close{
+    position: fixed;
+    font-size: 20px;
+    z-index: 110;
+    top: 320px;
+    right: 133px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.dept .add_unit_poppup .popup_close:hover{
+    color: red;
+}
+
+.dept .add_unit_poppup form .add_unit{
+    position: fixed;
+    display: inline-block;
+    z-index: 100;
+    padding: 10px 0px;
+    background: var(--color-white);
+    width: 24%;
+    transition: 0.3s ease;
+}
+
+.dept .add_unit_poppup form .add_unit:hover{
+    color: green;
+}
+
+.dept .add_unit_poppup button{
+    margin: 8px 0px;
+}
+
+.dept .add_unit_poppup .field span .unit_close{
+    position: absolute;
+    font-size: 15px;
+    right: 15px;
+    margin-top: 18.5px;
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+
+.dept .add_unit_poppup .field span .unit_close:hover{
+    color: red;
+}
+
+.dept .edit_popup{
+    position: absolute;
+    z-index: 230;
+    top: 310px;
+    right: 120px;
+    width: 25%;
+    height: 18.4%;
+    border-radius: 5px;
+    background-color: var(--color-white);
+    padding: 0px 8px;
+    box-shadow: 0rem 0rem 1rem 0.5rem rgb(222, 222, 222, 0.8)
+}
+
+.dept .edit_popup .popup_close{
+    font-size: 18px;
+    position: absolute;
+    z-index: 100;
+    top: 8px;
+    right: 8px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.dept .edit_popup input{
+    margin-top: 32px;
+    width: 100%;
+}
+
+
+.dept button.edit{
+    width: 80px;
+    height: 31px;
+    padding: 10px;
+    margin-top: -2px;
+    color: rgb(156, 156, 6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: none;
+    background-color: rgb(247, 247, 231);
 }
 
 .units{
@@ -149,7 +356,7 @@ input{
     padding: 0 10px;
     font-size: 1rem;
     border-radius: var(--border-radius-1);
-    text-transform: uppercase;
+    text-transform: capitalize;
 }
 
 button{
@@ -173,3 +380,4 @@ input.error {
     background-color: rgb(248, 234, 234);
     color: var(--color-danger);
 } */
+

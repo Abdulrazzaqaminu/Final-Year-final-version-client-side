@@ -69,7 +69,7 @@ const EmpPayHero = () =>{
                         <input type="text" disabled placeholder={success?.Grade || errorInfo?.Grade}/>
                     </div>
                     <div className="field">
-                        <label>Worked Days</label>
+                        <label>Days Worked</label>
                         <input type="text" disabled placeholder={success?.Days_Worked || errorInfo?.Days_Worked}/>
                     </div>
                         {success?.Employee_Type  === "Full-Time" || errorInfo?.Employee_Type  === "Full-Time" ? 
@@ -93,14 +93,14 @@ const EmpPayHero = () =>{
                            )
                         }
                     <div className="field">
-                        <label>Employee Type</label>
+                        <label>Employment Type</label>
                         <input type="text" disabled placeholder={success?.Employee_Type || errorInfo?.Employee_Type}/>
                     </div>
                     <div className="field">
                         {success?.Employee_Type  === "Full-Time" || errorInfo?.Employee_Type  === "Full-Time" ? 
                             <div className="pay">
                                 <div className="salary_pay">
-                                    <label>Net Salary ( Per days )</label>
+                                    <label>Net Salary (Per day)</label>
                                     <input type="text" disabled placeholder={success?.Net_Salary || errorInfo?.Net_Salary}/>
                                 </div>
                                 <div className="leave_pay">
@@ -109,7 +109,7 @@ const EmpPayHero = () =>{
                                 </div>
                             </div> :
                             <div className="field">
-                                <label>Net Salary ( Per hours )</label>
+                                <label>Net Salary (Per hours)</label>
                                 <input type="text" disabled placeholder={success?.Net_Salary || errorInfo?.Net_Salary}/>
                             </div>
                         }

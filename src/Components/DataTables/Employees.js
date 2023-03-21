@@ -55,8 +55,8 @@ const Employees = () => {
             sortable: true
         },
         {
-            name: "Employee Type",
-            selector: row => row.employee_type,
+            name: "Employment Type",
+            selector: row => row.employment_type,
             sortable: true
         },
         {
@@ -101,7 +101,7 @@ const Employees = () => {
                                         position: employee.position,
                                         grade: employee.grade,
                                         gross: `NGN ${(employee.gross_salary).toLocaleString()}`,
-                                        employee_type: employee.employee_type,
+                                        employment_type: employee.employee_type,
                                         status: <span className={employee.status === "Active" ? "green" : employee.status === "On Leave" ? "warning" : "red"}>{employee.status}</span>,
                                         more: <Link to={`/employees/${employee._id}`}>
                                                 <Button>View</Button>
