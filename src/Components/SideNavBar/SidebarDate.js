@@ -18,13 +18,6 @@ const SidebarDate = [
         iconOpened: <RiIcons.RiArrowUpSFill />,
     },
     {
-        title: "Department",
-        path:"/department",
-        icon: <GrIcons.GrOrganization /> ,
-        iconClosed: <RiIcons.RiArrowDownSFill />,
-        iconOpened: <RiIcons.RiArrowUpSFill />,
-    },
-    {
         title: "Employees",
         path:"/employees",
         icon: <BsIcons.BsFillPeopleFill /> ,
@@ -51,23 +44,23 @@ const SidebarDate = [
         ]
     },
     {
-        title: "Enrollment",
-        path: "/enrollment",
-        icon: <AiIcons.AiFillFileText /> ,
+        title: "Department",
+        path:"/department",
+        icon: <GrIcons.GrOrganization /> ,
         iconClosed: <RiIcons.RiArrowDownSFill />,
-        iconOpened: <RiIcons.RiArrowUpSFill />
+        iconOpened: <RiIcons.RiArrowUpSFill />,
     },
+    // {
+    //     title: "Enrollment",
+    //     path: "/enrollment",
+    //     icon: <AiIcons.AiFillFileText /> ,
+    //     iconClosed: <RiIcons.RiArrowDownSFill />,
+    //     iconOpened: <RiIcons.RiArrowUpSFill />
+    // },
     {
         title: "Payroll",
         path: "/payroll",
         icon: <FaIcons.FaMoneyCheck /> ,
-        iconClosed: <RiIcons.RiArrowDownSFill />,
-        iconOpened: <RiIcons.RiArrowUpSFill />,
-    },
-    {
-        title: "Loans",
-        path: "/loans",
-        icon: <FaIcons.FaMoneyBillWave /> ,
         iconClosed: <RiIcons.RiArrowDownSFill />,
         iconOpened: <RiIcons.RiArrowUpSFill />,
     },
@@ -79,12 +72,19 @@ const SidebarDate = [
         iconOpened: <RiIcons.RiArrowUpSFill />,
     },
     {
-        title: "Logout",
-        path: "/Logout",
-        icon: <FiIcons.FiLogOut /> ,
+        title: "Loans",
+        path: "/loans",
+        icon: <FaIcons.FaMoneyBillWave /> ,
         iconClosed: <RiIcons.RiArrowDownSFill />,
         iconOpened: <RiIcons.RiArrowUpSFill />,
     },
+    // {
+    //     title: "Logout",
+    //     path: "/Logout",
+    //     icon: <FiIcons.FiLogOut /> ,
+    //     iconClosed: <RiIcons.RiArrowDownSFill />,
+    //     iconOpened: <RiIcons.RiArrowUpSFill />,
+    // },
 ]
 
 export default SidebarDate;

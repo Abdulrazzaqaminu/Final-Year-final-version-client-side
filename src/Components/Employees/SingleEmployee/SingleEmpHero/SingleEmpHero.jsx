@@ -134,7 +134,6 @@ const SingleEmpHero = () =>{
                     'Content-Type': 'application/json'
                 }
             }).then((response) => {
-                console.log(response)
                 setClick(false)
                 setShow(true)
                 setTimeout(() => {
@@ -146,6 +145,7 @@ const SingleEmpHero = () =>{
                 setMoveStaff_ID('')
                 setMoveDept('')
                 setMoveUnit('')
+                navigate("/department")
             }).catch((error) => {
                 setError(error.response.data.Message)
                 setEmptyFields(error.response.data.emptyFields)

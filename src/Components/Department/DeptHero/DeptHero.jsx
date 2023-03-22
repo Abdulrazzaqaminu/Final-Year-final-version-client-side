@@ -21,7 +21,6 @@ const DeptHero = () =>{
     const Unit_ID = new URLSearchParams(search).get("unit_id");
     const [deptID, setDeptID] = useSearchParams();
     const [unitID, setUnitID] = useSearchParams();
-    const [id, setId] = useSearchParams()
     const [editUnitParams, setEditUnitParams] = useSearchParams();
 
     const removeUnitIDParams = () => {
