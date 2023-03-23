@@ -49,9 +49,9 @@
     margin: 20px 0px 8px 8px;
 }
 
-span{
+/* span{
     cursor: pointer;
-}
+} */
 
 .dept .dept_popup span.close{
     display: flex;
@@ -90,6 +90,7 @@ span{
 .dept .dept_popup .field span.add_unit{
     font-size: 13px;
     transition: 0.4s ease;
+    cursor: pointer;
 }
 
 .dept .dept_popup .field span.add_unit:hover{
@@ -259,6 +260,7 @@ span{
     background: var(--color-white);
     width: 24%;
     transition: 0.3s ease;
+    cursor: pointer;
 }
 
 .dept .add_unit_poppup form .add_unit:hover{

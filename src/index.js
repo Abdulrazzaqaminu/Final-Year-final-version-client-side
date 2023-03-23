@@ -6,6 +6,7 @@ import { UnitsContextProvider } from './context/unitContext';
 import { EmployeeContextProvider } from './context/empContext';
 import { LoanContextProvider } from './context/loanContext';
 import { LeaveContextProvider } from './context/leaveContext';
+import { EnrollContextProvider } from './context/enrollContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,7 +16,9 @@ root.render(
         <EmployeeContextProvider>
           <LoanContextProvider>
             <LeaveContextProvider>
-              <App />
+              <EnrollContextProvider>
+                <App />
+              </EnrollContextProvider>
             </LeaveContextProvider>
           </LoanContextProvider>
         </EmployeeContextProvider>

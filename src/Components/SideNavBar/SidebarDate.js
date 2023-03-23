@@ -50,13 +50,6 @@ const SidebarDate = [
         iconClosed: <RiIcons.RiArrowDownSFill />,
         iconOpened: <RiIcons.RiArrowUpSFill />,
     },
-    // {
-    //     title: "Enrollment",
-    //     path: "/enrollment",
-    //     icon: <AiIcons.AiFillFileText /> ,
-    //     iconClosed: <RiIcons.RiArrowDownSFill />,
-    //     iconOpened: <RiIcons.RiArrowUpSFill />
-    // },
     {
         title: "Payroll",
         path: "/payroll",

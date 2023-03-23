@@ -30,3 +30,195 @@
     padding: 3px 10px;
     border-radius: 8px;
 }
+
+.employee_plus .plus {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    padding: 8px;
+    top: 69px;
+    right: 120px;
+    font-size: 20px;
+    background-color: var(--color-white) ;
+    box-shadow: 0 0rem 2rem rgb(128, 128, 128, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.enrollment-container {
+    position: absolute;
+    opacity: 0.9;
+    z-index: 2;
+    top: 110px;
+    width: 65.3%;
+    height: 76%;
+    border-radius: 5px;
+    background-color: var(--color-white);
+    box-shadow: var(--box-shadow);
+    overflow: auto;
+}
+
+.enrollment-container .close {
+    position: fixed;
+    background: var(--color-white);
+    width: 65.3%;
+    height: 35px;
+}
+
+.enrollment-container .close .close_btn{
+    position: absolute;
+    display: grid;
+    place-items: center;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.enrollment-container .close .close_btn:hover {
+    color: red;
+}
+
+/* .enrollment-container{
+    margin:100px 30px;
+    height: 80vh;
+    position: fixed;
+    margin-left: 300px;
+    width: 63vw;
+    background: red;
+    border-radius: var(--border-radius-1); 
+}  */
+
+.enrollment-container::-webkit-scrollbar{
+    display: none;
+}
+
+.enrollment-container form{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    background:var(--color-white);
+    padding: 8px;
+    margin-top: 30px;
+    /* background: rebeccapurple; */
+}
+  
+.enrollment-container form .field{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
+}
+  
+.enrollment-container form .field .street{
+    margin-bottom: 40px;
+    text-transform: none;
+}
+  
+.enrollment-container form .field.selectables{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+}
+  
+.enrollment-container form .field.selectables select{
+    /* position: absolute; */
+    /* margin: 40px 296px; */
+    background: var(--color-info-light);
+    outline: none;
+    border: none;
+    /* height: 2rem; */
+    padding: 0 10px;
+    width: 7vw;
+    font-size: 1rem;
+    border-radius: var(--border-radius-1);
+}
+  
+/* .enrollment-container form .field textarea{
+    width: 201.9%;
+    height: 80px;
+    background: var(--color-info-light);
+    outline: none;
+    border: none;
+    height: 5rem;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: var(--border-radius-1);
+}
+   */
+.enrollment-container form .field input{
+    background: var(--color-info-light);
+    outline: none;
+    border: none;
+    height: 2rem;
+    padding: 0 10px;
+    font-size: 1rem;
+    border-radius: var(--border-radius-1);
+    text-transform: capitalize;
+}
+.enrollment-container form .field input.email{
+    text-transform: lowercase;
+    margin-top: 18.8px;
+}
+.enrollment-container form .field input.last_name{
+    text-transform: uppercase;
+}
+.enrollment-container form .field select{
+    background: var(--color-info-light);
+    outline: none;
+    border: none;
+    height: 2rem;
+    padding: 0 10px;
+    font-size: 1rem;
+    border-radius: var(--border-radius-1);
+}
+  
+.enrollment-container form button{
+    padding: 8px;
+    color: red;
+    margin-top: -8px;
+    border-radius: 5px;
+    width: 6vw;
+    border: none;
+    cursor: pointer;
+    background: rgb(236, 212, 212);
+}
+
+.email_span p{
+    position: absolute;
+    color: red;
+    display: flex;
+    margin-top: -20px;
+    font-size: 14px;
+    height: 10px;
+    width: 20px;
+    white-space: nowrap;
+}
+
+.field input[type="text"].error {
+    border: 1px solid var(--color-danger);
+    background-color: rgb(248, 234, 234);
+    color: var(--color-danger);
+}
+.field input[type="email"].error {
+    border: 1px solid var(--color-danger);
+    background-color: rgb(248, 234, 234);
+    color: var(--color-danger);
+}
+.field input[type="date"].error {
+    border: 1px solid var(--color-danger);
+    background-color: rgb(248, 234, 234);
+    color: var(--color-danger);
+}
+.enrollment-container .field.selectables .field select.error {
+    border: 1px solid var(--color-danger);
+    background-color: rgb(248, 234, 234);
+    color: var(--color-danger);
+}
+
+.enrollment-container .field.address select.error{
+    border: 1px solid var(--color-danger);
+    background-color: rgb(248, 234, 234);
+    color: var(--color-danger);
+}

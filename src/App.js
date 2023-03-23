@@ -8,7 +8,6 @@ import Employees from './Components/Employees/Employees';
 import SingleEmployee from './Components/Employees/SingleEmployee/SingleEmployee';
 import AttendanceReport from './Components/Attendance/AttendanceReport/AttendanceReport';
 import RecordAttendance from './Components/Attendance/RecordAttendance/RecordAttendance';
-import Enrollment from './Components/Enrollment/Enrollment';
 import Payroll from './Components/Payroll/Payroll';
 import Loans from './Components/Loan/Loans';
 import Leave from './Components/Leave/Leave'
@@ -26,7 +25,6 @@ function App() {
             <Route exact path="/employees/:employee_id" element={<SingleEmployee />} />
             <Route exact path="/attendance/record_attendance" element={<RecordAttendance />} />
             <Route exact path="/attendance/attendance_report" element={<AttendanceReport />} />
-            <Route exact path="/enrollment" element={<Enrollment />} />
             <Route exact path="/payroll" element={<Payroll />} />
             <Route exact path="/loans" element={<Loans />} />
             <Route exact path="/leave" element={<Leave />} />
