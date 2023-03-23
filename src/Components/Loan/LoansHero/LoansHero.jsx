@@ -5,6 +5,8 @@ import Button from "../../Button/Button";
 import { useState, useEffect } from "react";
 import { useLoanContext } from "../../../hooks/useLoanContext"
 import axios from "axios"
+import * as FiIcons from "react-icons/fi"
+import * as MdIcons from "react-icons/md"
 import DataTable from "react-data-table-component";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main css file
@@ -25,6 +27,7 @@ const LoansHero = () =>{
     const [approval, setApproval] = useState("");
     const [loanDesc, setLoanDesc] = useState("");
     const [openDate, setOpenDate] = useState(false);
+    const [openLoan, setOpenLoan] = useState(false);
     const [date, setDate] = useState([
         {
           startDate: new Date(),
@@ -198,101 +201,113 @@ const LoansHero = () =>{
                 ("")
             }
             <div className="loans_container">
-                <div className="loan-form">
-                    <form action="" onSubmit={handleSubmit}>
-                        <div className="field">
-                            <label>Assign To (Staff ID):</label>
-                            <TextInput 
-                                type="text"
-                                value={assign}
-                                onChange={staff_Id_numberOnly}
-                                maxLength={4}
-                                minLength = {4}
-                                className = {emptyFields?.includes("staff_ID") ? "error" : ""}
-                            />
-                        </div>
-                        <div className="field">
-                            <label>Amount:</label>
-                            <TextInput 
-                                type="text"
-                                value={amount}
-                                onChange={amount_numberOnly}
-                                className = {emptyFields?.includes("loan_amount") ? "error" : ""}
-                            />
-                        </div>
-                        <div className="field">
-                            <label>Approval Date:</label>
-                            <TextInput 
-                                type="text"
-                                value={approval}
-                                disabled={true}
-                                className = {emptyFields?.includes("approval_date") ? "error" : ""}
-                            />
-                        </div>
-                        <div className="field">
-                            <label>Duration:</label>
-                            <div className="duration">
-                                <span
-                                    onClick={() => setOpenDate(!openDate)}
-                                    className="dates"
-                                >
-                                    {`${format(date[0].startDate, "yyyy-MM-dd")} - ${format(
-                                        date[0].endDate,
-                                        "yyyy-MM-dd"
-                                    )}`}
-                                </span>
-                                {openDate && (
-                                    <div>
-                                        <DateRange
+                <div className="loan">
+                    <span className="plus" onClick={
+                        () => {
+                            setOpenLoan(true);
+                        }
+                    } ><FiIcons.FiPlus/></span>
+                    { openLoan &&    
+                        <div className="loan-form">
+                            <span className="close"><MdIcons.MdOutlineCancel onClick={() => setOpenLoan(false)} className="close_icon"/></span>
+                            <form onSubmit={handleSubmit}>
+                                <div className="field">
+                                    <label>Assign To (Staff ID):</label>
+                                    <TextInput 
+                                        type="text"
+                                        value={assign}
+                                        onChange={staff_Id_numberOnly}
+                                        maxLength={4}
+                                        minLength = {4}
+                                        className = {assign === "" ? "error" : ""}
+                                        // className = {emptyFields?.includes("staff_ID") ? "error" : ""}
+                                    />
+                                </div>
+                                <div className="field">
+                                    <label>Amount:</label>
+                                    <TextInput 
+                                        type="text"
+                                        value={amount}
+                                        onChange={amount_numberOnly}
+                                        className = {amount === "" ? "error" : ""}
+                                        // className = {emptyFields?.includes("loan_amount") ? "error" : ""}
+                                    />
+                                </div>
+                                <div className="field">
+                                    <label>Approval Date:</label>
+                                    <TextInput 
+                                        type="text"
+                                        value={approval}
+                                        disabled={true}
+                                        className = {emptyFields?.includes("approval_date") ? "error" : ""}
+                                    />
+                                </div>
+                                <div className="field">
+                                    <label>Duration:</label>
+                                    <div className="duration">
+                                        <span
+                                            onClick={() => setOpenDate(!openDate)}
+                                            className="dates"
+                                        >
+                                            {`${format(date[0].startDate, "yyyy-MM-dd")} - ${format(
+                                                date[0].endDate,
+                                                "yyyy-MM-dd"
+                                            )}`}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="field">
+                                    <label>Loan Details:</label>
+                                    <textarea name="" value={loanDesc} /*className = {emptyFields?.includes("loan_details") ? "error" : ""}*/ className = {loanDesc === "" ? "error" : ""} onChange={desclettersOnly} id="" cols="30" rows="2"></textarea>
+                                    
+                                    <Button type="submit" onClick={loan_payment}>Submit</Button>
+                                </div>
+                            </form>
+                            {openDate && (
+                                <div>
+                                    <DateRange
                                         editableDateInputs={true}
                                         onChange={(item) => setDate([item.selection])}
                                         moveRangeOnFirstSelection={false}
                                         ranges={date}
                                         className="daterange"
-                                        />
-                                    </div>
-                                )}
-                            </div>
+                                    />
+                                </div>
+                            )}
                         </div>
-                        <div className="field">
-                            <label>Loan Details:</label>
-                            <textarea name="" value={loanDesc} className = {emptyFields?.includes("loan_details") ? "error" : ""} onChange={desclettersOnly} id="" cols="30" rows="2"></textarea>
-                            <br />
-                            <Button type="submit" onClick={loan_payment}>Submit</Button>
-                        </div>
-                    </form>
-                </div>
-                <div className="loan-table">
-                    { loading ? 
-                        ("Loading please wait") :
-                        (
-                            <DataTable
-                                columns={employeeColumn}
-                                data={
-                                    loans?.map((loan) => (
-                                        {
-                                            staff_ID: loan?.staff_ID,
-                                            name: <div className="name_email">
-                                                    <p>{loan?.first_name} <b>{loan?.last_name}</b></p>
-                                                    <small className="text-muted">{loan?.email}</small>
-                                                </div>,
-                                            amount: `NGN ${(loan?.loan_amount).toLocaleString()}`,
-                                            approval_date: loan?.approval_date,
-                                            duration: <div className="name_email">
-                                                        <p>{loan?.loan_duration.from} -</p>
-                                                        <p>{loan?.loan_duration.to}</p>
-                                                    </div>,
-                                            desc: loan?.loan_details,
-                                            // pay_off: <Link to={`/loans/pay_off/${loan.employee_ID}`}><Button>Pay Off</Button></Link>
-                                        }
-                                    ))
-                                }
-                                fixedHeader
-                                pagination
-                                className='datatables'
-                            />
-                        )
                     }
+                    <div className="loan-table">
+                        { loading ? 
+                            ("Loading please wait") :
+                            (
+                                <DataTable
+                                    columns={employeeColumn}
+                                    data={
+                                        loans?.map((loan) => (
+                                            {
+                                                staff_ID: loan?.staff_ID,
+                                                name: <div className="name_email">
+                                                        <p>{loan?.first_name} <b>{loan?.last_name}</b></p>
+                                                        <small className="text-muted">{loan?.email}</small>
+                                                    </div>,
+                                                amount: `NGN ${(loan?.loan_amount).toLocaleString()}`,
+                                                approval_date: loan?.approval_date,
+                                                duration: <div className="name_email">
+                                                            <p>{loan?.loan_duration.from} -</p>
+                                                            <p>{loan?.loan_duration.to}</p>
+                                                        </div>,
+                                                desc: loan?.loan_details,
+                                                // pay_off: <Link to={`/loans/pay_off/${loan.employee_ID}`}><Button>Pay Off</Button></Link>
+                                            }
+                                        ))
+                                    }
+                                    fixedHeader
+                                    pagination
+                                    className='datatables'
+                                />
+                            )
+                        }
+                    </div>
                 </div>
             </div>
         </>

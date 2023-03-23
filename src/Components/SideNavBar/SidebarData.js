@@ -9,7 +9,7 @@ import * as FaIcons from 'react-icons/fa';
 import * as RiIcons from 'react-icons/ri';
 import * as TbIcons from 'react-icons/tb';
 
-const SidebarDate = [
+const SidebarData = [
     {
         title: "Dashboard",
         path:"/",
@@ -80,4 +80,4 @@ const SidebarDate = [
     // },
 ]
 
-export default SidebarDate;
+export default SidebarData;

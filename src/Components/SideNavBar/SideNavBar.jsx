@@ -1,6 +1,6 @@
 import React from "react";
 import './SideNavBar.css';
-import SidebarDate from "./SidebarDate";
+import SidebarData from "./SidebarData";
 import { Link } from 'react-router-dom';
 import SubMenu from "./SubMenu";
 
@@ -15,8 +15,8 @@ const SideNavBar = () =>{
                         </div>
                     </div>    
                     <div className="sidebar">
-                        {SidebarDate.map((item, index) =>{
-                            return <h3 key={index}><SubMenu item={item} key={index}/></h3>
+                        {SidebarData.map((item, index) =>{
+                            return <h3 key={index}><SubMenu item={item} key={index} /></h3>
                         })}
                     </div>
                 </aside>  

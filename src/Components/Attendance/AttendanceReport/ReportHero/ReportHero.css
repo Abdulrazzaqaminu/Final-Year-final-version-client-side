@@ -1,16 +1,15 @@
 .search-by-date-time{
-    margin: 100px 15px;
+    position: absolute;
+    top: 69px;
+    left: 308px;
 }
 .report-table{
-    position: absolute;
     display: flex;
     flex-direction: column;
-    margin:-80px 30px;
-    width: 65.5%;
-    height: 70vh;
-    overflow: auto;
-    /* background: blue; */
     /* background: red; */
+    margin: 110px 30px;
+    height: 76vh;
+    width: 95%;
     box-shadow: var(--box-shadow);
     border-radius: 5px;
     /* background: red; */
@@ -19,6 +18,9 @@
 .report-container .search-by-date-time .daterange{
     position: absolute;
     z-index: 10;
+    top: 94px;
+    left: 10%;
+    border-radius: 5px;
 }
 
 .report-container .search-by-date-time .headerSearchText {

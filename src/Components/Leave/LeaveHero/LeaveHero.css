@@ -1,30 +1,77 @@
 .leave_container{
-    display: grid;
-    grid-template-columns: 35% 60%;
-    gap: 10px;
-    place-items: center;
-    /* background: purple; */
-    width: 100%;
-    height: 60vh;
-    margin: 95px 30px;
+    height: 40vh;
 }
 
-.leave_container .leave_form{
+.leave_container .leave {
+    display: flex;
+    flex-direction: column;
+    /* background: red; */
+    margin: 110px 30px;
+    height: 76vh;
+    width: 95%;
+    box-shadow: var(--box-shadow);
+    border-radius: 5px;
+}
+
+.leave_container .leave .plus{
+    position: absolute;
+    display: grid;
+    place-items: center;
+    padding: 8px;
+    top: 69px;
+    right: 120px;
+    font-size: 20px;
+    background-color: var(--color-white) ;
+    box-shadow: 0 0rem 2rem rgb(128, 128, 128, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.leave_container .leave .leave_form{
+    position: absolute;
+    top: 184px;
+    right: 125px;
+    /* background: red; */
+    width: 25%;
+    height: 63vh;
+    z-index: 2;
+    border-radius: 7px;
+    transition: all 300ms ease;
     background: var(--color-white);
     box-shadow: var(--box-shadow);
-    transition: all 300ms ease;
-    /* background: red; */
-    width: 100%;
-    height: 60vh;
-    border-radius: 7px;
 }
 
-.leave_container .leave_form form{
+.leave_container .leave .leave_form .close{
+    position: fixed;
+    display: inline-block;
+    z-index: 100;
+    padding: 5px 0px;
+    width: 25%;
+    transition: 0.3s ease;
+    cursor: pointer;
+    background: var(--color-white);
+}
+
+.leave_container .leave .leave_form .close .close_icon{
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.leave_container .leave .leave_form .close .close_icon:hover{
+    color: red;
+}
+
+.leave_container .leave .leave_form form{
     display: grid;
     grid-template-columns: 1fr;
     padding: 2px;
-    margin-bottom: -10px;
+    margin-top: 20px;
 }
+
 
 .leave_container .leave_form form .field{
     display: grid;
@@ -57,16 +104,17 @@
     cursor: pointer;
     padding: 8px;
     width: 100%;
-    background: var(--color-info-light);
     border: 0.5px solid rgb(215, 215, 215);
     white-space: nowrap;
     text-align: left;
+    background: var(--color-info-light);
 }
-.leave_container .leave_form form .field .duration .daterange{
+.leave_container .leave_form .daterange{
     position: absolute;
     z-index: 10;
-    top: 25%;
-    right: 20%;
+    top: -5%;
+    right: 110%;
+    border-radius: 5px;
 }
 
 .leave_container .leave_table{
@@ -74,9 +122,6 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-left: 68px;
-    height: 75vh;
-    box-shadow: var(--box-shadow);
     border-radius: 5px;
     transition: all 300ms ease;
     /* background: blue; */

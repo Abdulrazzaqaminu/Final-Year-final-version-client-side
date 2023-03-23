@@ -45,7 +45,6 @@ aside .top{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 1.4rem;
     transition: all 300ms ease;
 }
 
@@ -84,6 +83,12 @@ aside .sidebar .link{
 }
 
 aside .sidebar .link:hover{
+    color: var(--color-primary);
+    margin-left: 0.2rem;
+    transition: all 300ms ease;
+    background: var(--color-light);
+}
+.active{
     color: var(--color-primary);
     margin-left: 0.2rem;
     transition: all 300ms ease;
