@@ -12,19 +12,18 @@ import useFetch from '../../hooks/useFetch';
 import { useEnrollContext } from "../../hooks/useEnrollContext";
 
 const Employees = () => {
-    // const {data, loading, reFetch} = useFetch(`http://127.0.0.1:4040/api/enrollment`);
     const {enroll, dispatch} = useEnrollContext();
-
-
+    
     const [openForm, setOpenForm] = useState(false);
     const [staffid, setStaffid] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [emailError, setEmailError] = useState('')
-
+    
     const [dob, setDob] = useState("");
     const [department, setDepartment] = useState("");
+
     const [unit, setUnit] = useState("");
     const [position, setPosition] = useState("");
     const [grade, setGrade] = useState("");
@@ -44,6 +43,8 @@ const Employees = () => {
     const first_name_capitalize = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
     const state_capitalize = state.charAt(0).toUpperCase() + state.slice(1).toLowerCase();
     const city_capitalize = city.charAt(0).toUpperCase() + city.slice(1).toLowerCase();
+
+    const {data, reFetch} = useFetch(`http://127.0.0.1:4040/api/department/filter?dept_name=${department}`);
 
     useEffect(() => {
         const fetchEmployees = async () => {
@@ -285,7 +286,7 @@ const Employees = () => {
                                 type="text"
                                 value={lastName}
                                 onChange={lastNamelettersOnly}
-                                className = {lastName === "" ? "error" : ""}
+                                className = {`last_name ${lastName === "" ? "error" : ""}`}
                                 // className = {`last_name ${emptyFields?.includes("last_name") ? "error" : ""}`}
                             />
                         </div>
@@ -328,11 +329,22 @@ const Employees = () => {
                             <div className="field">    
                                 <label>Department:</label>
                                 <select id="" value={department} /*</div>className = {emptyFields?.includes("department") ? "error" : ""}*/ className = {department === "" ? "error" : ""} onChange={(e) => setDepartment(e.target.value)}>
-                                    <option value="" disabled hidden>Choose...</option>
-                                    <option value="ACCOUNTING AND FINANCE">ACCOUNTING AND FINANCE</option>
+                                    <option value="" /*disabled hidden*/>Choose...</option>
+                                    { 
+                                        data?.dept?.length > 0 ?
+                                        (
+                                            data?.dept?.map((dept) => (
+                                                <option value = {dept.dept_name} key = {dept._id}>
+                                                    {dept.dept_name}
+                                                </option>
+                                            ))
+                                        ) :
+                                        (<option value="">No department(s)</option>)
+                                    }
+                                    {/* <option value="ACCOUNTING AND FINANCE">ACCOUNTING AND FINANCE</option>
                                     <option value="HUMAN RESOURCES">HUMAN RESOURCES</option>
                                     <option value="INFORMATION AND TECHNOLOGY">INFORMATION AND TECHNOLOGY</option>
-                                    <option value="MARKETING AND SALES">MARKETING AND SALES</option>
+                                    <option value="MARKETING AND SALES">MARKETING AND SALES</option> */}
                                 </select>
                             </div>
 
@@ -340,11 +352,32 @@ const Employees = () => {
                                 <label>Unit:</label>
                                 <select id="" value={unit} /*className = {emptyFields?.includes("unit") ? "error" : ""}*/ className = {unit === "" ? "error" : ""} onChange={(e) => setUnit(e.target.value)}>
                                     <option value="" disabled hidden>Choose...</option>
-                                    <option value="AUDIT">AUDIT</option>
+                                    {
+                                        data?.units?.length > 0 ?
+                                        (
+                                            data?.units?.map((unit) => (
+                                                unit?.unit.length > 0 ? 
+                                                (
+                                                    unit.unit?.map((unit_name) => (
+                                                        <option value={unit_name.unit_name} key = {unit_name._id}>
+                                                            {unit_name.unit_name}
+                                                        </option>
+                                                    ))
+                                                ) : 
+                                                (
+                                                    <option value="">No units</option>
+                                                )
+                                            ))
+                                        ) :
+                                        (
+                                            <option value="">Select department</option>
+                                        )
+                                    }
+                                    {/* <option value="AUDIT">AUDIT</option>
                                     <option value="CUSTOMER SERVICE">CUSTOMER SERVICE</option>
                                     <option value="HEALTH AND SAFETY">HEALTH AND SAFETY</option>
                                     <option value="PROCUREMENT">PROCUREMENT</option>
-                                    <option value="RECRUITMENT">RECRUITMENT</option>
+                                    <option value="RECRUITMENT">RECRUITMENT</option> */}
                                 </select>
                             </div>
 

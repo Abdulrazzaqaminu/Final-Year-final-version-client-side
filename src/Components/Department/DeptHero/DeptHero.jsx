@@ -483,7 +483,8 @@ const DeptHero = () =>{
                                         autoFocus = {true}
                                         onChange = {deptlettersOnly}
                                         value = {create_dept}
-                                        className = {emptyFields?.includes("dept_name") ? "error" : ""}
+                                        className = {create_dept === "" ? "error" : ""}
+                                        // className = {emptyFields?.includes("dept_name") ? "error" : ""}
                                     />
                                 </div>
                                 <div className="field">

@@ -24,6 +24,7 @@ const LoansHero = () =>{
 
     const [assign, setAssign] = useState("");
     const [amount, setAmount] = useState("");
+    const [formatAmount, setFormatAmount] = useState("")
     const [approval, setApproval] = useState("");
     const [loanDesc, setLoanDesc] = useState("");
     const [openDate, setOpenDate] = useState(false);
@@ -97,9 +98,12 @@ const LoansHero = () =>{
         }
     };
     const amount_numberOnly = (e) => {
-        const regex = /^[0-9\b]+$/;
+        // .replace(/,/g, "")
+        // .replace( /\d{1,3}(?=(\d{3})+(?!\d))/g , "$&,")
+        const regex = /^[0-9\b,]+$/;
         if ((e.target.value) === "" || regex.test(e.target.value)) {
-          setAmount(e.target.value);
+            setAmount((e.target.value).replace(/\,/g, ''));
+            setFormatAmount((e.target.value) === "" ? 0 : parseInt((e.target.value).replace(/,/g, '')).toLocaleString())
         }
     };
     const desclettersOnly = (e) => {
@@ -227,7 +231,7 @@ const LoansHero = () =>{
                                     <label>Amount:</label>
                                     <TextInput 
                                         type="text"
-                                        value={amount}
+                                        value={formatAmount}
                                         onChange={amount_numberOnly}
                                         className = {amount === "" ? "error" : ""}
                                         // className = {emptyFields?.includes("loan_amount") ? "error" : ""}

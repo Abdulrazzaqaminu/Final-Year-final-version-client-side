@@ -19,8 +19,8 @@ const Payroll = () => {
             sortable: true
         },
         {
-            name: "Employee Type",
-            selector: row => row.employee_type,
+            name: "Employment Type",
+            selector: row => row.employment_type,
             sortable: true
         },
         {
@@ -66,7 +66,7 @@ const Payroll = () => {
                                                 <p>{payroll.first_name} <b>{payroll.last_name}</b></p>
                                                 <small className="text-muted">{payroll.email}</small>
                                             </div>,
-                                        employee_type: payroll.employee_type,
+                                        employment_type: payroll.employee_type,
                                         loans: payroll.loans.length === 0 ?
                                                 ("No loans") :
                                                 (
