@@ -72,7 +72,8 @@ const HodHero = () =>{
                         <div className="field">
                             <TextInput 
                                 type="text"
-                                placeholder={`Status ${data[0]?.status}`}
+                                placeholder={`${data[0]?.status}`}
+                                className = {data[0]?.status == "Active" ? "green" : data[0]?.status == "On Leave" ? "warning" : "error"}
                                 disabled={true}
                             />
                         </div>

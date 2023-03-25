@@ -530,17 +530,17 @@ const DeptHero = () =>{
                                         department_name: dept?.dept_name,
                                         hod: dept?.dept_HOD?.hod_id === "N/A" ? 
                                             (   <>
-                                                    {dept.dept_HOD?.hod_first_name} <b>{dept.dept_HOD?.hod_last_name}</b>
+                                                    {dept.dept_HOD?.hod_first_name}
                                                     <small>
-                                                        <p className="text-muted">{dept.dept_HOD?.hod_email}</p>
+                                                        <p className="text-muted"><b>{dept.dept_HOD?.hod_last_name}</b></p>
                                                     </small> 
                                                 </>
                                             ) :
                                             (
                                                 <Link className="hod" to={`/department/hod/${dept.dept_HOD?.hod_id}`}>
-                                                    {dept.dept_HOD?.hod_first_name} <b>{dept.dept_HOD?.hod_last_name}</b>
+                                                    {dept.dept_HOD?.hod_first_name}
                                                     <small>
-                                                        <p className="text-muted">{dept.dept_HOD?.hod_email}</p>
+                                                        <p className="text-muted"><b>{dept.dept_HOD?.hod_last_name}</b></p>
                                                     </small> 
                                                 </Link>
                                             ),

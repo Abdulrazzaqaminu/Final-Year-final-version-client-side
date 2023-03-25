@@ -7,3 +7,20 @@
 .single_employee_container .single_employee_info input.email{
     text-transform: lowercase;
 }
+
+.single_employee_container .single_employee_update form .field .green{
+    background-color: rgb(222, 255, 222);
+    color: green;
+}
+
+.single_employee_container .single_employee_update form .field .warning{
+    border: 1px solid yellowgreen;
+    background: rgb(252, 252, 230);
+    color: yellow;
+}
+
+.single_employee_container .single_employee_update form .field .error{
+    border: 1px solid var(--color-danger);
+    background-color: rgb(248, 234, 234);
+    color: var(--color-danger);
+}

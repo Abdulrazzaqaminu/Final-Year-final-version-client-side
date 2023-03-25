@@ -71,12 +71,17 @@ const LeaveHero = () => {
             sortable: true
         },
         {
+            name: "Start - End",
+            selector: row => row.start_end,
+            sortable: true
+        },
+        {
             name: "Duration",
             selector: row => row.duration,
             sortable: true
         },
         {
-            name: "Paid Leave",
+            name: "Paid",
             selector: row => row.paid,
             sortable: true
         },
@@ -277,10 +282,11 @@ const LeaveHero = () => {
                                                     </div>,
                                                 leave_type: leave?.leave_type,
                                                 approval_date: leave?.approval_date,
-                                                duration: <div className="name_email">
+                                                start_end: <div className="name_email">
                                                             <p>{leave?.leave_duration.start} -</p>
                                                             <p>{leave?.leave_duration.end}</p>
                                                         </div>,
+                                                duration: <p>{leave?.days_on_leave} {leave?.days_on_leave === 1 ? "day" : "days"}</p>,
                                                 paid: <p>{leave?.paid === true ? "Yes" : "No"}</p>,
                                                 status: <p className={leave?.status === "On Leave" ? "warning" : leave?.status === "Active" ? "green" : "approved"}>{leave?.status}</p>
                                             }

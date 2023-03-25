@@ -27,8 +27,8 @@
 }
 .transfer_button {
     position: absolute;
-    right: 48%;
-    top: 90%;
+    right: 47.9%;
+    top: 90.5%;
     z-index: 10;
 }
 .transfer .field{
@@ -122,7 +122,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    top: 30px;
+    top: 25px;
     right: 32%;
     background-color: rgb(230, 255, 230);
     color: green;
@@ -173,7 +173,7 @@
     margin: 10px 0px;
 }
 .single_employee_container .single_employee_update .field button{
-    margin: 22px 0px;
+    margin: 25px 0px;
 }
 
 .single_employee_container .single_employee_info{

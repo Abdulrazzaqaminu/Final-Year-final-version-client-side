@@ -75,6 +75,11 @@ const LoansHero = () =>{
             sortable: true
         },
         {
+            name: "Fom - To",
+            selector: row => row.from_to,
+            sortable: true
+        },
+        {
             name: "Duration",
             selector: row => row.duration,
             sortable: true
@@ -261,7 +266,7 @@ const LoansHero = () =>{
                                     </div>
                                 </div>
                                 <div className="field">
-                                    <label>Loan Details:</label>
+                                    <label>Loan Description:</label>
                                     <textarea name="" value={loanDesc} /*className = {emptyFields?.includes("loan_details") ? "error" : ""}*/ className = {loanDesc === "" ? "error" : ""} onChange={desclettersOnly} id="" cols="30" rows="2"></textarea>
                                     
                                     <Button type="submit" onClick={loan_payment}>Submit</Button>
@@ -296,10 +301,11 @@ const LoansHero = () =>{
                                                     </div>,
                                                 amount: `NGN ${(loan?.loan_amount).toLocaleString()}`,
                                                 approval_date: loan?.approval_date,
-                                                duration: <div className="name_email">
+                                                from_to: <div className="name_email">
                                                             <p>{loan?.loan_duration.from} -</p>
                                                             <p>{loan?.loan_duration.to}</p>
                                                         </div>,
+                                                duration: <p>{loan?.amount_of_days} {loan?.amount_of_days === 1 ? "day" : "days"}</p> ,
                                                 desc: loan?.loan_details,
                                                 // pay_off: <Link to={`/loans/pay_off/${loan.employee_ID}`}><Button>Pay Off</Button></Link>
                                             }
