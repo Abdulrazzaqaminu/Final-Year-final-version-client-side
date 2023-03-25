@@ -1,6 +1,22 @@
+.transfer {
+    position: absolute;
+    z-index: 20;
+    background: var(--color-white);
+    box-shadow: var(--box-shadow);
+    right: 32%;
+    top: 25%;
+    width: 30%;
+    height: 54%;
+    border-radius: 5px;
+}
+
+.transfer form{
+    margin-top: 30px;
+}
 .transfer .cancel {
     position: absolute;
-    right: 20px;
+    top: 6px;
+    right: 6px;
     font-size: 20px;
     cursor: pointer;
     transition: 0.2s ease;
@@ -15,18 +31,6 @@
     top: 90%;
     z-index: 10;
 }
-
-.transfer {
-    position: absolute;
-    z-index: 20;
-    background: var(--color-white);
-    box-shadow: var(--box-shadow);
-    right: 32%;
-    top: 25%;
-    width: 30%;
-    height: 51%;
-    border-radius: 5px;
-}
 .transfer .field{
     padding: 0px 8px;
     margin-top: 12px;
@@ -40,18 +44,6 @@
 }
 
 /* edit */
-.edit .cancel {
-    position: absolute;
-    right: 20px;
-    font-size: 20px;
-    cursor: pointer;
-    color: black;
-    transition: 0.2s ease;
-}
-.edit .cancel:hover{
-    color: red;
-    transition: 0.2s ease;
-}
 .edit {
     position: absolute;
     z-index: 20;
@@ -60,10 +52,36 @@
     right: 32%;
     top: 25%;
     width: 30%;
-    height: 52%;
+    height: 54%;
     overflow: auto;
     border-radius: 5px;
 }
+
+.edit .cancel {
+    position: fixed;
+    background: var(--color-white);
+    width: 30%;
+    height: 32px;
+}
+
+.edit .cancel .cancel_btn {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    top: 6px;
+    right: 6px;
+    font-size: 20px;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+.edit .cancel .cancel_btn:hover{
+    color: red;
+}
+
+.edit form{
+    margin-top: 35px;
+}
+
 .edit button {
     margin-bottom: 10px;
 }

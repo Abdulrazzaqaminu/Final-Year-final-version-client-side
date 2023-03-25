@@ -477,44 +477,46 @@ const DeptHero = () =>{
                         <form onSubmit={handleSubmit}>
                             <div className="dept_popup">
                                 <span className="close"><MdIcons.MdOutlineCancel onClick={() => setOpen(false)} className="close_icon"/></span>
-                                <div className="field">
-                                    <label> Department Name</label>
-                                    <TextInput
-                                        autoFocus = {true}
-                                        onChange = {deptlettersOnly}
-                                        value = {create_dept}
-                                        className = {create_dept === "" ? "error" : ""}
-                                        // className = {emptyFields?.includes("dept_name") ? "error" : ""}
-                                    />
-                                </div>
-                                <div className="field">
-                                    <span className="add_unit" onClick={addUnit}>Add unit <FiIcons.FiPlus/></span>
-                                </div>
-                                { 
-                                    addinputs.map((element, index) => (
-                                        <div className="field" key={index}>
-                                            <TextInput
-                                                value = {element?.unit_name || ""}
-                                                name = "unit_name"
-                                                autoComplete = "off"
-                                                autoFocus = {true}
-                                                placeholder = "Enter unit name"
-                                                className = {`unit_names ${element?.unit_name === "" ? "error" : ""}`}
-                                                onChange = {e => handleInputChange(index, e)}
-                                            />
-                                            { index >= 0  ?
-                                                (
-                                                    <span onClick={removeUnit}>
-                                                        <MdIcons.MdOutlineCancel className="unit_close" />
-                                                    </span>
-                                                ) :
-                                                null
-                                            }
-                                        </div>
-                                    ))
-                                }
-                                <div className="button">
-                                    <Button type="submit" onClick = {createDept}>Create</Button>
+                                <div className="dept_popup_container">
+                                    <div className="field">
+                                        <label> Department Name</label>
+                                        <TextInput
+                                            autoFocus = {true}
+                                            onChange = {deptlettersOnly}
+                                            value = {create_dept}
+                                            className = {create_dept === "" ? "error" : ""}
+                                            // className = {emptyFields?.includes("dept_name") ? "error" : ""}
+                                        />
+                                    </div>
+                                    <div className="field">
+                                        <span className="add_unit" onClick={addUnit}>Add unit <FiIcons.FiPlus/></span>
+                                    </div>
+                                    { 
+                                        addinputs.map((element, index) => (
+                                            <div className="field" key={index}>
+                                                <TextInput
+                                                    value = {element?.unit_name || ""}
+                                                    name = "unit_name"
+                                                    autoComplete = "off"
+                                                    autoFocus = {true}
+                                                    placeholder = "Enter unit name"
+                                                    className = {`unit_names ${element?.unit_name === "" ? "error" : ""}`}
+                                                    onChange = {e => handleInputChange(index, e)}
+                                                />
+                                                { index >= 0  ?
+                                                    (
+                                                        <span onClick={removeUnit}>
+                                                            <MdIcons.MdOutlineCancel className="unit_close" />
+                                                        </span>
+                                                    ) :
+                                                    null
+                                                }
+                                            </div>
+                                        ))
+                                    }
+                                    <div className="button">
+                                        <Button type="submit" onClick = {createDept}>Create</Button>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -649,7 +651,13 @@ const DeptHero = () =>{
                                                 ("") :
                                                 (
                                                     <>
-                                                        {<p className="dept_name">{units ? units[0]?.dept_name : ""} <FiIcons.FiPlus className="unit_plus" onClick={() => setShowAddUnit(true)}/> </p>}
+                                                        {<p className="dept_name">{units ? units[0]?.dept_name : ""} <FiIcons.FiPlus className="unit_plus" onClick={
+                                                            () => {
+                                                                setShowAddUnit(true);
+                                                                setEditShow(false);                 
+                                                                setEditUnit(false);
+                                                            }
+                                                            }/> </p>}
                                                     </>
                                                 )
                                             }
@@ -705,7 +713,10 @@ const DeptHero = () =>{
                     }
                     { showAddUnit && 
                         <div className="add_unit_poppup">
-                            <MdIcons.MdOutlineCancel className="popup_close" onClick={() => {setShowAddUnit(false)}}/>
+                            <MdIcons.MdOutlineCancel className="popup_close" onClick={
+                                () => {
+                                    setShowAddUnit(false);
+                                }}/>
                             <form onSubmit={handleSubmit}>
                                 <div className="field">
                                     <span className="add_unit" onClick={createUnit}>Add unit <FiIcons.FiPlus/></span>

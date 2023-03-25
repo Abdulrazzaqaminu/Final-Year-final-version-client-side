@@ -33,11 +33,12 @@
     right: 130px;
     z-index: 100;
     /* height: 50%; */
-    max-height: 50%;
+    max-height: 62.8%;
     overflow: auto;
     width: 27%;
     background-color: var(--color-white) ;
-    box-shadow: var(--box-shadow);
+    /* box-shadow: var(--box-shadow); */
+    box-shadow: 0rem 0rem 1rem 0.5rem rgb(222, 222, 222, 0.8);
     border-radius: 5px;
 }
 
@@ -53,21 +54,31 @@
     cursor: pointer;
 } */
 
-.dept .dept_popup span.close{
-    display: flex;
-    justify-content: end;
-    margin: 10px;
-    font-size: 22px;
-    color: var(--color-dark-variant);
+.dept .dept_popup .close{
+    position: fixed;
+    background: var(--color-white);
+    width: 27%;
+    height: 32px;
+    border-radius: 5px;
 }
 
-.dept .dept_popup span.close .close_icon{
+.dept .dept_popup .close .close_icon{
+    position: absolute;
+    display: grid;
+    place-items: center;
+    top: 6px;
+    right: 6px;
+    font-size: 20px;
+    transition: 0.3s ease;
     cursor: pointer;
-    transition: 0.5s ease;
 }
 
-.dept .dept_popup span.close .close_icon:hover{
+.dept .dept_popup .close .close_icon:hover{
     color: red;
+}
+
+.dept .dept_popup .dept_popup_container {
+    margin-top: 35px;
 }
 
 .dept .dept_popup .field{
@@ -156,8 +167,8 @@
     position: absolute;
     z-index: 100;
     font-size: 20px;
-    top: 15px;
-    right: 15px;
+    top: 6px;
+    right: 6px;
     cursor: pointer;
     transition: 0.3s ease;
 }
@@ -170,7 +181,7 @@
     position: absolute;
     z-index: 100;
     top: 205px;
-    right: 120px;
+    right: 130px;
     width: 25%;
     height: 18.4%;
     border-radius: 5px;
@@ -189,11 +200,11 @@
 }
 
 .dept .popup .popup_close{
-    font-size: 18px;
+    font-size: 20px;
     position: absolute;
     z-index: 100;
-    top: 8px;
-    right: 8px;
+    top: 6px;
+    right: 6px;
     cursor: pointer;
     transition: 0.3s ease;
 }
@@ -219,7 +230,7 @@
     position: absolute;
     z-index: 200;
     top: 310px;
-    right: 120px;
+    right: 130px;
     width: 25%;
     max-height: 43%;
     overflow: auto;
@@ -242,8 +253,8 @@
     position: fixed;
     font-size: 20px;
     z-index: 110;
-    top: 320px;
-    right: 133px;
+    top: 315px;
+    right: 135px;
     cursor: pointer;
     transition: 0.3s ease;
 }
@@ -288,7 +299,7 @@
     position: absolute;
     z-index: 230;
     top: 310px;
-    right: 120px;
+    right: 130px;
     width: 25%;
     height: 18.4%;
     border-radius: 5px;
@@ -298,11 +309,11 @@
 }
 
 .dept .edit_popup .popup_close{
-    font-size: 18px;
+    font-size: 20px;
     position: absolute;
     z-index: 100;
-    top: 8px;
-    right: 8px;
+    top: 6px;
+    right: 6px;
     cursor: pointer;
     transition: 0.3s ease;
 }

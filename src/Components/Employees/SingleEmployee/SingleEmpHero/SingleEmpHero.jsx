@@ -1,11 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import './SingleEmpHero.css'
-import * as MdIcons from 'react-icons/md';
 import TextInput from "../../../TextInput/TextInput";
 import Button from "../../../Button/Button";
+import * as FiIcons from "react-icons/fi"
+import * as MdIcons from "react-icons/md"
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEmpContext } from "../../../../hooks/useEmpContext"
+import useFetch from "../../../../hooks/useFetch";
 import axios from "axios"
 
 const SingleEmpHero = () =>{
@@ -31,6 +33,7 @@ const SingleEmpHero = () =>{
     const [emptyFields, setEmptyFields] = useState([])
     
     const [loading, setLoading] = useState(null)
+    const {data, reFetch} = useFetch(`http://127.0.0.1:4040/api/department/filter?dept_name=${moveDept}`);
 
     const numberOnly = (e) => {
         const regex = /^[0-9\b]+$/;
@@ -67,19 +70,7 @@ const SingleEmpHero = () =>{
     }, []);
 
     const transferwindow = () => {
-        setClick(current => !current)
-        setMoveStaff_ID(employee?.staff_ID)
-        setError(null)
-    }
-
-    const editwindow = () => {
-        setEdit(current => !current)
-        setError(null)
-        setPhoneNumber(employee?.phone_number[0])
-        setFirstName(employee?.first_name[0])
-        setLastName(employee?.last_name[0])
-        setPosition(employee?.position[0])
-        setGrade(employee?.grade[0])
+       
     }
 
     const handleSubmitEdit = async (e) =>{
@@ -187,8 +178,14 @@ const SingleEmpHero = () =>{
                 click && 
                 (
                     <div className="transfer">
+                        <span className="cancel"><MdIcons.MdOutlineCancel
+                            onClick={
+                                () => {
+                                    setClick(false);
+                                    setError(false);
+                            }}
+                        /></span>
                         <form onSubmit={handleSubmitTransfer}>
-                            <span className="cancel" onClick={transferwindow}>x</span>
                             <div className="field">
                                 <label >Staff ID</label>
                                 <TextInput 
@@ -201,24 +198,56 @@ const SingleEmpHero = () =>{
                             </div>
                             <div className="field">
                                 <label >Department</label>
-                                <select id="" value={moveDept} className = {emptyFields?.includes("dept_name") ? "error" : ""} onChange={(e) => setMoveDept(e.target.value)}>
-                                    <option value="" disabled hidden>Choose...</option>
-                                    <option value="ACCOUNTING AND FINANCE">ACCOUNTING AND FINANCE</option>
+                                <select id="" value={moveDept} /*className = {emptyFields?.includes("dept_name") ? "error" : ""}*/ className = {moveDept === "" ? "error" : ""} onChange={(e) => setMoveDept(e.target.value)}>
+                                    <option value="">Choose...</option>
+                                    { 
+                                        data?.dept?.length > 0 ?
+                                        (
+                                            data?.dept?.map((dept) => (
+                                                <option value = {dept.dept_name} key = {dept._id}>
+                                                    {dept.dept_name}
+                                                </option>
+                                            ))
+                                        ) :
+                                        (<option value="">No department(s)</option>)
+                                    }
+                                    {/* <option value="ACCOUNTING AND FINANCE">ACCOUNTING AND FINANCE</option>
                                     <option value="HUMAN RESOURCES">HUMAN RESOURCES</option>
                                     <option value="INFORMATION AND TECHNOLOGY">INFORMATION AND TECHNOLOGY</option>
-                                    <option value="MARKETING AND SALES">MARKETING AND SALES</option>
+                                    <option value="MARKETING AND SALES">MARKETING AND SALES</option> */}
                                 </select>
                             </div>
                             
                             <div className="field">
                                 <label >Unit Name</label>
-                                <select id="" value={moveUnit} className = {emptyFields?.includes("unit_name") ? "error" : ""} onChange={(e) => setMoveUnit(e.target.value)}>
+                                <select id="" value={moveUnit} /*className = {emptyFields?.includes("unit_name") ? "error" : ""}*/ className = {moveUnit === "" ? "error" : ""} onChange={(e) => setMoveUnit(e.target.value)}>
                                     <option value="" disabled hidden>Choose...</option>
-                                    <option value="AUDIT">AUDIT</option>
+                                    {
+                                        data?.units?.length > 0 ?
+                                        (
+                                            data?.units?.map((unit) => (
+                                                unit?.unit.length > 0 ? 
+                                                (
+                                                    unit.unit?.map((unit_name) => (
+                                                        <option value={unit_name.unit_name} key = {unit_name._id}>
+                                                            {unit_name.unit_name}
+                                                        </option>
+                                                    ))
+                                                ) : 
+                                                (
+                                                    <option value="">No units</option>
+                                                )
+                                            ))
+                                        ) :
+                                        (
+                                            <option value="">Select department</option>
+                                        )
+                                    }
+                                    {/* <option value="AUDIT">AUDIT</option>
                                     <option value="CUSTOMER SERVICE">CUSTOMER SERVICE</option>
                                     <option value="HEALTH AND SAFETY">HEALTH AND SAFETY</option>
                                     <option value="PROCUREMENT">PROCUREMENT</option>
-                                    <option value="RECRUITMENT">RECRUITMENT</option>
+                                    <option value="RECRUITMENT">RECRUITMENT</option> */}
                                 </select>
                                 <Button type="submit">Submit</Button>
                             </div>
@@ -230,15 +259,23 @@ const SingleEmpHero = () =>{
                 edit && 
                 (
                     <div className="edit">
+                        <span className="cancel"> <MdIcons.MdOutlineCancel
+                            onClick={
+                                () => {
+                                    setEdit(false);
+                                    setError(false);
+                            }}
+                            className = "cancel_btn"
+                        /></span>
                         <form onSubmit={handleSubmitEdit}>
-                            <span className="cancel" onClick={editwindow}>x</span>
                             <div className="field">
                                 <label >First Name</label>
                                 <TextInput 
                                     type="text"
                                     value={first_name}
                                     onChange={firstNamelettersOnly}
-                                    className = {emptyFields?.includes("first_name") ? "error" : ""}
+                                    className = {first_name === "" ? "error" : ""}
+                                    // className = {emptyFields?.includes("first_name") ? "error" : ""}
                                 />
                             </div>
                             <div className="field">
@@ -247,7 +284,8 @@ const SingleEmpHero = () =>{
                                     type="text"
                                     value={last_name}
                                     onChange={lastNamelettersOnly}
-                                    className = {`last_name ${emptyFields?.includes("last_name") ? "error" : ""}`}
+                                    className = {last_name === "" ? "error" : ""}
+                                    // className = {`last_name ${emptyFields?.includes("last_name") ? "error" : ""}`}
                                 />
                             </div>
                             <div className="field">
@@ -258,12 +296,13 @@ const SingleEmpHero = () =>{
                                     onChange={numberOnly}
                                     maxLength={11}
                                     minLength = {11}
-                                    className = {emptyFields?.includes("phone_number") ? "error" : ""}
+                                    className = {phone_number === "" ? "error" : ""}
+                                    // className = {emptyFields?.includes("phone_number") ? "error" : ""}
                                 />
                             </div>
                             <div className="field">
                                 <label>Position:</label>
-                                <select id="" value={position} className = {emptyFields?.includes("position") ? "error" : ""} required={true} onChange={(e) => setPosition(e.target.value)}>
+                                <select id="" value={position} /*className = {emptyFields?.includes("position") ? "error" : ""}*/ className = {position === "" ? "error" : ""} required={true} onChange={(e) => setPosition(e.target.value)}>
                                     <option value="" disabled hidden>{employee?.position}</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -272,7 +311,7 @@ const SingleEmpHero = () =>{
                             </div>
                             <div className="field">
                                 <label>Grade:</label>
-                                <select id="" value={grade} className = {emptyFields?.includes("grade") ? "error" : ""} required={true} onChange={(e) => setGrade(e.target.value)}>
+                                <select id="" value={grade} /*className = {emptyFields?.includes("grade") ? "error" : ""}*/ className = {grade === "" ? "error" : ""} required={true} onChange={(e) => setGrade(e.target.value)}>
                                     <option value="" disabled hidden>{employee?.grade}</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -328,13 +367,37 @@ const SingleEmpHero = () =>{
                             <option value="2">2</option>
                             <option value="3">3</option>
                         </select>
-                        <Button type="submit" disabled = {employee?.status == "Terminated" ? true : false} onClick = {editwindow}>Update</Button>
+                        <Button type="submit" disabled = {employee?.status == "Terminated" ? true : false} onClick = {
+                            () => {
+                                setEdit(true);
+                                setClick(false);
+                                setError(null);
+                                setMoveStaff_ID("");
+                                setPhoneNumber(employee?.phone_number[0]);
+                                setFirstName(employee?.first_name[0]);
+                                setLastName(employee?.last_name[0]);
+                                setPosition(employee?.position[0]);
+                                setGrade(employee?.grade[0]);
+                            }
+                        }>Update</Button>
                         <div className="transfer_button">
                             {
                                 employee?.status == "Terminated" ? 
                                 ("") :
                                 (
-                                    <span className="move" onClick={transferwindow}>Transfer</span>
+                                    <span className="move" onClick={
+                                        () =>{
+                                            setClick(true);
+                                            setEdit(false);
+                                            setMoveStaff_ID(employee?.staff_ID);
+                                            setPhoneNumber("");
+                                            setFirstName("");
+                                            setLastName("");
+                                            setPosition("");
+                                            setGrade("");
+                                            setError(null);
+                                        }
+                                    }>Transfer</span>
                                 )
                             }
                             
