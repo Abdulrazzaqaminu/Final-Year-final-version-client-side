@@ -7,7 +7,7 @@ import * as FiIcons from "react-icons/fi"
 import * as MdIcons from "react-icons/md"
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEmpContext } from "../../../../hooks/useEmpContext"
-import useFetch from "../../../../hooks/useFetch";
+import useFetch from "../../../../hooks/Fetch/useFetch";
 import axios from "axios"
 
 const SingleEmpHero = () =>{

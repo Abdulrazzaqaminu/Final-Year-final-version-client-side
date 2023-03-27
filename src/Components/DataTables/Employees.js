@@ -8,11 +8,14 @@ import TextInput from '../TextInput/TextInput';
 import * as FiIcons from "react-icons/fi"
 import * as MdIcons from "react-icons/md"
 import validator from 'validator'
-import useFetch from '../../hooks/useFetch';
+import useFetch from '../../hooks/Fetch/useFetch';
+import useDeptFetch from '../../hooks/Fetch/useDeptFetch';
+import useEmpPayrollFetch from '../../hooks/Fetch/useEmpPayrollFetch';
 import { useEnrollContext } from "../../hooks/useEnrollContext";
+import Analytics from '../Analytics/Analytics';
 
 const Employees = () => {
-    const {enroll, dispatch} = useEnrollContext();
+    const {enroll, enrolldispatch} = useEnrollContext();
     
     const [openForm, setOpenForm] = useState(false);
     const [staffid, setStaffid] = useState("");
@@ -20,10 +23,8 @@ const Employees = () => {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [emailError, setEmailError] = useState('')
-    
     const [dob, setDob] = useState("");
     const [department, setDepartment] = useState("");
-
     const [unit, setUnit] = useState("");
     const [position, setPosition] = useState("");
     const [grade, setGrade] = useState("");
@@ -33,18 +34,25 @@ const Employees = () => {
     const [state, setState] = useState("");
     const [city, setCity] = useState("");
     const [street, setStreet] = useState("");
-
     const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(null)
-    const [loading, setLoading] = useState(false)
-    const [show, setShow] = useState(false)
-    const [emptyFields, setEmptyFields] = useState([])
+    const [success, setSuccess] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [show, setShow] = useState(false);
+    const [emptyFields, setEmptyFields] = useState([]);
+    const [moreInfo, setMoreInfo] = useState(false);
+    const [moreGross, setMoreGross] = useState(false);
+
+    const [popupdept, setPopupdept] = useState("");
+    const [employee_id, setEmployee_ID] = useState("");
+    const [employee_id2, setEmployee_ID2] = useState("")
     
     const first_name_capitalize = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
     const state_capitalize = state.charAt(0).toUpperCase() + state.slice(1).toLowerCase();
     const city_capitalize = city.charAt(0).toUpperCase() + city.slice(1).toLowerCase();
 
     const {data, reFetch} = useFetch(`http://127.0.0.1:4040/api/department/filter?dept_name=${department}`);
+    const {dept, reFetchDept} = useDeptFetch(`http://127.0.0.1:4040/api/department/filter_department?dept_name=${popupdept}`);
+    const {payroll, reFetchPayroll} = useEmpPayrollFetch(`http://127.0.0.1:4040/api/payroll/employee_salary/${moreGross ? employee_id : "636a8841e238f4196ca49427"}`);
 
     useEffect(() => {
         const fetchEmployees = async () => {
@@ -53,14 +61,14 @@ const Employees = () => {
                 await axios.get("http://127.0.0.1:4040/api/enrollment")
                 .then((response) => {
                     setError(null)
-                    dispatch({type: "GET_EMPLOYEES", payload: response.data})
+                    enrolldispatch({type: "GET_EMPLOYEES", payload: response.data})
                 })
                 .catch((error) => {
                     setError(error.response.data.Message)
                     setTimeout(() => {
                         setError(null)
                     }, 3000)
-                    dispatch({type: "GET_EMPLOYEES", payload: error.response.data.result})
+                    enrolldispatch({type: "GET_EMPLOYEES", payload: error.response.data.result})
                 })
             } catch (error) {
                 setError(error)
@@ -165,7 +173,7 @@ const Employees = () => {
                 setSuccess(response.data.Message)
                 setEmptyFields([])
                 setError(null);
-                dispatch({type: "ENROLL_EMPLOYEE", payload: response.data})
+                enrolldispatch({type: "ENROLL_EMPLOYEE", payload: response.data})
             }).catch((error) => {
                 setError(error.response.data.Message)
                 setTimeout(() => {
@@ -240,13 +248,52 @@ const Employees = () => {
             sortable: true
         },
     ]
-    
+
+    const moreInfoColumn = [
+        {
+            name: "Staff ID",
+            selector: row => row.staff_ID,
+            sortable: true
+        },
+        {
+            name: "Name",
+            selector: row => row.name,
+            sortable: true
+        },
+        {
+            name: "Email",
+            selector: row => row.email,
+            sortable: true
+        },
+        {
+            name: "Unit",
+            selector: row => row.unit,
+            sortable: true
+        },
+        {
+            name: "Employment Type",
+            selector: row => row.employment_type,
+            sortable: true
+        },
+    ]
+
     return(
         <>
+            <Analytics 
+                onClick = {
+                    () => {
+                        setOpenForm(false);
+                        setMoreInfo(false);
+                        setMoreGross(false);
+                    }
+                }
+            />
             <div className='employee_plus'>
                 <span className="plus" onClick={
                     () => {
                         setOpenForm(true);
+                        setMoreInfo(false);
+                        setMoreGross(false);
                     }
                 }><FiIcons.FiPlus /></span>
             </div>
@@ -453,25 +500,25 @@ const Employees = () => {
                     </form>
                 </div> 
             }
+            {error &&
+                (
+                    <div className="error_message">
+                        {error}
+                    </div>
+                )
+            }
+            {show ?
+                (
+                    <div className="success_message">
+                        {success}
+                    </div>
+                ) :
+                ("")
+            }
             {loading ?
                 ("Loading please wait") :
                 (
                     <>
-                        {error &&
-                            (
-                                <div className="error_message">
-                                    {error}
-                                </div>
-                            )
-                        }
-                        {show ?
-                            (
-                                <div className="success_message">
-                                    {success}
-                                </div>
-                            ) :
-                            ("")
-                        }
                         <DataTable
                             columns={employeeColumn}
                             data={
@@ -484,11 +531,27 @@ const Employees = () => {
                                             </div>,
                                         dob: employee.date_of_birth,
                                         phone_number: employee.phone_number,
-                                        department: employee.department,
+                                        department: <p className='hover'
+                                                        onClick={() => {
+                                                            // setLoading(true);
+                                                            setMoreInfo(true);
+                                                            setOpenForm(false);
+                                                            setMoreGross(false);
+                                                            setPopupdept(employee.department);
+                                                            setEmployee_ID2(employee._id);
+                                                        }}
+                                                    >{employee.department}</p>,
                                         unit: employee.unit,
                                         position: employee.position,
                                         grade: employee.grade,
-                                        gross: `NGN ${(employee.gross_salary).toLocaleString()}`,
+                                        gross: <p className='hover'
+                                                        onClick={() => {
+                                                            setMoreGross(true);
+                                                            setOpenForm(false);
+                                                            setMoreInfo(false);
+                                                            setEmployee_ID(employee._id);
+                                                        }}
+                                                >{`NGN ${(employee.gross_salary).toLocaleString()}`}</p>,
                                         employment_type: employee.employee_type,
                                         status: <span className={employee.status === "Active" ? "green" : employee.status === "On Leave" ? "warning" : "red"}>{employee.status}</span>,
                                         more: <Link to={`/employees/${employee._id}`}>
@@ -503,6 +566,131 @@ const Employees = () => {
                         />
                     </>
                 )
+            }
+            { moreInfo ?
+                <div className='moreInfo'>
+                    <span className="close"><MdIcons.MdOutlineCancel className='close_btn' 
+                        onClick={() => {
+                            setMoreInfo(false);
+                            setMoreGross(false);
+                            setOpenForm(false);
+                        }}
+                    /></span>
+                    <div className='dept_table'>
+                        <DataTable
+                            columns={moreInfo ? moreInfoColumn : null}
+                            data = {
+                                moreInfo ? 
+                                (
+                                    dept.employees?.map((info) => (
+                                       {
+                                            staff_ID: <p className = {employee_id2 === info._id ? "green" : ""}>{info.staff_ID}</p>,
+                                            name: <div className="name_email">
+                                                    <p>{info.first_name}</p>
+                                                    <small className="text-muted"><b>{info.last_name}</b></small>
+                                                </div>,
+                                            email: info.email,
+                                            unit: info.unit,
+                                            employment_type: info.employee_type
+
+                                       }
+                                    ))
+                                ) :
+                                ("")
+                            }
+                            title = {<p className='title'>{dept.departments?.dept_name}: {dept.employees?.length}</p>}
+                            fixedHeader
+                            pagination
+                            className = "datatables"
+                        />
+                    </div>
+                </div> : moreGross ?
+                (
+                    <div className='moreInfo_form'>
+                        <form>
+                            <span className="close"><MdIcons.MdOutlineCancel className='close_btn' 
+                                onClick={() => {
+                                    setMoreInfo(false);
+                                    setMoreGross(false);
+                                    setOpenForm(false);
+                                }}
+                            /></span>
+                            <div className='form_container'>
+                                <div className="field">
+                                    <label>Staff Id</label>
+                                    <input type="text" disabled placeholder={payroll?.Staff_ID}/>
+                                </div>
+                                <div className="field">
+                                    <label>First Name</label>
+                                    <input type="text" disabled placeholder={payroll?.First_Name}/>
+                                </div>
+                                <div className="field">
+                                    <label>Last Name</label>
+                                    <input type="text" disabled placeholder={payroll?.Last_Name}/>
+                                </div>
+                                <div className="field email">
+                                    <label>Email</label>
+                                    <input type="text" disabled placeholder={payroll?.Employee_Email}/>
+                                </div>
+                                <div className="field">
+                                    <label>Days worked</label>
+                                    <input type="text" disabled placeholder={payroll?.Days_Worked}/>
+                                </div>
+                                <div className="field">
+                                    <label>Annual Gross</label>
+                                    <input type="text" disabled placeholder={payroll?.Employee_Gross}/>
+                                </div>
+                                <div className="field">
+                                    <label>Employment Type</label>
+                                    <input type="text" disabled placeholder={payroll?.Employee_Type}/>
+                                </div>
+                                { payroll?.Employee_Type === "Full-Time" ?
+                                    (
+                                        <div className='hours'>
+                                            <div className="hours_worked">
+                                                <label>Total Hours Worked</label>
+                                                <input type="text" disabled placeholder={payroll?.Hours_Worked}/>
+                                            </div>
+                                            <div className="over_time">
+                                                <label>Total Extra Hours</label>
+                                                <input type="text" disabled placeholder={payroll?.Extra_Hours}/>
+                                            </div>
+                                        </div>
+                                    ):
+                                    (
+                                        <div className='hours'>
+                                            <div className="hours_worked">
+                                                <label>Hours Worked</label>
+                                                <input type="text" disabled placeholder={payroll?.Hours_Worked}/>
+                                            </div>
+                                            <div className="over_time">
+                                                <label>Net Salary (Per hours)</label>
+                                                <input type="text" disabled placeholder={payroll?.Net_Salary}/>
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                                { payroll?.Employee_Type === "Full-Time" ?
+                                    (
+                                        <>
+                                            <div className="field">
+                                                <label>Net Salary (Per day)</label>
+                                                <input type="text" disabled placeholder={payroll?.Net_Salary}/>
+                                            </div>
+                                            <div className='field'>
+                                                <label>Total Leave Pay</label>
+                                                <input type="text" disabled placeholder={payroll?.Leave_Pay}/>
+                                            </div>
+                                        </>
+                                        
+                                    ) :
+                                    ("")
+                                }
+                            </div>
+                        </form>
+                    </div>
+                ) :
+                ""
             }
         </>
     )

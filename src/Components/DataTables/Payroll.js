@@ -1,7 +1,7 @@
 import './Datatable.css'
 import {Link} from 'react-router-dom';
 import DataTable from 'react-data-table-component';
-import useFetch from '../../hooks/useFetch';
+import useFetch from '../../hooks/Fetch/useFetch';
 import Button from '../Button/Button';
 
 const Payroll = () => {
@@ -42,20 +42,19 @@ const Payroll = () => {
 
     return(
         <>
-            
+             {error &&
+                (
+                    <div className="error">
+                        <span className='error_message'>
+                            {error}
+                        </span>
+                    </div>
+                )
+            }
             {loading ? 
                 ("Loading please wait") : 
                 (
                     <>
-                        {error &&
-                            (
-                                <div className="error">
-                                    <span className='error_message'>
-                                        {error}
-                                    </span>
-                                </div>
-                            )
-                        }
                         <DataTable
                             columns={employeeColumn}
                             data = {

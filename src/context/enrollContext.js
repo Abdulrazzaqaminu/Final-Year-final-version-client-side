@@ -20,12 +20,12 @@ export const enrollReducer = (state, action) => {
 }
 
 export const EnrollContextProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(enrollReducer, {
+    const [state, enrolldispatch] = useReducer(enrollReducer, {
         enroll: null
     })
 
     return(
-        <EnrollContext.Provider value={ {...state, dispatch} }>
+        <EnrollContext.Provider value={ {...state, enrolldispatch} }>
             { children }
         </EnrollContext.Provider>
     )

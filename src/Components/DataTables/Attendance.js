@@ -1,7 +1,7 @@
 import React from "react";
 import './Datatable.css'
 import DataTable from "react-data-table-component";
-import useFetch from "../../hooks/useFetch";
+import useFetch from "../../hooks/Fetch/useFetch";
 
 const Attendance = () =>{
     const {data, loading, error, reFetch} = useFetch(`http://127.0.0.1:4040/api/dashboard`);

@@ -4,7 +4,7 @@ import TextInput from "../../../TextInput/TextInput";
 import Button from "../../../Button/Button";
 import './HodHero.css';
 import { useLocation, useNavigate } from 'react-router-dom';
-import useFetch from '../../../../hooks/useFetch';
+import useFetch from '../../../../hooks/Fetch/useFetch';
 import axios from "axios";
 
 const HodHero = () =>{

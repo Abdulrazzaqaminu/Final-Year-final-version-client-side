@@ -2,7 +2,7 @@ import React from "react";
 import './Cards.css';
 import * as BsIcons from 'react-icons/bs';
 import * as CgIcons from 'react-icons/cg';
-import useFetch from "../../../hooks/useFetch";
+import useFetch from "../../../hooks/Fetch/useFetch";
 
 const Cards = () =>{
     const {data, loading, error, reFetch} = useFetch(`http://127.0.0.1:4040/api/dashboard`);

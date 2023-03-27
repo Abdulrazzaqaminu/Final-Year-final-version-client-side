@@ -141,10 +141,6 @@ const RecordHero = (props) =>{
             confirm()
         }
     }
-
-    const toggleState = () =>{
-        setButton(!button)
-    }
     
     return(
         <>
