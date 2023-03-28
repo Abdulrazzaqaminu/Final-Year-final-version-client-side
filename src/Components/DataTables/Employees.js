@@ -12,7 +12,7 @@ import useFetch from '../../hooks/Fetch/useFetch';
 import useDeptFetch from '../../hooks/Fetch/useDeptFetch';
 import useEmpPayrollFetch from '../../hooks/Fetch/useEmpPayrollFetch';
 import { useEnrollContext } from "../../hooks/useEnrollContext";
-import Analytics from '../Analytics/Analytics';
+import Analytics from '../Analytics/Bar/Analytics';
 
 const Employees = () => {
     const {enroll, enrolldispatch} = useEnrollContext();

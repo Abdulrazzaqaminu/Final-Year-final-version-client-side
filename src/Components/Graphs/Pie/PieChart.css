@@ -1,0 +1,10 @@
+.pieChart{
+    display: flex;
+    flex-direction: column;
+    margin: 110px 30px;
+    height: 76vh;
+    width: 95%;
+    box-shadow: var(--box-shadow);
+    border-radius: 5px;
+    overflow: hidden;
+}

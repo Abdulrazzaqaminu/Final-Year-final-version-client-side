@@ -1,4 +1,4 @@
-.leave_container{
+.con{
     height: 40vh;
 }
 
@@ -128,6 +128,68 @@
     /* background: blue; */
     /* background: red; */
     /* background: red; */
+}
+
+.con .filter_leave{
+    position: absolute;
+    margin: -535px 130px;
+    height: 58%;
+    width: 50%;
+    z-index: 2;
+    opacity: 0.93;
+    border-radius: 5px;
+    background-color: var(--color-white);
+    box-shadow: 0rem 0rem 1rem 0.5rem rgb(222, 222, 222, 0.8);
+    overflow: hidden;
+}
+
+.filter_leave .close {
+    position: fixed;
+    background: var(--color-white);
+    box-shadow: var(--box-shadow);
+    width: 50%;
+    height: 32px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.filter_leave .close .close_btn {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    top: 6px;
+    right: 6px;
+    font-size: 20px;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.filter_leave .close .close_btn:hover {
+    color: red;
+}
+
+.filter_leave .table {
+    width: 100%;
+    height: 100%;
+    margin: 35px 0px;
+}
+
+.filter_leave .table p.approved{
+    width: 18%;
+}
+.filter_leave .table p.warning{
+    width: 17.2%;
+}
+.filter_leave .table p.green{
+    width: 17.2%;
+}
+
+.filter_leave .table .datatables{
+    height: 35vh;
+}
+
+.filter_leave .table .title{
+    font-size: 18px;
 }
 
 .approved{
