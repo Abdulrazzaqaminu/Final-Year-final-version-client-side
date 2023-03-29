@@ -1,9 +1,28 @@
 import React from "react";
 import "./PieChart.css";
 import { ResponsivePie } from '@nivo/pie';
-import { data } from "./PieData";
 
-const PieChart = ({onClick}) => {
+const PieChart = ({onClick, values}) => {
+    const data = [
+        {
+          "id": "On Leave",
+          "label": "On Leave",
+          "value": values.On_Leave,
+          "color": "hsl(107, 70%, 50%)"
+        },
+        {
+          "id": "Resumed",
+          "label": "Resumed",
+          "value": values.Resumed,
+          "color": "hsl(206, 70%, 50%)"
+        },
+        {
+          "id": "Approved",
+          "label": "Approved",
+          "value": values.Approved,
+          "color": "hsl(347, 70%, 50%)"
+        }
+      ]
     return (
         <div className="pieChart">
             <ResponsivePie

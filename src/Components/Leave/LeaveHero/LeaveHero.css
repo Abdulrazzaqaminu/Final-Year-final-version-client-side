@@ -189,6 +189,14 @@
 }
 
 .filter_leave .table .title{
+    display: flex;
+}
+
+.filter_leave .table .title .emp_count{
+    margin-left: 10px;
+}
+
+.filter_leave .table .title p{
     font-size: 18px;
 }
 

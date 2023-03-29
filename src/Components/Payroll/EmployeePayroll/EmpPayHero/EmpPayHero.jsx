@@ -105,7 +105,7 @@ const EmpPayHero = () =>{
                                 </div>
                                 <div className="leave_pay">
                                     <label>Total Leave Pay</label>
-                                    <input type="text" disabled placeholder={success?.Leave_pay || errorInfo?.Leave_pay}/>
+                                    <input type="text" disabled placeholder={success?.Leave_Pay || errorInfo?.Leave_Pay}/>
                                 </div>
                             </div> :
                             <div className="field">

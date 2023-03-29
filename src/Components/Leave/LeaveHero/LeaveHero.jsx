@@ -3,7 +3,7 @@ import './LeaveHero.css'
 import TextInput from "../../TextInput/TextInput";
 import Button from "../../Button/Button";
 import { useState, useEffect } from "react";
-import { useLeaveContext } from "../../../hooks/useLeaveContext"
+import { useLeaveContext } from "../../../hooks/useLeaveContext";
 import * as FiIcons from "react-icons/fi"
 import * as MdIcons from "react-icons/md"
 import axios from "axios"
@@ -17,7 +17,6 @@ import Cancel from "../../Analytics/Cancel";
 import PieChart from "../../Graphs/Pie/PieChart";
 
 const LeaveHero = () => {
-
     const {leave, dispatch} = useLeaveContext();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -32,7 +31,9 @@ const LeaveHero = () => {
     const [openRequest, setOpenRequest] = useState(false);
     const [showLeaveTable, setShowLeaveTable] = useState(true);
     const [filterLeave, setFilterLeave] = useState(false);
+    const [filterLeave_Table, setFilterLeave_Table] = useState([]);
     const [leaveStatus, setLeaveStatus] = useState("");
+    const [pieResults, setPieResults] = useState({});
     const [date, setDate] = useState([
         {
           startDate: new Date(),
@@ -125,96 +126,6 @@ const LeaveHero = () => {
             sortable: true
         }
     ]
-    const dummy = [
-        {
-            "staff_id": "0001",
-            "first_name": "Abdul",
-            "last_name": "AMINU",
-            "leave_type": "Sick Leave",
-            "duration": "2",
-            "paid": "Yes",
-        },
-        {
-            "staff_id": "0001",
-            "first_name": "Abdul",
-            "last_name": "AMINU",
-            "leave_type": "Sick Leave",
-            "duration": "2",
-            "paid": "Yes",
-        },
-        {
-            "staff_id": "0001",
-            "first_name": "Abdul",
-            "last_name": "AMINU",
-            "leave_type": "Sick Leave",
-            "duration": "2",
-            "paid": "Yes",
-        },
-        {
-            "staff_id": "0001",
-            "first_name": "Abdul",
-            "last_name": "AMINU",
-            "leave_type": "Sick Leave",
-            "duration": "2",
-            "paid": "Yes",
-        },
-        {
-            "staff_id": "0001",
-            "first_name": "Abdul",
-            "last_name": "AMINU",
-            "leave_type": "Sick Leave",
-            "duration": "2",
-            "paid": "Yes",
-        },
-        {
-            "staff_id": "0001",
-            "first_name": "Abdul",
-            "last_name": "AMINU",
-            "leave_type": "Sick Leave",
-            "duration": "2",
-            "paid": "Yes",
-        },
-        {
-            "staff_id": "0001",
-            "first_name": "Abdul",
-            "last_name": "AMINU",
-            "leave_type": "Sick Leave",
-            "duration": "2",
-            "paid": "Yes",
-        },
-        {
-            "staff_id": "0001",
-            "first_name": "Abdul",
-            "last_name": "AMINU",
-            "leave_type": "Sick Leave",
-            "duration": "2",
-            "paid": "Yes",
-        },
-        {
-            "staff_id": "0001",
-            "first_name": "Abdul",
-            "last_name": "AMINU",
-            "leave_type": "Sick Leave",
-            "duration": "2",
-            "paid": "Yes",
-        },
-        {
-            "staff_id": "0001",
-            "first_name": "Abdul",
-            "last_name": "AMINU",
-            "leave_type": "Sick Leave",
-            "duration": "2",
-            "paid": "Yes",
-        },
-        {
-            "staff_id": "0001",
-            "first_name": "Abdul",
-            "last_name": "AMINU",
-            "leave_type": "Sick Leave",
-            "duration": "2",
-            "paid": "Yes",
-        },
-    ]
 
     const staff_Id_numberOnly = (e) => {
         const regex = /^[0-9\b]+$/;
@@ -298,6 +209,40 @@ const LeaveHero = () => {
         }
     }
 
+    const filterLeaveType = async () => {
+        try {
+            await axios.get("http://127.0.0.1:4040/api/leave/filter_leave")
+            .then((response) => {
+                setError(null)
+                setPieResults(response.data)
+            })
+            .catch((error) => {
+                setError(error.response.data.Message)
+                setTimeout(() => {
+                    setError(null)
+                }, 3000)
+            })
+            
+        } catch (error) {
+            setError(error);
+        }
+    }
+
+    const filterLeaveTable = async (status) => {
+        try {
+            await axios.get(`http://127.0.0.1:4040/api/leave/filterleave_table?leave_status=${status}`)
+            .then((response) => {
+                setError(null)
+                setFilterLeave_Table(response.data);
+            })
+            .catch((error) => {
+                setFilterLeave_Table(error.response.data);
+            })
+        } catch (error) {
+            setError(error);
+        }
+    }
+
     return (
         <>
             {error &&
@@ -322,12 +267,14 @@ const LeaveHero = () => {
                          <Analytics 
                             onClick={() => {
                                 setShowLeaveTable(false);
+                                filterLeaveType();
                             }}
                         />
                         <div className="leave">
                             <span className="plus" onClick={
                                 () => {
                                     setOpenRequest(true);
+                                    
                                 }
                             } ><FiIcons.FiPlus/></span>
                             { openRequest &&
@@ -441,15 +388,18 @@ const LeaveHero = () => {
                             onClick={() => {
                                 setShowLeaveTable(true);
                                 setFilterLeave(false);
+                                setPieResults({})
                             }}
-                            />
+                        />
                         <PieChart 
                             onClick = {(node, event) => {
                                 // node.data
                                 setOpenRequest(false)
                                 setFilterLeave(true);
                                 setLeaveStatus(node.data.id);
+                                filterLeaveTable(node.data.id);
                             }}
+                            values = {pieResults}
                         />
                     </>
                 )
@@ -461,26 +411,29 @@ const LeaveHero = () => {
                             setFilterLeave(false);
                         }}
                     /></span>
-                    {console.log(leaveStatus)}
                     <div className="table">
                         <DataTable
                             columns={filterLeaveColumn}
                             data={
-                                dummy?.map((leave) => (
+                                filterLeave_Table?.map((leave) => (
                                     {
-                                        staff_ID: leave.staff_id,
+                                        staff_ID: leave.staff_ID,
                                         name: <div className="name_email">
                                                 <p>{leave?.first_name}</p>
                                                 <small className="text-muted"><b>{leave?.last_name}</b></small>
                                             </div>,
                                         leave_type: leave.leave_type,
-                                        duration: <p>{leave?.duration} {leave?.duration === 1 ? "day" : "days"}</p>,
-                                        paid: leave.paid,
-                                        status: <p className={leave?.status === "On Leave" ? "warning" : leave?.status === "Resumed" ? "green" : "approved"}>{leave?.status}</p>
+                                        duration: <p>{leave?.days_on_leave} {leave?.days_on_leave === 1 ? "day" : "days"}</p>,
+                                        paid: <p>{leave?.paid === false ? "No" : "Yes"}</p>
                                     }
                                 ))
                             }
-                            title ={<p className={leaveStatus === "On Leave" ? "warning" : leaveStatus === "Resumed" ? "green" : "approved"}>{leaveStatus}</p>}
+                            title ={
+                                <div className="title">
+                                    <p className={leaveStatus === "On Leave" ? "warning" : leaveStatus === "Resumed" ? "green" : "approved"}>{leaveStatus}</p>
+                                    <p className="emp_count">: {filterLeave_Table.length}</p>
+                                </div>
+                            }
                             fixedHeader
                             pagination
                             className = "datatables"

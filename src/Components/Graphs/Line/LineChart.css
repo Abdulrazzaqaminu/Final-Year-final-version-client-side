@@ -1,0 +1,11 @@
+.lineChart{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    height: 75.7%;
+    width: 65.5%;
+    background: none;
+    /* box-shadow: var(--box-shadow); */
+    border-radius: 5px;
+    overflow: hidden;
+}
