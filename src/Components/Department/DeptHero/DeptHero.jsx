@@ -489,7 +489,7 @@ const DeptHero = () =>{
                                         />
                                     </div>
                                     <div className="field">
-                                        <span className="add_unit" onClick={addUnit}>Add unit <FiIcons.FiPlus/></span>
+                                        <span className="add_unit" onClick={() => addUnit()}>Add unit <FiIcons.FiPlus/></span>
                                     </div>
                                     { 
                                         addinputs.map((element, index) => (
@@ -503,9 +503,9 @@ const DeptHero = () =>{
                                                     className = {`unit_names ${element?.unit_name === "" ? "error" : ""}`}
                                                     onChange = {e => handleInputChange(index, e)}
                                                 />
-                                                { index >= 0  ?
+                                                { index ?
                                                     (
-                                                        <span onClick={removeUnit}>
+                                                        <span onClick={() => removeUnit(index)}>
                                                             <MdIcons.MdOutlineCancel className="unit_close" />
                                                         </span>
                                                     ) :
@@ -719,7 +719,7 @@ const DeptHero = () =>{
                                 }}/>
                             <form onSubmit={handleSubmit}>
                                 <div className="field">
-                                    <span className="add_unit" onClick={createUnit}>Add unit <FiIcons.FiPlus/></span>
+                                    <span className="add_unit" onClick={() => createUnit()}>Add unit <FiIcons.FiPlus/></span>
                                 </div>
                                 <br />
                                 <br />
@@ -738,7 +738,7 @@ const DeptHero = () =>{
                                                 />
                                                 { index >= 0  ?
                                                     (
-                                                        <span onClick={removecreateUnit}>
+                                                        <span onClick={() => removecreateUnit(index)}>
                                                             <MdIcons.MdOutlineCancel className="unit_close" />
                                                         </span>
                                                     ) :

@@ -3,10 +3,10 @@
     z-index: 20;
     background: var(--color-white);
     box-shadow: var(--box-shadow);
-    right: 32%;
-    top: 25%;
+    right: 6.5%;
+    top: 39.5%;
     width: 30%;
-    height: 54%;
+    height: 53.3%;
     border-radius: 5px;
 }
 
@@ -14,43 +14,47 @@
     margin-top: 30px;
 }
 .transfer .cancel {
+    position: fixed;
+    background: var(--color-white);
+    box-shadow: 0rem 0.1rem 0rem 0rem rgb(222, 222, 222, 0.5);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    width: 30%;
+    height: 32px;
+    margin: -67.8px 38.5px 0px 0px;
+}
+.transfer .cancel .cancel_btn {
     position: absolute;
+    display: grid;
+    place-items: center;
     top: 6px;
     right: 6px;
     font-size: 20px;
+    transition: 0.3s ease;
     cursor: pointer;
-    transition: 0.2s ease;
 }
-.transfer .cancel:hover{
+.transfer .cancel .cancel_btn:hover{
     color: red;
-    transition: 0.2s ease;
 }
-.transfer_button {
-    position: absolute;
-    right: 47.9%;
-    top: 90.5%;
-    z-index: 10;
-}
+
 .transfer .field{
-    padding: 0px 8px;
+    padding: 0px 6px;
     margin-top: 12px;
 }
 
 .transfer .field input{
     width: 100%;
 }
-.transfer .field input.email{
-    text-transform: lowercase;
-}
 
 /* edit */
+
 .edit {
     position: absolute;
     z-index: 20;
     background: var(--color-white);
     box-shadow: var(--box-shadow);
-    right: 32%;
-    top: 25%;
+    right: 6.5%;
+    top: 39%;
     width: 30%;
     height: 54%;
     overflow: auto;
@@ -60,8 +64,12 @@
 .edit .cancel {
     position: fixed;
     background: var(--color-white);
+    box-shadow: 0rem 0.1rem 0rem 0rem rgb(222, 222, 222, 0.5);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     width: 30%;
     height: 32px;
+    margin: -67.8px 38.5px 0px 0px;
 }
 
 .edit .cancel .cancel_btn {
@@ -79,17 +87,14 @@
 }
 
 .edit form{
-    margin-top: 35px;
+    margin-top: 30px;
 }
 
-.edit button {
-    margin-bottom: 10px;
-}
 .edit::-webkit-scrollbar {
     display: none;
 }
 .edit .field{
-    padding: 0px 8px;
+    padding: 0px 6px;
     margin-top: 12px;
 }
 
@@ -132,120 +137,7 @@
     height: 8vh;
     transition: 0.5s ease-in;
 }
-.single_employee_container{
-    display: grid;
-    grid-template-columns: 40% 50%;
-    gap: 30px;
-    place-items: center;
-    /* background: red; */
-    width: 100%;
-    height: 50vh;
-    margin: 100px 30px;
-}
 
-.single_employee_container .single_employee_update{
-    /* background: blue; */
-    background: var(--color-white);
-    box-shadow: var(--box-shadow);
-    transition: all 300ms ease;
-    width: 100%;
-    height: 80vh;
-    border-radius: 7px;
-}
-
-.single_employee_container .single_employee_update .field{
-    display: grid;
-    grid-template-columns: 1fr;
-    padding: 11px 8px;
-    margin-bottom: -10px;
-}
-
-.single_employee_container .single_employee_update .field input,select{
-    background: var(--color-info-light);
-    outline: none;
-    border: none;
-    height: 2rem;
-    padding: 0 10px;
-    font-size: 1rem;
-    border-radius: var(--border-radius-1);
-}
-.single_employee_container .single_employee_update .field select{
-    margin: 10px 0px;
-}
-.single_employee_container .single_employee_update .field button{
-    margin: 25px 0px;
-}
-
-.single_employee_container .single_employee_info{
-    /* background: purple; */
-    background: var(--color-white);
-    box-shadow: var(--box-shadow);
-    width: 100%;
-    height: 80vh;
-    margin-left: 5px;
-    border-radius: 7px;
-    transition: all 300ms ease;
-}
-
-.single_employee_container .single_employee_info:hover{
-    box-shadow: none;
-}
-
-.single_employee_container .single_employee_info .profile_icon{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* background: green; */
-    width: 100%;
-    height: 32%;
-    padding: 10px;
-    font-size: 100px;
-}
-
-.single_employee_container .single_employee_info .profile_icon .uneroll{
-    position: absolute;
-    right: 148px;
-}
-
-.single_employee_container .single_employee_info .profile_icon .icon{
-    display: grid;
-    place-items: center;
-    /* background: pink; */
-    padding: 10px;
-    border-radius: 50%;
-    margin-bottom: -30px;
-    transition: all 300ms ease;
-}
-
-.single_employee_container .single_employee_info .profile_icon .icon:hover{
-    box-shadow: var(--box-shadow);
-    cursor: pointer;
-}
-
-.single_employee_container .single_employee_info .single_employee_org_info{
-    /* background: gray; */
-    padding: 15px;
-    margin-top: 20px;
-}
-
-.single_employee_container .single_employee_info .single_employee_org_info form .field{
-    display: flex;
-    padding: 2px;
-    align-items: center;
-    justify-content: space-between;
-}
-.single_employee_container .single_employee_info .single_employee_org_info form .field input{
-   text-transform: capitalize;
-}
-.single_employee_container .single_employee_info .single_employee_org_info form .field input.email{
-   text-transform: lowercase;
-}
-
-.single_employee_container .field input[type="text"].error {
-    border: 1px solid var(--color-danger);
-    background-color: rgb(248, 234, 234);
-    color: var(--color-danger);
-}
 .transfer form select.error {
     border: 1px solid var(--color-danger);
     background-color: rgb(248, 234, 234);
@@ -305,3 +197,168 @@
 .transfer form .field button{
     margin-top: 20px;
 }
+
+.employee-container{
+    height: 40vh;
+}
+
+.single_employee_container{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    margin: 110px 30px;
+    height: 76vh;
+    width: 100%;
+    background-color: var(--color-white);
+    box-shadow: var(--box-shadow);
+    border-radius: 5px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.single_employee_container::-webkit-scrollbar{
+    width: 8px;
+}
+.single_employee_container::-webkit-scrollbar-thumb{
+    border-radius: 5px;
+    background: var(--color-info-light); 
+}
+.single_employee_container::-webkit-scrollbar-thumb:hover{
+    background: #a2a2a2; 
+}
+
+.single_employee_container .options{
+    position: fixed;
+    background: var(--color-white);
+    box-shadow: 0rem 0.1rem 0rem 0rem rgb(222, 222, 222, 0.5);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    height: 40px;
+    width: 68.77%;
+}
+
+.single_employee_container .options ul{
+    display: flex;
+    justify-content: end;
+}
+
+.single_employee_container .options ul li{
+    padding: 5px 20px;
+}
+
+.single_employee_container .options ul li.edit_button_hover{
+    background-color: rgb(246, 246, 218);
+    color: rgb(156, 156, 6);
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+    transition: 0.3s ease;
+}
+.single_employee_container .options ul li.edit_button_hover:hover{
+    box-shadow: 0rem 0rem 0.5rem 0rem rgba(196, 188, 116, 0.5);
+}
+
+.single_employee_container .options ul li.transfer_button_hover{
+    background-color: rgb(194, 194, 248);
+    color: blue;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    transition: 0.3s ease;
+}
+.single_employee_container .options ul li.transfer_button_hover:hover{
+    box-shadow: 0rem 0rem 0.5rem 0rem rgba(138, 167, 253, 0.5);
+}
+
+.single_employee_container .options ul li.unenroll_button_hover{
+    background-color: rgb(246, 194, 194);
+    color: red;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    transition: 0.3s ease;
+}
+.single_employee_container .options ul li.unenroll_button_hover:hover{
+    box-shadow: 0rem 0rem 0.5rem 0rem rgba(252, 147, 135, 0.5);
+}
+
+.single_employee_container .info{
+    margin-top: 40px;
+}
+
+.single_employee_container .top form{
+    display: grid;
+    grid-template-columns: 49% 50%;
+    white-space: nowrap;
+}
+
+.single_employee_container .top form .field {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 8px;
+}
+
+.single_employee_container .top form .left{
+    display: grid;
+    grid-template-columns: 1fr;
+    /* border-right: 1px dashed var(--color-info-light); */
+}
+
+.single_employee_container .top form .left .field p{
+    margin: 0px -60px;
+}
+
+.single_employee_container .top form .right {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.single_employee_container .top form .right .field p{
+    margin: 0px -62px;
+}
+
+.single_employee_container .top form .right .field p.active_status{
+    background-color: rgb(210, 253, 210);
+    color: green;
+    padding: 5px;
+    border-radius: 5px;
+    height: auto;
+    width: 100%;
+}
+.single_employee_container .top form .right .field p.leave_status{
+    background-color: rgb(246, 246, 218);
+    color: rgb(156, 156, 6);
+    padding: 5px;
+    border-radius: 5px;
+    height: auto;
+    width: 100%;
+}
+.single_employee_container .top form .right .field p.terminated_status{
+    background-color: rgb(251, 204, 204);
+    color: red;
+    padding: 5px;
+    border-radius: 5px;
+    height: auto;
+    width: 100%;
+}
+
+.single_employee_container .bottom{
+    margin: 10px 8px;
+    border-top: 1px solid var(--color-info-light);
+}
+
+.single_employee_container .bottom table{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.single_employee_container .bottom table th , td{
+    padding: 8px 0px;
+    text-align: left;
+}
+
+/* .single_employee_container .bottom table tr{
+    border-bottom: 1px solid #ddd;
+}
+.single_employee_container .bottom table tr:last-child{
+    border-bottom: none;
+} */

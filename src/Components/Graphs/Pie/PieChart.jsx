@@ -7,19 +7,19 @@ const PieChart = ({onClick, values}) => {
         {
           "id": "On Leave",
           "label": "On Leave",
-          "value": values.On_Leave,
+          "value": values.On_Leave == null ? 0 : values.On_Leave,
           "color": "hsl(107, 70%, 50%)"
         },
         {
           "id": "Resumed",
           "label": "Resumed",
-          "value": values.Resumed,
+          "value": values.Resumed == null ? 0 : values.Resumed,
           "color": "hsl(206, 70%, 50%)"
         },
         {
           "id": "Approved",
           "label": "Approved",
-          "value": values.Approved,
+          "value": values.Approved == null ? 0 : values.Approved,
           "color": "hsl(347, 70%, 50%)"
         }
       ]

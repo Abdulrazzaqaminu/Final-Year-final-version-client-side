@@ -116,6 +116,16 @@ const LeaveHero = () => {
             sortable: true
         },
         {
+            name: "Approval Date",
+            selector: row => row.approval_date,
+            sortable: true
+        },
+        {
+            name: "Start - End",
+            selector: row => row.start_end,
+            sortable: true
+        },
+        {
             name: "Duration",
             selector: row => row.duration,
             sortable: true
@@ -261,7 +271,7 @@ const LeaveHero = () => {
                 ("")
             }
         <div className="con">
-        { showLeaveTable === true ? 
+            { showLeaveTable === true ? 
                 (   
                     <div className="leave_container">
                          <Analytics 
@@ -296,7 +306,7 @@ const LeaveHero = () => {
                                         <div className="field">
                                             <label>Leave Type:</label>
                                             <select id="" value={leave_type} onChange={(e) => setLeave_Type(e.target.value)} /*className = {emptyFields?.includes("leave_type") ? "error" : ""}*/ className = {leave_type === "" ? "error" : ""}>
-                                                <option value="" disabled hidden>Choose...</option>
+                                                <option value="">Choose...</option>
                                                 <option value="Annual leave">Annual leave</option>
                                                 <option value="Bereavement leave">Bereavement leave</option>
                                                 <option value="Casual leave">Casual leave</option>
@@ -423,6 +433,11 @@ const LeaveHero = () => {
                                                 <small className="text-muted"><b>{leave?.last_name}</b></small>
                                             </div>,
                                         leave_type: leave.leave_type,
+                                        approval_date: leave?.approval_date,
+                                        start_end: <div className="name_email">
+                                                        <p>{leave?.leave_duration.start} -</p>
+                                                        <p>{leave?.leave_duration.end}</p>
+                                                    </div>,
                                         duration: <p>{leave?.days_on_leave} {leave?.days_on_leave === 1 ? "day" : "days"}</p>,
                                         paid: <p>{leave?.paid === false ? "No" : "Yes"}</p>
                                     }

@@ -6,11 +6,16 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import TextInput from '../TextInput/TextInput';
 import * as FiIcons from "react-icons/fi"
-import * as MdIcons from "react-icons/md"
+import * as MdIcons from "react-icons/md";
+import { DateRange } from "react-date-range";
+import "react-date-range/dist/styles.css"; // main css file
+import "react-date-range/dist/theme/default.css"; // theme css file
+import { format } from "date-fns";
 import validator from 'validator'
 import useFetch from '../../hooks/Fetch/useFetch';
 import useDeptFetch from '../../hooks/Fetch/useDeptFetch';
 import useEmpPayrollFetch from '../../hooks/Fetch/useEmpPayrollFetch';
+import useAttFilterFetch from "../../hooks/Fetch/useAttFilterFetch"
 import { useEnrollContext } from "../../hooks/useEnrollContext";
 import Analytics from '../Analytics/Bar/Analytics';
 import Cancel from '../Analytics/Cancel';
@@ -21,6 +26,7 @@ const Employees = () => {
     
     const [openForm, setOpenForm] = useState(false);
     const [staffid, setStaffid] = useState("");
+    const [attid, setAttid] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -44,18 +50,48 @@ const Employees = () => {
     const [moreInfo, setMoreInfo] = useState(false);
     const [moreGross, setMoreGross] = useState(false);
     const [showEmpTable, setShowEmpTable] = useState(true);
+    const [empAtt, setEmpAtt] = useState(false);
 
     const [popupdept, setPopupdept] = useState("");
     const [employee_id, setEmployee_ID] = useState("");
-    const [employee_id2, setEmployee_ID2] = useState("")
+    const [employee_id2, setEmployee_ID2] = useState("");
+    const [openDate, setOpenDate] = useState(false);
+
+    const [status, setStatus] = useState("");
+    const [hour, setHour] = useState("");
+    const [dayMonYea, setDayMonYea] = useState("");
+
+    const day = new Date();
+    const [date, setDate] = useState([
+        {
+          startDate: new Date(),
+          endDate: new Date(day.setDate(day.getDate() + 5)),
+          key: "selection",
+        },
+    ]);
+
+    const Start_Date = date[0].startDate;
+    const End_Date = date[0].endDate;
+
+    const from_day = Start_Date.toLocaleString("default", {day: "2-digit"}).substr(0,2).replace('T', ' ');
+    const from_month = Start_Date.toLocaleString("default", {month: "2-digit"}).substr(0,2).replace('T', ' ');
+    const from_year = Start_Date.toLocaleString("default", {year: "numeric"}).substr(0,4).replace('T', ' ');
+
+    const to_day = End_Date.toLocaleString("default", {day: "2-digit"}).substr(0,2).replace('T', ' ');
+    const to_month = End_Date.toLocaleString("default", {month: "2-digit"}).substr(0,2).replace('T', ' ');
+    const to_year = End_Date.toLocaleString("default", {year: "numeric"}).substr(0,4).replace('T', ' ');
+    
+    const from = `${from_year}-${from_month}-${from_day}`;
+    const to = `${to_year}-${to_month}-${to_day}`;
     
     const first_name_capitalize = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
     const state_capitalize = state.charAt(0).toUpperCase() + state.slice(1).toLowerCase();
     const city_capitalize = city.charAt(0).toUpperCase() + city.slice(1).toLowerCase();
 
-    const {data, reFetch} = useFetch(`http://127.0.0.1:4040/api/department/filter?dept_name=${department}`);
-    const {dept, reFetchDept} = useDeptFetch(`http://127.0.0.1:4040/api/department/filter_department?dept_name=${popupdept}`);
-    const {payroll, reFetchPayroll} = useEmpPayrollFetch(`http://127.0.0.1:4040/api/payroll/employee_salary/${moreGross ? employee_id : "636a8841e238f4196ca49427"}`);
+    const { data, reFetch } = useFetch(`http://127.0.0.1:4040/api/department/filter?dept_name=${department}`);
+    const { dept, reFetchDept } = useDeptFetch(`http://127.0.0.1:4040/api/department/filter_department?dept_name=${popupdept}`);
+    const { filter, filtererror } = useAttFilterFetch(`http://127.0.0.1:4040/api/attendance/attendance_report/filter_date?staff_ID=${attid}&from=${from}&to=${to}`) ;
+    const { payroll, reFetchPayroll } = useEmpPayrollFetch(`http://127.0.0.1:4040/api/payroll/employee_salary/${moreGross ? employee_id : "636a8841e238f4196ca49427"}`);
 
     useEffect(() => {
         const fetchEmployees = async () => {
@@ -100,6 +136,12 @@ const Employees = () => {
         const regex = /^[0-9\b]+$/;
         if ((e.target.value) === "" || regex.test(e.target.value)) {
           setStaffid(e.target.value);
+        }
+    };
+    const AttStaff_IDnumberOnly = (e) => {
+        const regex = /^[0-9\b]+$/;
+        if ((e.target.value) === "" || regex.test(e.target.value)) {
+          setAttid(e.target.value);
         }
     };
     const firstNamelettersOnly = (e) => {
@@ -189,16 +231,29 @@ const Employees = () => {
         }
     }
 
+    const [checked, setChecked] = useState(false);
+    const handleCheckBox = (e) => {
+        setChecked(e.target.checked)
+    }
+
     const employeeColumn = [
         {
-            name: "Staff ID",
+            name: <p className='header_check'> <TextInput 
+                type="checkbox" 
+                className="header_check_box"
+                // value = {checked}
+                checked = {true}
+                onChange = {handleCheckBox}
+            />Staff ID</p>,
             selector: row => row.staff_ID,
-            sortable: true
+            // sortable: true,
+            width: "100px",
         },
         {
             name: "Name",
             selector: row => row.name,
-            sortable: true
+            // sortable: true,
+            width: "120px"
         },
         {
             name: "Date of Birth",
@@ -223,17 +278,20 @@ const Employees = () => {
         {
             name: "Position",
             selector: row => row.position,
-            sortable: true
+            sortable: true,
+            width: "96px",
         },
         {
             name: "Grade",
             selector: row => row.grade,
-            sortable: true
+            sortable: true,
+            width: "86px",
         },
         {
             name: "Annual Gross",
             selector: row => row.gross,
-            sortable: true
+            sortable: true,
+            width: "129px",
         },
         {
             name: "Employment Type",
@@ -243,7 +301,8 @@ const Employees = () => {
         {
             name: "Status",
             selector: row => row.status,
-            sortable: true
+            sortable: true,
+            width: "129px"
         },
         {
             name: "More",
@@ -276,6 +335,44 @@ const Employees = () => {
         {
             name: "Employment Type",
             selector: row => row.employment_type,
+            sortable: true
+        },
+    ]
+
+    const filterColumn = [
+        {
+            name: "Staff ID",
+            selector: row => row.staff_ID,
+            sortable: true,
+            width: "100px",
+        },
+        {
+            name: "Name",
+            selector: row => row.name,
+            sortable: true,
+            width: "120px"
+        },
+        {
+            name: "Email",
+            selector: row => row.email,
+            sortable: true,
+            width: "170px"
+        },
+        {
+            name: "Date",
+            selector: row => row.date,
+            sortable: true,
+            width: "125px"
+        },
+        {
+            name: "Entry Time",
+            selector: row => row.entry_time,
+            sortable: true,
+            width: "125px"
+        },
+        {
+            name: "Exit Time",
+            selector: row => row.exit_time,
             sortable: true
         },
     ]
@@ -533,31 +630,36 @@ const Employees = () => {
                                                 {
                                                     staff_ID: employee.staff_ID,
                                                     name: <div className="name_email">
-                                                            <p>{employee.first_name} <b>{employee.last_name}</b></p>
-                                                            <small className="text-muted">{employee.email}</small>
+                                                            <p><b>{employee.last_name}</b></p>
+                                                            <small className="text-muted">{employee.first_name}</small>
                                                         </div>,
                                                     dob: employee.date_of_birth,
                                                     phone_number: employee.phone_number,
-                                                    department: <p className='hover'
-                                                                    onClick={() => {
-                                                                        // setLoading(true);
-                                                                        setMoreInfo(true);
-                                                                        setOpenForm(false);
-                                                                        setMoreGross(false);
-                                                                        setPopupdept(employee.department);
-                                                                        setEmployee_ID2(employee._id);
-                                                                    }}
-                                                                >{employee.department}</p>,
+                                                    department: employee.status === "Terminated" ?
+                                                                    <>{employee.department}</>:
+                                                                    <>
+                                                                        <p className='hover'
+                                                                            onClick={() => {
+                                                                                // setLoading(true);
+                                                                                setMoreInfo(true);
+                                                                                setOpenForm(false);
+                                                                                setMoreGross(false);
+                                                                                setPopupdept(employee.department);
+                                                                                setEmployee_ID2(employee._id);
+                                                                            }}
+                                                                            >{employee.department}
+                                                                        </p>
+                                                                    </>,
                                                     unit: employee.unit,
                                                     position: employee.position,
                                                     grade: employee.grade,
-                                                    gross: <p className='hover'
-                                                                    onClick={() => {
-                                                                        setMoreGross(true);
-                                                                        setOpenForm(false);
-                                                                        setMoreInfo(false);
-                                                                        setEmployee_ID(employee._id);
-                                                                    }}
+                                                    gross: <p
+                                                                onClick={() => {
+                                                                    setMoreGross(true);
+                                                                    setOpenForm(false);
+                                                                    setMoreInfo(false);
+                                                                    setEmployee_ID(employee._id);
+                                                                }}
                                                             >{`NGN ${(employee.gross_salary).toLocaleString()}`}</p>,
                                                     employment_type: employee.employee_type,
                                                     status: <span className={employee.status === "Active" ? "green" : employee.status === "On Leave" ? "warning" : "red"}>{employee.status}</span>,
@@ -574,7 +676,7 @@ const Employees = () => {
                                 </>
                             )
                         }
-                        { moreInfo ?
+                        { moreInfo &&
                             <div className='moreInfo'>
                                 <span className="close"><MdIcons.MdOutlineCancel className='close_btn' 
                                     onClick={() => {
@@ -589,7 +691,7 @@ const Employees = () => {
                                         data = {
                                             moreInfo ? 
                                             (
-                                                dept.employees?.map((info) => (
+                                                dept?.employees?.map((info) => (
                                                 {
                                                         staff_ID: <p className = {employee_id2 === info._id ? "green" : ""}>{info.staff_ID}</p>,
                                                         name: <div className="name_email">
@@ -605,114 +707,230 @@ const Employees = () => {
                                             ) :
                                             ("")
                                         }
-                                        title = {<p className='title'>{dept.departments?.dept_name}: {dept.employees?.length}</p>}
+                                        title = {<p className='title'>{dept?.departments?.dept_name}: {dept?.employees?.length}</p>}
                                         fixedHeader
                                         pagination
                                         className = "datatables"
                                     />
                                 </div>
-                            </div> : moreGross ?
-                            (
-                                <div className='moreInfo_form'>
-                                    <form>
-                                        <span className="close"><MdIcons.MdOutlineCancel className='close_btn' 
-                                            onClick={() => {
-                                                setMoreInfo(false);
-                                                setMoreGross(false);
-                                                setOpenForm(false);
-                                            }}
-                                        /></span>
-                                        <div className='form_container'>
-                                            <div className="field">
-                                                <label>Staff Id</label>
-                                                <input type="text" disabled placeholder={payroll?.Staff_ID}/>
-                                            </div>
-                                            <div className="field">
-                                                <label>First Name</label>
-                                                <input type="text" disabled placeholder={payroll?.First_Name}/>
-                                            </div>
-                                            <div className="field">
-                                                <label>Last Name</label>
-                                                <input type="text" disabled placeholder={payroll?.Last_Name}/>
-                                            </div>
-                                            <div className="field email">
-                                                <label>Email</label>
-                                                <input type="text" disabled placeholder={payroll?.Employee_Email}/>
-                                            </div>
-                                            <div className="field">
-                                                <label>Days worked</label>
-                                                <input type="text" disabled placeholder={payroll?.Days_Worked}/>
-                                            </div>
-                                            <div className="field">
-                                                <label>Annual Gross</label>
-                                                <input type="text" disabled placeholder={payroll?.Employee_Gross}/>
-                                            </div>
-                                            <div className="field">
-                                                <label>Employment Type</label>
-                                                <input type="text" disabled placeholder={payroll?.Employee_Type}/>
-                                            </div>
-                                            { payroll?.Employee_Type === "Full-Time" ?
-                                                (
-                                                    <div className='hours'>
-                                                        <div className="hours_worked">
-                                                            <label>Total Hours Worked</label>
-                                                            <input type="text" disabled placeholder={payroll?.Hours_Worked}/>
-                                                        </div>
-                                                        <div className="over_time">
-                                                            <label>Total Extra Hours</label>
-                                                            <input type="text" disabled placeholder={payroll?.Extra_Hours}/>
-                                                        </div>
-                                                    </div>
-                                                ):
-                                                (
-                                                    <div className='hours'>
-                                                        <div className="hours_worked">
-                                                            <label>Hours Worked</label>
-                                                            <input type="text" disabled placeholder={payroll?.Hours_Worked}/>
-                                                        </div>
-                                                        <div className="over_time">
-                                                            <label>Net Salary (Per hours)</label>
-                                                            <input type="text" disabled placeholder={payroll?.Net_Salary}/>
-                                                        </div>
-                                                    </div>
-                                                )
-                                            }
-                                            { payroll?.Employee_Type === "Full-Time" ?
-                                                (
-                                                    <>
-                                                        <div className="field">
-                                                            <label>Net Salary (Per day)</label>
-                                                            <input type="text" disabled placeholder={payroll?.Net_Salary}/>
-                                                        </div>
-                                                        <div className='field'>
-                                                            <label>Total Leave Pay</label>
-                                                            <input type="text" disabled placeholder={payroll?.Leave_Pay}/>
-                                                        </div>
-                                                    </>
+                            </div> 
+                            // : moreGross ?
+                            // (
+                            //     <div className='moreInfo_form'>
+                            //         <form>
+                            //             <span className="close"><MdIcons.MdOutlineCancel className='close_btn' 
+                            //                 onClick={() => {
+                            //                     setMoreInfo(false);
+                            //                     setMoreGross(false);
+                            //                     setOpenForm(false);
+                            //                 }}
+                            //             /></span>
+                            //             <div className='form_container'>
+                            //                 <div className="field">
+                            //                     <label>Staff Id</label>
+                            //                     <input type="text" disabled placeholder={payroll ? payroll?.Staff_ID : "N/A"}/>
+                            //                 </div>
+                            //                 <div className="field">
+                            //                     <label>First Name</label>
+                            //                     <input type="text" disabled placeholder={payroll?.First_Name}/>
+                            //                 </div>
+                            //                 <div className="field">
+                            //                     <label>Last Name</label>
+                            //                     <input type="text" disabled placeholder={payroll?.Last_Name}/>
+                            //                 </div>
+                            //                 <div className="field email">
+                            //                     <label>Email</label>
+                            //                     <input type="text" disabled placeholder={payroll?.Employee_Email}/>
+                            //                 </div>
+                            //                 <div className="field">
+                            //                     <label>Days worked</label>
+                            //                     <input type="text" disabled placeholder={payroll?.Days_Worked}/>
+                            //                 </div>
+                            //                 <div className="field">
+                            //                     <label>Annual Gross</label>
+                            //                     <input type="text" disabled placeholder={payroll?.Employee_Gross}/>
+                            //                 </div>
+                            //                 <div className="field">
+                            //                     <label>Employment Type</label>
+                            //                     <input type="text" disabled placeholder={payroll?.Employee_Type}/>
+                            //                 </div>
+                            //                 { payroll?.Employee_Type === "Full-Time" ?
+                            //                     (
+                            //                         <div className='hours'>
+                            //                             <div className="hours_worked">
+                            //                                 <label>Total Hours Worked</label>
+                            //                                 <input type="text" disabled placeholder={payroll?.Hours_Worked}/>
+                            //                             </div>
+                            //                             <div className="over_time">
+                            //                                 <label>Total Extra Hours</label>
+                            //                                 <input type="text" disabled placeholder={payroll?.Extra_Hours}/>
+                            //                             </div>
+                            //                         </div>
+                            //                     ):
+                            //                     (
+                            //                         <div className='hours'>
+                            //                             <div className="hours_worked">
+                            //                                 <label>Hours Worked</label>
+                            //                                 <input type="text" disabled placeholder={payroll?.Hours_Worked}/>
+                            //                             </div>
+                            //                             <div className="over_time">
+                            //                                 <label>Net Salary (Per hours)</label>
+                            //                                 <input type="text" disabled placeholder={payroll?.Net_Salary}/>
+                            //                             </div>
+                            //                         </div>
+                            //                     )
+                            //                 }
+                            //                 { payroll?.Employee_Type === "Full-Time" ?
+                            //                     (
+                            //                         <>
+                            //                             <div className="field">
+                            //                                 <label>Net Salary (Per day)</label>
+                            //                                 <input type="text" disabled placeholder={payroll?.Net_Salary}/>
+                            //                             </div>
+                            //                             <div className='field'>
+                            //                                 <label>Total Leave Pay</label>
+                            //                                 <input type="text" disabled placeholder={payroll?.Leave_Pay}/>
+                            //                             </div>
+                            //                         </>
                                                     
-                                                ) :
-                                                ("")
-                                            }
-                                        </div>
-                                    </form>
-                                </div>
-                            ) :
-                            ""
+                            //                     ) :
+                            //                     ("")
+                            //                 }
+                            //             </div>
+                            //         </form>
+                            //     </div>
+                            // ) :
+                            // ""
                         }
                     </>   
                 ) :
                 (
                     <>
+                        {filtererror &&
+                            (
+                                <div className='filter_error'>
+                                    <div className="error_message">
+                                        {filtererror}
+                                    </div>
+                                </div>
+                            )
+                        }
                         <Cancel 
                             onClick={() => {
                                 setShowEmpTable(true);
+                                setEmpAtt(false)
                             }}
                         />
+                        <div className="date_range">
+                            <p><small>*Optional</small></p>
+                            <TextInput
+                                type = "text"
+                                value = {attid}
+                                className = "staff_id"
+                                placeholder = "Staff ID"
+                                maxLength={4}
+                                minLength = {4}
+                                onChange = {AttStaff_IDnumberOnly}
+                            />
+                            <span
+                                onClick={() => setOpenDate(!openDate)}
+                                className="dates"
+                            >
+                                {`${format(date[0].startDate, "yyyy-MM-dd")} - ${format(
+                                    date[0].endDate,
+                                    "yyyy-MM-dd"
+                                )}`}
+                            </span>
+                            {openDate && (
+                                <div>
+                                    <DateRange
+                                        editableDateInputs={true}
+                                        onChange={(item) => setDate([item.selection])}
+                                        moveRangeOnFirstSelection={false}
+                                        ranges={date}
+                                        className="range"
+                                    />
+                                </div>
+                            )}
+                        </div>
                         <LineChart 
-                            onClick = {(point, even) => {
-                                console.log(point)
+                            onClick = {(point, event) => {
+                                setDayMonYea(point.data.xFormatted);
+                                setStatus(point.serieId);
+                                setHour(point.data.yFormatted);
+                                setEmpAtt(true)
                             }}
+                            from = {from}
                         />
+                        { empAtt &&
+                            <div className='emp_att'>
+                                <span className="close"><MdIcons.MdOutlineCancel className='close_btn' 
+                                    onClick={() => {
+                                        setEmpAtt(false);
+                                    }}
+                                /></span>
+                                <div className='filtertable'>
+                                    <DataTable
+                                        columns = {filterColumn}
+                                        data = {filter?.length > 0 ? 
+                                            (
+                                                status === "Checked Out" ? 
+                                                (
+                                                    filter?.filter((each) => (
+                                                        each.in_time === status && each.date === dayMonYea && (each.out_time).slice(0,2) === (hour).slice(0,2)
+                                                    ))?.map((info) => (
+                                                        {
+                                                            staff_ID: info.staff_ID,
+                                                            name: <>
+                                                                    <b>{info.last_name}</b>
+                                                                        <small>
+                                                                            <p className="text-muted">{info.first_name}</p>
+                                                                        </small> 
+                                                                </> ,
+                                                            email: info.email,
+                                                            date: info.date,
+                                                            entry_time: info.in_time === "Checked Out" ? 
+                                                                        (<p className="red">{info.in_time}</p>) :
+                                                                        (<p>{info.in_time}</p>),
+                                                            exit_time: info.out_time === "Still In" ? 
+                                                                        (<p className="green">{info.out_time}</p>) :
+                                                                        (<p>{info.out_time}</p>)
+                                                        }
+                                                    ))
+                                                ) :
+                                                (
+                                                    (filter?.filter((each) => (
+                                                        each.out_time === status && each.date === dayMonYea && (each.in_time).slice(0,2) === (hour).slice(0,2)
+                                                    )))?.map((info) => (
+                                                        {
+                                                            staff_ID: info.staff_ID,
+                                                            name: <>
+                                                                    <b>{info.last_name}</b>
+                                                                        <small>
+                                                                            <p className="text-muted">{info.first_name}</p>
+                                                                        </small> 
+                                                                </> ,
+                                                            email: info.email,
+                                                            date: info.date,
+                                                            entry_time: info.in_time === "Checked Out" ? 
+                                                                        (<p className="red">{info.in_time}</p>) :
+                                                                        (<p>{info.in_time}</p>),
+                                                            exit_time: info.out_time === "Still In" ? 
+                                                                        (<p className="green">{info.out_time}</p>) :
+                                                                        (<p>{info.out_time}</p>)
+                                                        }
+                                                    ))
+                                                )
+                                            ) :
+                                            ("")
+                                        }
+                                        fixedHeader
+                                        pagination
+                                        className='datatables'
+                                    />
+                                </div>
+                            </div>
+                        }
                     </>
                 )
 

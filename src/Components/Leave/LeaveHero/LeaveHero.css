@@ -46,10 +46,12 @@
     display: inline-block;
     z-index: 100;
     padding: 5px 0px;
+    height: 30px;
     width: 25%;
     transition: 0.3s ease;
     cursor: pointer;
     background: var(--color-white);
+    box-shadow: 0rem 0.1rem 0rem 0rem rgb(222, 222, 222, 0.5);
 }
 
 .leave_container .leave .leave_form .close .close_icon{
@@ -82,6 +84,15 @@
 
 .leave_container .leave_form form .field select{
     margin: 10px 0px;
+    background: var(--color-info-light);
+    outline: none;
+    border: none;
+    height: 2rem;
+    padding: 0 10px;
+    font-size: 1rem;
+    margin: 9px 0px;
+    width: 100%;
+    border-radius: var(--border-radius-1);
 }
 
 .leave_container .leave_form form .field select.error{
@@ -132,9 +143,9 @@
 
 .con .filter_leave{
     position: absolute;
-    margin: -535px 130px;
+    margin: -537px 65px;
     height: 58%;
-    width: 50%;
+    width: 60%;
     z-index: 2;
     opacity: 0.93;
     border-radius: 5px;
@@ -147,7 +158,7 @@
     position: fixed;
     background: var(--color-white);
     box-shadow: var(--box-shadow);
-    width: 50%;
+    width: 60%;
     height: 32px;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
@@ -175,16 +186,17 @@
 }
 
 .filter_leave .table p.approved{
-    width: 18%;
+    width: 15%;
 }
 .filter_leave .table p.warning{
-    width: 17.2%;
+    width: 14.1%;
 }
 .filter_leave .table p.green{
-    width: 17.2%;
+    width: 14.5%;
 }
 
 .filter_leave .table .datatables{
+    overflow-x: hidden;
     height: 35vh;
 }
 

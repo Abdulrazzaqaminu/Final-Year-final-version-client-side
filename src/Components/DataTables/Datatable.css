@@ -383,3 +383,118 @@
 .moreInfo_form form .form_container {
     margin-top: 32px;
 }
+
+.header_check {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input[type=checkbox]{
+    /* appearance: none; */
+    background-color: #fff;
+    cursor: pointer;
+    font: inherit;
+    color: currentColor;
+    margin: 3px 3px 0px 0px;
+    width: 1.10em;
+    height: 1.15em;
+    border: 0.15em solid currentColor;
+    border-radius: 0.15em;
+    transform: translateY(-0.075em);
+}
+
+.date_range{
+    position: absolute;
+    top: 60px;
+}
+
+.date_range .dates{
+    position: absolute;
+    cursor: pointer;
+    z-index: 100;
+    white-space: nowrap;
+    color: var(--color-info-dark);
+    border-radius: 5px;
+    padding: 10px;
+    border: 0.5px solid rgb(215, 215, 215);
+}
+
+
+.date_range p{
+    position: absolute;
+    margin-top: -20px;
+    color: rgb(254, 129, 129);
+}
+
+.date_range .staff_id {
+    width: 50%;
+    height: 50%;
+    margin: 0px 10px 0px 0px;
+    white-space: nowrap;
+    color: var(--color-info-dark);
+    background: none;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid rgb(215, 215, 215);
+}
+
+.date_range .range{
+    position: absolute;
+    z-index: 100;
+    top: 100px;
+    box-shadow: var(--box-shadow);
+    left: 10px;
+}
+
+.filter_error .error_message{
+    margin-top: -20px;
+}
+
+.emp_att {
+    position: absolute;
+    margin: 36px 35px;
+    height: 64%;
+    width: 60%;
+    z-index: 2;
+    opacity: 0.9;
+    border-radius: 5px;
+    background: var(--color-white);
+    box-shadow: 0rem 0rem 1rem 0.5rem rgb(222, 222, 222, 0.8);
+}
+
+.emp_att .close {
+    position: fixed;
+    background: var(--color-white);
+    box-shadow: var(--box-shadow);
+    width: 60%;
+    height: 32px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.emp_att .close .close_btn {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    top: 6px;
+    right: 6px;
+    font-size: 20px;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.emp_att .close .close_btn:hover {
+    color: red;
+}
+
+.emp_att .filtertable{
+    width: 100%;
+    height: 100%;
+    margin-top: 35px;
+}
+
+.emp_att .filtertable .datatables {
+    height: 50vh;
+}
