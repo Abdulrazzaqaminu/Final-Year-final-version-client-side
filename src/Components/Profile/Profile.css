@@ -26,5 +26,57 @@
 }
 
 .profile .profile-icon:hover{
+    cursor: pointer;
     box-shadow: var(--box-shadow);
+}
+
+.profile .options{
+    position: absolute;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    top: 55px;
+    margin-left: 170px;
+    border-radius: 3px;
+    /* background: var(--color-white); */
+}
+
+.profile .options p{
+    padding: 3px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    white-space: nowrap;
+}
+
+.profile .options p.prof{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    box-shadow: rgba(94, 255, 153, 0.44) 0px 3px 8px;
+}
+.profile .options p.prof:hover{
+    color: green;
+    box-shadow: none;
+}
+
+.profile .options p.log{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    box-shadow: rgba(255, 118, 94, 0.44) 0px 3px 8px;
+}
+.profile .options p.log:hover{
+    color: red;
+    box-shadow: none;
+}
+.proficon{
+    color: rgb(67, 115, 67);
+    margin-left: 10px;
+}
+.logicon{
+    color: rgb(155, 64, 64);
+    margin-left: 10px;
+    transition: 0.3s ease;
 }

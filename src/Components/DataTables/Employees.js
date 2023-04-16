@@ -11,7 +11,7 @@ import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
-import validator from 'validator'
+import validator from 'validator';
 import useFetch from '../../hooks/Fetch/useFetch';
 import useDeptFetch from '../../hooks/Fetch/useDeptFetch';
 import useEmpPayrollFetch from '../../hooks/Fetch/useEmpPayrollFetch';

@@ -20,7 +20,7 @@ const AccountHero = () =>{
             <div className="acct-hero_container">
                 <div className="acct_update">
                     <form action="" onSubmit={handleSubmit}>
-                        <div class="field">
+                        <div className="field">
                             <label>First Name:</label>
                             <TextInput 
                                 type="text"
@@ -29,7 +29,7 @@ const AccountHero = () =>{
                                 onChange={(e) => setFirstName(e.target.value)}
                             />
                         </div>
-                        <div class="field">
+                        <div className="field">
                             <label>Last Name:</label>
                             <TextInput 
                                 type="text"
@@ -38,7 +38,7 @@ const AccountHero = () =>{
                                 onChange={(e) => setLastName(e.target.value)}
                             />
                         </div>
-                        <div class="field">
+                        <div className="field">
                             <label>Email:</label>
                             <TextInput 
                                 type="text"
@@ -48,7 +48,7 @@ const AccountHero = () =>{
                                 className = "email"
                             />
                         </div>
-                        <div class="field">
+                        <div className="field">
                             <label>Role:</label>
                             <TextInput 
                                 type="text"
@@ -58,7 +58,7 @@ const AccountHero = () =>{
                                 className="text-muted"
                             />
                         </div>
-                        <div class="field">
+                        <div className="field">
                             <label>Password:</label>
                             <TextInput 
                                 type="text"
@@ -76,23 +76,23 @@ const AccountHero = () =>{
                     </div>
                     <div className="acct_org_info">
                         <form>
-                            <div class="field">
+                            <div className="field">
                                 <label>First Name:</label>
                                 <input type="text" placeholder="Abdulrazzaq" name="enrollDate" disabled/>
                             </div>
-                            <div class="field">
+                            <div className="field">
                                 <label>Last Name:</label>
                                 <input type="text" placeholder="Aminu" name="state" disabled/>
                             </div>
-                            <div class="field">
+                            <div className="field">
                                 <label>Email:</label>
                                 <input type="text" placeholder="abdulrazzaqaminu@gmail.com" className="email" name="state" disabled/>
                             </div>
-                            <div class="field">
+                            <div className="field">
                                 <label>Role:</label>
                                 <input type="text" placeholder="Admin" name="Role" disabled/>
                             </div>
-                            <div class="field">
+                            <div className="field">
                                 <label>Password:</label>
                                 <input type="text" placeholder="123456789" name="state" disabled/>
                             </div>

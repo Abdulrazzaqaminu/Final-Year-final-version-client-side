@@ -11,17 +11,17 @@ const Cards = () =>{
         {
             cardTile: "Employees",
             cardIcon: <BsIcons.BsFillPeopleFill />,
-            cardInfo: data.Number_of_Employees
+            cardInfo: data?.Number_of_Employees
         },
         {
             cardTile: "Entry",
             cardIcon: <CgIcons.CgLogIn />,
-            cardInfo: data.Number_of_entries
+            cardInfo: data?.Number_of_entries
         },
         {
             cardTile: "Exit",
             cardIcon: <CgIcons.CgLogOut />,
-            cardInfo: data.Number_of_exits
+            cardInfo: data?.Number_of_exits
         },
     ]
 

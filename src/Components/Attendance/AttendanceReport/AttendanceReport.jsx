@@ -2,13 +2,26 @@ import React from 'react';
 import SideNavBar from '../../SideNavBar/SideNavBar';
 import Profile from "../../Profile/Profile";
 import ReportHero from './ReportHero/ReportHero';
+import { useContext } from 'react';
+import { Navigate } from 'react-router-dom';
+import AuthContext from '../../../context/AuthContext';
 
 const AttendanceReport = () =>{
+    const { loggedIn } = useContext(AuthContext);
     return(
         <>
-            <SideNavBar />
-            <ReportHero />
-            <Profile />
+            {loggedIn === true ? 
+                (
+                    <>
+                        <SideNavBar />
+                        <ReportHero />
+                        <Profile />
+                    </>
+                ):
+                (
+                    <Navigate replace={true} to="/login" />
+                )
+            }
         </>
     )
 }

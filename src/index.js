@@ -7,10 +7,12 @@ import { EmployeeContextProvider } from './context/empContext';
 import { LoanContextProvider } from './context/loanContext';
 import { LeaveContextProvider } from './context/leaveContext';
 import { EnrollContextProvider } from './context/enrollContext';
+import { AuthContextProvider } from './context/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
+  <AuthContextProvider>
     <DepartmentContextProvider>
       <UnitsContextProvider>
         <EmployeeContextProvider>
@@ -24,5 +26,6 @@ root.render(
         </EmployeeContextProvider>
       </UnitsContextProvider>
     </DepartmentContextProvider>
+  </AuthContextProvider>
   // </React.StrictMode>
 );

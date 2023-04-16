@@ -10,14 +10,20 @@ import AttendanceReport from './Components/Attendance/AttendanceReport/Attendanc
 import RecordAttendance from './Components/Attendance/RecordAttendance/RecordAttendance';
 import Payroll from './Components/Payroll/Payroll';
 import Loans from './Components/Loan/Loans';
-import Leave from './Components/Leave/Leave'
+import Leave from './Components/Leave/Leave';
+import Login from './Components/Login/Login';
 import EmployeePayroll from './Components/Payroll/EmployeePayroll/EmployeePayroll';
+import { useContext } from 'react';
+import AuthContext from './context/AuthContext'
+
 
 function App() {
+  const { loggedIn } = useContext(AuthContext);
   return (
     <BrowserRouter>
        <div className="container">
           <Routes>
+            <Route exact path="/login" element={<Login />} />
             <Route exact path="/" element={<Dashboard />} />
             <Route exact path="/department" element={<Department />} />
             <Route exact path="/department/hod/:hod_id" element={<Hod />} />
