@@ -5,13 +5,12 @@ import * as MdIcons from 'react-icons/md';
 import * as FiIcons from 'react-icons/fi';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import axios from 'axios';
 
 const Profile = () =>{
     const { getLoggedIn } = useContext(AuthContext)
-    const navigate = useNavigate();
     const [error, setError] = useState(null);
     let userDetails = JSON.parse(localStorage?.getItem('admin'));
     const [options, setOptions] = useState(false);
@@ -25,6 +24,7 @@ const Profile = () =>{
             setError(error);
         }
     }
+
     const confirmLogOut = (e) => {
         e.preventDefault()  
         confirmAlert({

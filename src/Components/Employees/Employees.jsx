@@ -13,7 +13,7 @@ const Employees = () =>{
             {loggedIn === true ? 
                 (
                     <>
-                         <SideNavBar />
+                        <SideNavBar />
                         <EmpHero />
                         <Profile />
                     </>

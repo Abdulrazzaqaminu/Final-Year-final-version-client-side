@@ -5,23 +5,26 @@ import useFetch from '../../hooks/Fetch/useFetch';
 import Button from '../Button/Button';
 
 const Payroll = () => {
-    const {data, loading, error, reFetch} = useFetch(`http://127.0.0.1:4040/api/payroll`);
+    const { data } = useFetch(`http://127.0.0.1:4040/api/payroll`);
 
     const employeeColumn = [
         {
             name: "Staff ID",
             selector: row => row.staff_ID,
-            sortable: true
+            sortable: true,
+            width: "100px"
         },
         {
             name: "Name",
             selector: row => row.name,
-            sortable: true
+            sortable: true,
+            width: "120px"
         },
         {
-            name: "Employment Type",
-            selector: row => row.employment_type,
-            sortable: true
+            name: "Email",
+            selector: row => row.email,
+            sortable: true,
+            width: "200px"
         },
         {
             name: "Loans",
@@ -31,7 +34,8 @@ const Payroll = () => {
         {
             name: "Annual Gross",
             selector: row => row.annual_gross,
-            sortable: true
+            sortable: true,
+            width: "150px"
         },
         {
             name: "More",
@@ -42,47 +46,33 @@ const Payroll = () => {
 
     return(
         <>
-             {error &&
-                (
-                    <div className="error">
-                        <span className='error_message'>
-                            {error}
-                        </span>
-                    </div>
-                )
-            }
-            {loading ? 
-                ("Loading please wait") : 
-                (
-                    <>
-                        <DataTable
-                            columns={employeeColumn}
-                            data = {
-                                data?.map(payroll => (
-                                    {
-                                        staff_ID: payroll.staff_ID,
-                                        name: <div className="name_email">
-                                                <p>{payroll.first_name} <b>{payroll.last_name}</b></p>
-                                                <small className="text-muted">{payroll.email}</small>
-                                            </div>,
-                                        employment_type: payroll.employee_type,
-                                        loans: payroll.loans.length === 0 ?
-                                                ("No loans") :
-                                                (
-                                                `NGN ${(payroll.loans).toLocaleString()}`
-                                                ),
-                                        annual_gross: `NGN ${(payroll.annual_gross).toLocaleString()}`,
-                                        more: <Link to={`/payroll/employee_salary/${payroll.employee_id}`}><Button>Salary</Button></Link>
-                                    }
-                                ))
+            <>
+                <DataTable
+                    columns={employeeColumn}
+                    data = {
+                        data?.map(payroll => (
+                            {
+                                staff_ID: payroll.staff_ID,
+                                name: <div className="name_email">
+                                        <p><b>{payroll.last_name}</b></p>
+                                        <small className="text-muted">{payroll.first_name}</small>
+                                    </div>,
+                                email: payroll.email,
+                                loans: payroll.loans.length === 0 ?
+                                        ("No loans") :
+                                        (
+                                        `NGN ${(payroll.loans).toLocaleString()}`
+                                        ),
+                                annual_gross: `NGN ${(payroll.annual_gross).toLocaleString()}`,
+                                more: <Link to={`/payroll/employee_salary/${payroll.employee_id}`}><Button>Salary</Button></Link>
                             }
-                            fixedHeader
-                            pagination
-                            className='datatables'
-                        />
-                    </>
-                )
-            }
+                        ))
+                    }
+                    fixedHeader
+                    pagination
+                    className='datatables'
+                />
+            </>
         </>
     )
 }

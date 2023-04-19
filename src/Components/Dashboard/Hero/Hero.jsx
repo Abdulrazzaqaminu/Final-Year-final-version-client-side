@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import './Hero.css';
 import Cards from "../Cards/Cards";
 import Attendance from "../../DataTables/Attendance";
-import Profile from "../../Profile/Profile";
 import { useState } from "react";
+import useFetch from "../../../hooks/Fetch/useFetch";
+import Loading from "../../Loading/Loading";
 
 const Hero = () =>{
     const [hours, setHours] = useState("");
@@ -11,6 +12,7 @@ const Hero = () =>{
     const [seconds, setSeconds] = useState("");
     const [ampm, setAmpm] = useState("");
     const [date, setDate] = useState("");
+    const { loading } = useFetch(`http://127.0.0.1:4040/api/dashboard`);
     
     useEffect(() => {
         const startTime = () => {
@@ -43,22 +45,27 @@ const Hero = () =>{
     }, [])
 
     return(
-            <main>
-                <h1>Dashboard</h1>
-                <div className="date_time">
-                    <h2 className="text-muted date">{date}</h2>
-                    <h2 className="text-muted time">{`${hours}:${minutes}:${seconds} ${ampm}`}</h2>
-                </div>
-                <div>
-                    <Cards/>
-                </div>
-                <div className="attendance-table">
-                    <Attendance />
-                </div>
-                <div>
-                    <Profile />
-                </div>
-            </main>
+        <>
+            { loading ?
+                ( <Loading /> ) :
+                (
+                    <main>
+                        <h1>Dashboard</h1>
+                        <div className="date_time">
+                            <h2 className="text-muted date">{date}</h2>
+                            <h2 className="text-muted time">{`${hours}:${minutes}:${seconds} ${ampm}`}</h2>
+                        </div>
+                        <div>
+                            <Cards/>
+                        </div>
+                        <div className="attendance-table">
+                            <Attendance />
+                        </div>
+                    </main>
+                )
+                    
+            }
+        </>
     )
 }
 

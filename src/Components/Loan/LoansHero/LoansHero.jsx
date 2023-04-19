@@ -12,6 +12,7 @@ import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
+import Loading from "../../Loading/Loading";
 
 
 const LoansHero = () =>{
@@ -57,17 +58,26 @@ const LoansHero = () =>{
         {
             name: "Staff ID",
             selector: row => row.staff_ID,
-            sortable: true
+            sortable: true,
+            width: "100px"
         },
         {
             name: "Name",
             selector: row => row.name,
-            sortable: true
+            sortable: true,
+            width: "120px"
+        },
+        {
+            name: "Email",
+            selector: row => row.email,
+            sortable: true,
+            width: "200px"
         },
         {
             name: "Amount",
             selector: row => row.amount,
-            sortable: true
+            sortable: true,
+            width: "120px"
         },
         {
             name: "Approval Date",
@@ -209,86 +219,86 @@ const LoansHero = () =>{
                 ) :
                 ("")
             }
-            <div className="loans_container">
-                <div className="loan">
-                    <span className="plus" onClick={
-                        () => {
-                            setOpenLoan(true);
-                        }
-                    } ><FiIcons.FiPlus/></span>
-                    { openLoan &&    
-                        <div className="loan-form">
-                            <span className="close"><MdIcons.MdOutlineCancel onClick={() => setOpenLoan(false)} className="close_icon"/></span>
-                            <form onSubmit={handleSubmit}>
-                                <div className="field">
-                                    <label>Assign To (Staff ID):</label>
-                                    <TextInput 
-                                        type="text"
-                                        value={assign}
-                                        onChange={staff_Id_numberOnly}
-                                        maxLength={4}
-                                        minLength = {4}
-                                        className = {assign === "" ? "error" : ""}
-                                        // className = {emptyFields?.includes("staff_ID") ? "error" : ""}
-                                    />
+            { loading ?
+                ( <Loading /> ):
+                (
+                    <div className="loans_container">
+                        <div className="loan">
+                            <span className="plus" onClick={
+                                () => {
+                                    setOpenLoan(true);
+                                }
+                            } ><FiIcons.FiPlus/></span>
+                            { openLoan &&    
+                                <div className="loan-form">
+                                    <span className="close"><MdIcons.MdOutlineCancel onClick={() => setOpenLoan(false)} className="close_icon"/></span>
+                                    <form onSubmit={handleSubmit}>
+                                        <div className="field">
+                                            <label>Assign To (Staff ID):</label>
+                                            <TextInput 
+                                                type="text"
+                                                value={assign}
+                                                onChange={staff_Id_numberOnly}
+                                                maxLength={4}
+                                                minLength = {4}
+                                                className = {assign === "" ? "error" : ""}
+                                                // className = {emptyFields?.includes("staff_ID") ? "error" : ""}
+                                            />
+                                        </div>
+                                        <div className="field">
+                                            <label>Amount:</label>
+                                            <TextInput 
+                                                type="text"
+                                                value={formatAmount}
+                                                onChange={amount_numberOnly}
+                                                className = {amount === "" ? "error" : ""}
+                                                // className = {emptyFields?.includes("loan_amount") ? "error" : ""}
+                                            />
+                                        </div>
+                                        <div className="field">
+                                            <label>Approval Date:</label>
+                                            <TextInput 
+                                                type="text"
+                                                value={approval}
+                                                disabled={true}
+                                                className = {emptyFields?.includes("approval_date") ? "error" : ""}
+                                            />
+                                        </div>
+                                        <div className="field">
+                                            <label>Duration:</label>
+                                            <div className="duration">
+                                                <span
+                                                    onClick={() => setOpenDate(!openDate)}
+                                                    className="dates"
+                                                >
+                                                    {`${format(date[0].startDate, "yyyy-MM-dd")} - ${format(
+                                                        date[0].endDate,
+                                                        "yyyy-MM-dd"
+                                                    )}`}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="field">
+                                            <label>Loan Description:</label>
+                                            <textarea name="" value={loanDesc} /*className = {emptyFields?.includes("loan_details") ? "error" : ""}*/ className = {loanDesc === "" ? "error" : ""} onChange={desclettersOnly} id="" cols="30" rows="2"></textarea>
+                                            
+                                            <Button type="submit" onClick={loan_payment}>Submit</Button>
+                                        </div>
+                                    </form>
+                                    {openDate && (
+                                        <div>
+                                            <DateRange
+                                                editableDateInputs={true}
+                                                onChange={(item) => setDate([item.selection])}
+                                                moveRangeOnFirstSelection={false}
+                                                ranges={date}
+                                                className="daterange"
+                                            />
+                                        </div>
+                                    )}
                                 </div>
-                                <div className="field">
-                                    <label>Amount:</label>
-                                    <TextInput 
-                                        type="text"
-                                        value={formatAmount}
-                                        onChange={amount_numberOnly}
-                                        className = {amount === "" ? "error" : ""}
-                                        // className = {emptyFields?.includes("loan_amount") ? "error" : ""}
-                                    />
-                                </div>
-                                <div className="field">
-                                    <label>Approval Date:</label>
-                                    <TextInput 
-                                        type="text"
-                                        value={approval}
-                                        disabled={true}
-                                        className = {emptyFields?.includes("approval_date") ? "error" : ""}
-                                    />
-                                </div>
-                                <div className="field">
-                                    <label>Duration:</label>
-                                    <div className="duration">
-                                        <span
-                                            onClick={() => setOpenDate(!openDate)}
-                                            className="dates"
-                                        >
-                                            {`${format(date[0].startDate, "yyyy-MM-dd")} - ${format(
-                                                date[0].endDate,
-                                                "yyyy-MM-dd"
-                                            )}`}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="field">
-                                    <label>Loan Description:</label>
-                                    <textarea name="" value={loanDesc} /*className = {emptyFields?.includes("loan_details") ? "error" : ""}*/ className = {loanDesc === "" ? "error" : ""} onChange={desclettersOnly} id="" cols="30" rows="2"></textarea>
-                                    
-                                    <Button type="submit" onClick={loan_payment}>Submit</Button>
-                                </div>
-                            </form>
-                            {openDate && (
-                                <div>
-                                    <DateRange
-                                        editableDateInputs={true}
-                                        onChange={(item) => setDate([item.selection])}
-                                        moveRangeOnFirstSelection={false}
-                                        ranges={date}
-                                        className="daterange"
-                                    />
-                                </div>
-                            )}
-                        </div>
-                    }
-                    <div className="loan-table">
-                        { loading ? 
-                            ("Loading please wait") :
-                            (
+                            }
+                            <div className="loan-table">
                                 <DataTable
                                     columns={employeeColumn}
                                     data={
@@ -296,9 +306,10 @@ const LoansHero = () =>{
                                             {
                                                 staff_ID: loan?.staff_ID,
                                                 name: <div className="name_email">
-                                                        <p>{loan?.first_name} <b>{loan?.last_name}</b></p>
-                                                        <small className="text-muted">{loan?.email}</small>
+                                                        <p><b>{loan?.last_name}</b></p>
+                                                        <small className="text-muted">{loan?.first_name}</small>
                                                     </div>,
+                                                email: loan?.email,
                                                 amount: `NGN ${(loan?.loan_amount).toLocaleString()}`,
                                                 approval_date: loan?.approval_date,
                                                 from_to: <div className="name_email">
@@ -315,11 +326,11 @@ const LoansHero = () =>{
                                     pagination
                                     className='datatables'
                                 />
-                            )
-                        }
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                )
+            }
         </>
     )
 }

@@ -89,3 +89,8 @@
     height: 50px;
     width: 30%;
 }
+
+.loading_circle{
+    width: 100vw;
+    height: 100vh;
+}

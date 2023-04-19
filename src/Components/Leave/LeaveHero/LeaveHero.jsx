@@ -15,6 +15,7 @@ import { format } from "date-fns";
 import Analytics from "../../Analytics/Pie/Analytics";
 import Cancel from "../../Analytics/Cancel";
 import PieChart from "../../Graphs/Pie/PieChart";
+import Loading from "../../Loading/Loading"
 
 const LeaveHero = () => {
     const {leave, dispatch} = useLeaveContext();
@@ -60,12 +61,14 @@ const LeaveHero = () => {
         {
             name: "Staff ID",
             selector: row => row.staff_ID,
-            sortable: true
+            sortable: true,
+            width: "100px"
         },
         {
             name: "Name",
             selector: row => row.name,
-            sortable: true
+            sortable: true,
+            width: "120px"
         },
         {
             name: "Leave Type",
@@ -85,12 +88,14 @@ const LeaveHero = () => {
         {
             name: "Duration",
             selector: row => row.duration,
-            sortable: true
+            sortable: true,
+            width: "120px"
         },
         {
             name: "Paid",
             selector: row => row.paid,
-            sortable: true
+            sortable: true,
+            width: "100px"
         },
         {
             name: "Status",
@@ -103,22 +108,26 @@ const LeaveHero = () => {
         {
             name: "Staff ID",
             selector: row => row.staff_ID,
-            sortable: true
+            sortable: true,
+            width: "100px"
         },
         {
             name: "Name",
             selector: row => row.name,
-            sortable: true
+            sortable: true,
+            width: "120px"
         },
         {
             name: "Leave Type",
             selector: row => row.leave_type,
-            sortable: true
+            sortable: true,
+            width: "150px"
         },
         {
             name: "Approval Date",
             selector: row => row.approval_date,
-            sortable: true
+            sortable: true,
+            width: "120px"
         },
         {
             name: "Start - End",
@@ -128,12 +137,14 @@ const LeaveHero = () => {
         {
             name: "Duration",
             selector: row => row.duration,
-            sortable: true
+            sortable: true,
+            width: "130px"
         },
         {
             name: "Paid",
             selector: row => row.paid,
-            sortable: true
+            sortable: true,
+            width: "120px"
         }
     ]
 
@@ -270,193 +281,192 @@ const LeaveHero = () => {
                 ) :
                 ("")
             }
-        <div className="con">
-            { showLeaveTable === true ? 
-                (   
-                    <div className="leave_container">
-                         <Analytics 
-                            onClick={() => {
-                                setShowLeaveTable(false);
-                                filterLeaveType();
-                            }}
-                        />
-                        <div className="leave">
-                            <span className="plus" onClick={
-                                () => {
-                                    setOpenRequest(true);
-                                    
-                                }
-                            } ><FiIcons.FiPlus/></span>
-                            { openRequest &&
-                                <div className="leave_form">
-                                    <span className="close"><MdIcons.MdOutlineCancel onClick={() => setOpenRequest(false)} className="close_icon"/></span>
-                                    <form onSubmit={handleSubmit}>
-                                        <div className="field">
-                                            <label>Staff ID:</label>
-                                            <TextInput 
-                                                type="text"
-                                                value={staff_ID}
-                                                maxLength={4}
-                                                minLength = {4}
-                                                onChange={staff_Id_numberOnly}
-                                                className = {staff_ID === "" ? "error" : ""}
-                                                // className = {emptyFields?.includes("staff_ID") ? "error" : ""}
+            { loading ?
+                ( <Loading /> ):
+                (
+                    <div className="con">
+                        { showLeaveTable === true ? 
+                            (   
+                                <div className="leave_container">
+                                    <Analytics 
+                                        onClick={() => {
+                                            setShowLeaveTable(false);
+                                            filterLeaveType();
+                                        }}
+                                    />
+                                    <div className="leave">
+                                        <span className="plus" onClick={
+                                            () => {
+                                                setOpenRequest(true);
+                                                
+                                            }
+                                        } ><FiIcons.FiPlus/></span>
+                                        { openRequest &&
+                                            <div className="leave_form">
+                                                <span className="close"><MdIcons.MdOutlineCancel onClick={() => setOpenRequest(false)} className="close_icon"/></span>
+                                                <form onSubmit={handleSubmit}>
+                                                    <div className="field">
+                                                        <label>Staff ID:</label>
+                                                        <TextInput 
+                                                            type="text"
+                                                            value={staff_ID}
+                                                            maxLength={4}
+                                                            minLength = {4}
+                                                            onChange={staff_Id_numberOnly}
+                                                            className = {staff_ID === "" ? "error" : ""}
+                                                            // className = {emptyFields?.includes("staff_ID") ? "error" : ""}
+                                                        />
+                                                    </div>
+                                                    <div className="field">
+                                                        <label>Leave Type:</label>
+                                                        <select id="" value={leave_type} onChange={(e) => setLeave_Type(e.target.value)} /*className = {emptyFields?.includes("leave_type") ? "error" : ""}*/ className = {leave_type === "" ? "error" : ""}>
+                                                            <option value="">Choose...</option>
+                                                            <option value="Annual leave">Annual leave</option>
+                                                            <option value="Bereavement leave">Bereavement leave</option>
+                                                            <option value="Casual leave">Casual leave</option>
+                                                            <option value="Compassionate leave">Compassionate leave</option>
+                                                            <option value="Maternity leave">Maternity leave</option>
+                                                            <option value="Paternity leave">Paternity leave</option>
+                                                            <option value="Sabbatical leave">Sabbatical leave</option>
+                                                            <option value="Sick leave">Sick leave</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="field">
+                                                        <label>Approval Date:</label>
+                                                        <TextInput 
+                                                            type="text"
+                                                            value={approval}
+                                                            disabled={true}
+                                                            className = {emptyFields?.includes("approval_date") ? "error" : ""}
+                                                        />
+                                                    </div>
+                                                    <div className="field">
+                                                        <label>Duration:</label>
+                                                        <div className="duration">
+                                                            <span
+                                                                onClick={() => setOpenDate(!openDate)}
+                                                                className="dates"
+                                                            >
+                                                                {`${format(date[0].startDate, "yyyy-MM-dd")} - ${format(
+                                                                    date[0].endDate,
+                                                                    "yyyy-MM-dd"
+                                                                )}`}
+                                                            </span>
+                                                        </div>
+                                                        <Button type="submit" onClick={leave_request}>Submit</Button>
+                                                    </div>
+                                                </form>
+                                                {openDate && (
+                                                    <div>
+                                                        <DateRange
+                                                            editableDateInputs={true}
+                                                            onChange={(item) => setDate([item.selection])}
+                                                            moveRangeOnFirstSelection={false}
+                                                            ranges={date}
+                                                            className="daterange"
+                                                        />
+                                                    </div>
+                                                )}
+                                            </div> 
+                                        }
+                                        <div className="leave_table">
+                                            <DataTable
+                                                columns={employeeColumn}
+                                                data={
+                                                    leave?.map((leave) => (
+                                                        {
+                                                            staff_ID: leave?.staff_ID,
+                                                            name: <div className="name_email">
+                                                                    <p><b>{leave?.last_name}</b></p>
+                                                                    <small className="text-muted">{leave?.first_name}</small>
+                                                                </div>,
+                                                            leave_type: leave?.leave_type,
+                                                            approval_date: leave?.approval_date,
+                                                            start_end: <div className="name_email">
+                                                                        <p>{leave?.leave_duration.start} -</p>
+                                                                        <p>{leave?.leave_duration.end}</p>
+                                                                    </div>,
+                                                            duration: <p>{leave?.days_on_leave} {leave?.days_on_leave === 1 ? "day" : "days"}</p>,
+                                                            paid: <p>{leave?.paid === true ? "Yes" : "No"}</p>,
+                                                            status: <p className={leave?.status === "On Leave" ? "warning" : leave?.status === "Resumed" ? "green" : "approved"}>{leave?.status}</p>
+                                                        }
+                                                    ))
+                                                }
+                                                fixedHeader
+                                                pagination
+                                                className='datatables'
                                             />
                                         </div>
-                                        <div className="field">
-                                            <label>Leave Type:</label>
-                                            <select id="" value={leave_type} onChange={(e) => setLeave_Type(e.target.value)} /*className = {emptyFields?.includes("leave_type") ? "error" : ""}*/ className = {leave_type === "" ? "error" : ""}>
-                                                <option value="">Choose...</option>
-                                                <option value="Annual leave">Annual leave</option>
-                                                <option value="Bereavement leave">Bereavement leave</option>
-                                                <option value="Casual leave">Casual leave</option>
-                                                <option value="Compassionate leave">Compassionate leave</option>
-                                                <option value="Maternity leave">Maternity leave</option>
-                                                <option value="Paternity leave">Paternity leave</option>
-                                                <option value="Sabbatical leave">Sabbatical leave</option>
-                                                <option value="Sick leave">Sick leave</option>
-                                            </select>
-                                        </div>
-                                        <div className="field">
-                                            <label>Approval Date:</label>
-                                            <TextInput 
-                                                type="text"
-                                                value={approval}
-                                                disabled={true}
-                                                className = {emptyFields?.includes("approval_date") ? "error" : ""}
-                                            />
-                                        </div>
-                                        <div className="field">
-                                            <label>Duration:</label>
-                                            <div className="duration">
-                                                <span
-                                                    onClick={() => setOpenDate(!openDate)}
-                                                    className="dates"
-                                                >
-                                                    {`${format(date[0].startDate, "yyyy-MM-dd")} - ${format(
-                                                        date[0].endDate,
-                                                        "yyyy-MM-dd"
-                                                    )}`}
-                                                </span>
-                                            </div>
-                                            <Button type="submit" onClick={leave_request}>Submit</Button>
-                                        </div>
-                                    </form>
-                                    {openDate && (
-                                        <div>
-                                            <DateRange
-                                                editableDateInputs={true}
-                                                onChange={(item) => setDate([item.selection])}
-                                                moveRangeOnFirstSelection={false}
-                                                ranges={date}
-                                                className="daterange"
-                                            />
-                                        </div>
-                                    )}
-                                </div> 
-                            }
-                            <div className="leave_table">
-                                { loading ?
-                                    ("Loading please wait") :
-                                    (
-                                        <DataTable
-                                            columns={employeeColumn}
-                                            data={
-                                                leave?.map((leave) => (
-                                                    {
-                                                        staff_ID: leave?.staff_ID,
-                                                        name: <div className="name_email">
-                                                                <p>{leave?.first_name} <b>{leave?.last_name}</b></p>
-                                                                <small className="text-muted">{leave?.email}</small>
-                                                            </div>,
-                                                        leave_type: leave?.leave_type,
-                                                        approval_date: leave?.approval_date,
-                                                        start_end: <div className="name_email">
+                                    </div>
+                                </div>
+                            ) :
+                            (
+                                <>
+                                    <Cancel 
+                                        onClick={() => {
+                                            setShowLeaveTable(true);
+                                            setFilterLeave(false);
+                                            setPieResults({})
+                                        }}
+                                    />
+                                    <PieChart 
+                                        onClick = {(node, event) => {
+                                            // node.data
+                                            setOpenRequest(false)
+                                            setFilterLeave(true);
+                                            setLeaveStatus(node.data.id);
+                                            filterLeaveTable(node.data.id);
+                                        }}
+                                        values = {pieResults}
+                                    />
+                                </>
+                            )
+                        }
+                        { filterLeave &&
+                            <div className="filter_leave">
+                                <span className="close"><MdIcons.MdOutlineCancel className='close_btn' 
+                                    onClick={() => {
+                                        setFilterLeave(false);
+                                    }}
+                                /></span>
+                                <div className="table">
+                                    <DataTable
+                                        columns={filterLeaveColumn}
+                                        data={
+                                            filterLeave_Table?.map((leave) => (
+                                                {
+                                                    staff_ID: leave.staff_ID,
+                                                    name: <div className="name_email">
+                                                            <p><b>{leave?.last_name}</b></p>
+                                                            <small className="text-muted">{leave?.first_name}</small>
+                                                        </div>,
+                                                    leave_type: leave.leave_type,
+                                                    approval_date: leave?.approval_date,
+                                                    start_end: <div className="name_email">
                                                                     <p>{leave?.leave_duration.start} -</p>
                                                                     <p>{leave?.leave_duration.end}</p>
                                                                 </div>,
-                                                        duration: <p>{leave?.days_on_leave} {leave?.days_on_leave === 1 ? "day" : "days"}</p>,
-                                                        paid: <p>{leave?.paid === true ? "Yes" : "No"}</p>,
-                                                        status: <p className={leave?.status === "On Leave" ? "warning" : leave?.status === "Resumed" ? "green" : "approved"}>{leave?.status}</p>
-                                                    }
-                                                ))
-                                            }
-                                            fixedHeader
-                                            pagination
-                                            className='datatables'
-                                        />
-                                    )
-
-                                }
+                                                    duration: <p>{leave?.days_on_leave} {leave?.days_on_leave === 1 ? "day" : "days"}</p>,
+                                                    paid: <p>{leave?.paid === false ? "No" : "Yes"}</p>
+                                                }
+                                            ))
+                                        }
+                                        title ={
+                                            <div className="title">
+                                                <p className={leaveStatus === "On Leave" ? "warning" : leaveStatus === "Resumed" ? "green" : "approved"}>{leaveStatus}</p>
+                                                <p className="emp_count">: {filterLeave_Table.length}</p>
+                                            </div>
+                                        }
+                                        fixedHeader
+                                        pagination
+                                        className = "datatables"
+                                    />
+                                </div>
                             </div>
-                        </div>
+                        }
                     </div>
-                ) :
-                (
-                    <>
-                        <Cancel 
-                            onClick={() => {
-                                setShowLeaveTable(true);
-                                setFilterLeave(false);
-                                setPieResults({})
-                            }}
-                        />
-                        <PieChart 
-                            onClick = {(node, event) => {
-                                // node.data
-                                setOpenRequest(false)
-                                setFilterLeave(true);
-                                setLeaveStatus(node.data.id);
-                                filterLeaveTable(node.data.id);
-                            }}
-                            values = {pieResults}
-                        />
-                    </>
                 )
             }
-            { filterLeave &&
-                <div className="filter_leave">
-                    <span className="close"><MdIcons.MdOutlineCancel className='close_btn' 
-                        onClick={() => {
-                            setFilterLeave(false);
-                        }}
-                    /></span>
-                    <div className="table">
-                        <DataTable
-                            columns={filterLeaveColumn}
-                            data={
-                                filterLeave_Table?.map((leave) => (
-                                    {
-                                        staff_ID: leave.staff_ID,
-                                        name: <div className="name_email">
-                                                <p>{leave?.first_name}</p>
-                                                <small className="text-muted"><b>{leave?.last_name}</b></small>
-                                            </div>,
-                                        leave_type: leave.leave_type,
-                                        approval_date: leave?.approval_date,
-                                        start_end: <div className="name_email">
-                                                        <p>{leave?.leave_duration.start} -</p>
-                                                        <p>{leave?.leave_duration.end}</p>
-                                                    </div>,
-                                        duration: <p>{leave?.days_on_leave} {leave?.days_on_leave === 1 ? "day" : "days"}</p>,
-                                        paid: <p>{leave?.paid === false ? "No" : "Yes"}</p>
-                                    }
-                                ))
-                            }
-                            title ={
-                                <div className="title">
-                                    <p className={leaveStatus === "On Leave" ? "warning" : leaveStatus === "Resumed" ? "green" : "approved"}>{leaveStatus}</p>
-                                    <p className="emp_count">: {filterLeave_Table.length}</p>
-                                </div>
-                            }
-                            fixedHeader
-                            pagination
-                            className = "datatables"
-                        />
-                    </div>
-                </div>
-            }
-        </div>
         </>
     )
 }

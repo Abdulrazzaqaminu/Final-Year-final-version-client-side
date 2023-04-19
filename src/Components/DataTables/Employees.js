@@ -20,6 +20,7 @@ import { useEnrollContext } from "../../hooks/useEnrollContext";
 import Analytics from '../Analytics/Bar/Analytics';
 import Cancel from '../Analytics/Cancel';
 import LineChart from '../Graphs/Line/LineChart';
+import Loading from '../Loading/Loading';
 
 const Employees = () => {
     const {enroll, enrolldispatch} = useEnrollContext();
@@ -112,7 +113,7 @@ const Employees = () => {
             } catch (error) {
                 setError(error)
             }
-            setLoading(false)
+            setLoading(false);
         }
         fetchEmployees();
         const startTime = () => {
@@ -231,20 +232,9 @@ const Employees = () => {
         }
     }
 
-    const [checked, setChecked] = useState(false);
-    const handleCheckBox = (e) => {
-        setChecked(e.target.checked)
-    }
-
     const employeeColumn = [
         {
-            name: <p className='header_check'> <TextInput 
-                type="checkbox" 
-                className="header_check_box"
-                // value = {checked}
-                checked = {true}
-                onChange = {handleCheckBox}
-            />Staff ID</p>,
+            name: "Staff ID",
             selector: row => row.staff_ID,
             // sortable: true,
             width: "100px",
@@ -315,22 +305,19 @@ const Employees = () => {
         {
             name: "Staff ID",
             selector: row => row.staff_ID,
-            sortable: true
+            sortable: true,
+            width: "100px",
         },
         {
             name: "Name",
             selector: row => row.name,
-            sortable: true
-        },
-        {
-            name: "Email",
-            selector: row => row.email,
-            sortable: true
+            sortable: true,
+            width: "150px"
         },
         {
             name: "Unit",
             selector: row => row.unit,
-            sortable: true
+            sortable: true,
         },
         {
             name: "Employment Type",
@@ -394,542 +381,457 @@ const Employees = () => {
                 ) :
                 ("")
             }
-            { showEmpTable === true ?
+            { loading ?
+                ( <Loading /> ) :
                 (
                     <>
-                        <Analytics 
-                            onClick = {
-                                () => {
-                                    setOpenForm(false);
-                                    setMoreInfo(false);
-                                    setMoreGross(false);
-                                    setShowEmpTable(false);
-                                }
-                            }
-                        />
-                        <div className='employee_plus'>
-                            <span className="plus" onClick={
-                                () => {
-                                    setOpenForm(true);
-                                    setMoreInfo(false);
-                                    setMoreGross(false);
-                                }
-                            }><FiIcons.FiPlus /></span>
-                        </div>
-                        { openForm &&
-                            <div className="enrollment-container">
-                                <span className="close"><MdIcons.MdOutlineCancel className='close_btn' onClick={
-                                    () => {
-                                        setOpenForm(false)
-                                    }
-                                }/></span>
-                                <form onSubmit={handleSubmit}>
-                                    <div className="field">
-                                        <label>Staff ID:</label>
-                                        <TextInput 
-                                            type="text"
-                                            value={staffid}
-                                            onChange={Staff_IDnumberOnly}
-                                            maxLength={4}
-                                            minLength = {4}
-                                            className = {staffid === "" ? "error" : ""}
-                                            // className = {emptyFields?.includes("staff_ID") ? "error" : ""}
-                                        />
-                                    </div>
-                                    <div className="field">
-                                        <label>First Name:</label>
-                                        <TextInput 
-                                            type="text"
-                                            value={firstName}
-                                            onChange={firstNamelettersOnly}
-                                            className = {firstName === "" ? "error" : ""}
-                                            // className = {emptyFields?.includes("first_name") ? "error" : ""}
-                                        />
-                                    </div>
-                                    <div className="field">
-                                        <label>Last Name:</label>
-                                        <TextInput 
-                                            type="text"
-                                            value={lastName}
-                                            onChange={lastNamelettersOnly}
-                                            className = {`last_name ${lastName === "" ? "error" : ""}`}
-                                            // className = {`last_name ${emptyFields?.includes("last_name") ? "error" : ""}`}
-                                        />
-                                    </div>
-                                    <div className="field ">
-                                        <label>Email:</label>
-                                        <TextInput 
-                                            type="text"
-                                            value={email}
-                                            onChange={validateEmail}
-                                            className = {`email ${email === "" ? "error" : ""}`}
-                                            // className={`email ${emptyFields?.includes("emp_email") ? "error" : ""}`}
-                                        />
-                                        <span className="email_span">
-                                            <p>{emailError}</p>
-                                        </span>
-                                    </div>
-                                    <div className="field dob">
-                                        <label>Date Of Birth:</label>
-                                        <TextInput 
-                                            type="date"
-                                            value={dob}
-                                            onChange={(e) => setDob(e.target.value)}
-                                            className = {dob === "" ? "error" : ""}
-                                            // className = {emptyFields?.includes("date_of_birth") ? "error" : ""}
-                                        />
-                                    </div>
-                                    <div className="field ">
-                                        <label>Phone Number:</label>
-                                        <TextInput 
-                                            type="text"
-                                            value={phoneNumber}
-                                            onChange={numberOnly}
-                                            maxLength={11}
-                                            minLength = {11}
-                                            className = {phoneNumber === "" ? "error" : ""}
-                                            // className = {emptyFields?.includes("phone_number") ? "error" : ""}
-                                        />
-                                    </div>
-                                    <div className="field selectables">
-                                        <div className="field">    
-                                            <label>Department:</label>
-                                            <select id="" value={department} /*</div>className = {emptyFields?.includes("department") ? "error" : ""}*/ className = {department === "" ? "error" : ""} onChange={(e) => setDepartment(e.target.value)}>
-                                                <option value="" /*disabled hidden*/>Choose...</option>
-                                                { 
-                                                    data?.dept?.length > 0 ?
-                                                    (
-                                                        data?.dept?.map((dept) => (
-                                                            <option value = {dept.dept_name} key = {dept._id}>
-                                                                {dept.dept_name}
-                                                            </option>
-                                                        ))
-                                                    ) :
-                                                    (<option value="">No department(s)</option>)
-                                                }
-                                                {/* <option value="ACCOUNTING AND FINANCE">ACCOUNTING AND FINANCE</option>
-                                                <option value="HUMAN RESOURCES">HUMAN RESOURCES</option>
-                                                <option value="INFORMATION AND TECHNOLOGY">INFORMATION AND TECHNOLOGY</option>
-                                                <option value="MARKETING AND SALES">MARKETING AND SALES</option> */}
-                                            </select>
-                                        </div>
-
-                                        <div className="field">
-                                            <label>Unit:</label>
-                                            <select id="" value={unit} /*className = {emptyFields?.includes("unit") ? "error" : ""}*/ className = {unit === "" ? "error" : ""} onChange={(e) => setUnit(e.target.value)}>
-                                                <option value="" disabled hidden>Choose...</option>
-                                                {
-                                                    data?.units?.length > 0 ?
-                                                    (
-                                                        data?.units?.map((unit) => (
-                                                            unit?.unit.length > 0 ? 
-                                                            (
-                                                                unit.unit?.map((unit_name) => (
-                                                                    <option value={unit_name.unit_name} key = {unit_name._id}>
-                                                                        {unit_name.unit_name}
-                                                                    </option>
-                                                                ))
-                                                            ) : 
-                                                            (
-                                                                <option value="">No units</option>
-                                                            )
-                                                        ))
-                                                    ) :
-                                                    (
-                                                        <option value="">Select department</option>
-                                                    )
-                                                }
-                                                {/* <option value="AUDIT">AUDIT</option>
-                                                <option value="CUSTOMER SERVICE">CUSTOMER SERVICE</option>
-                                                <option value="HEALTH AND SAFETY">HEALTH AND SAFETY</option>
-                                                <option value="PROCUREMENT">PROCUREMENT</option>
-                                                <option value="RECRUITMENT">RECRUITMENT</option> */}
-                                            </select>
-                                        </div>
-
-                                        <div className="field ">
-                                            <label>Position:</label>
-                                            <select id="" value={position} /*className = {emptyFields?.includes("position") ? "error" : ""}*/ className = {position === "" ? "error" : ""} onChange={(e) => setPosition(e.target.value)}>
-                                                <option value="" disabled hidden>Choose...</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                            </select>
-                                        </div>
-                                        <div className="field ">
-                                            <label>Grade:</label>
-                                            <select id="" value={grade} /*className = {emptyFields?.includes("grade") ? "error" : ""}*/ className = {grade === "" ? "error" : ""} onChange={(e) => setGrade(e.target.value)}>
-                                                <option value="" disabled hidden>Choose...</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="field">
-                                        <label>Enrollment date:</label>
-                                        <TextInput 
-                                            type="text"
-                                            value={enrollDate}
-                                            disabled={true}
-                                            className = {emptyFields?.includes("enrollment_date") ? "error" : ""}
-                                        />
-                                    </div>
-                                    <div className="field address">
-                                        <label>Employment Type:</label>
-                                        <select id="" value={employee_type} /*className = {emptyFields?.includes("employee_type") ? "error" : ""}*/ className = {employee_type === "" ? "error" : ""} onChange={(e) => setEmployee_Type(e.target.value)}>
-                                            <option value="" disabled hidden>Choose...</option>
-                                            <option value="Full-Time">Full-Time</option>
-                                            <option value="Contracted">Contracted</option>
-                                        </select>
-                                    </div>
-                                    <div className="field address">
-                                        <label>Address:</label>
-                                        <TextInput 
-                                            type="text"
-                                            value={state}
-                                            onChange={statelettersOnly}
-                                            placeholder="state"
-                                            className = {state === "" ? "error" : ""}
-                                            // className = {emptyFields?.includes("state") ? "error" : ""}
-                                        />
-                                    </div>
-                                    <div className="field">
-                                    <TextInput 
-                                            type="text"
-                                            value={city}
-                                            onChange={citylettersOnly}
-                                            placeholder="city"
-                                            className = {city === "" ? "error" : ""}
-                                            // className = {emptyFields?.includes("city") ? "error" : ""}
-                                        />
-                                    </div>
-                                    <div className="field">
-                                    <TextInput 
-                                            type="text"
-                                            value={street}
-                                            onChange={streetlettersOnly}
-                                            placeholder="street"
-                                            className = {street === "" ? "error" : ""}
-                                            // className= {`street ${emptyFields?.includes("street") ? "error" : ""}`}
-                                            
-                                        />
-                                    </div>
-                                    <Button type="submit">Enroll</Button>
-                                </form>
-                            </div> 
-                        }
-                        {loading ?
-                            ("Loading please wait") :
+                        { showEmpTable === true ?
                             (
                                 <>
-                                    <DataTable
-                                        columns={employeeColumn}
-                                        data={
-                                            enroll?.map(employee => (
-                                                {
-                                                    staff_ID: employee.staff_ID,
-                                                    name: <div className="name_email">
-                                                            <p><b>{employee.last_name}</b></p>
-                                                            <small className="text-muted">{employee.first_name}</small>
-                                                        </div>,
-                                                    dob: employee.date_of_birth,
-                                                    phone_number: employee.phone_number,
-                                                    department: employee.status === "Terminated" ?
-                                                                    <>{employee.department}</>:
-                                                                    <>
-                                                                        <p className='hover'
-                                                                            onClick={() => {
-                                                                                // setLoading(true);
-                                                                                setMoreInfo(true);
-                                                                                setOpenForm(false);
-                                                                                setMoreGross(false);
-                                                                                setPopupdept(employee.department);
-                                                                                setEmployee_ID2(employee._id);
-                                                                            }}
-                                                                            >{employee.department}
-                                                                        </p>
-                                                                    </>,
-                                                    unit: employee.unit,
-                                                    position: employee.position,
-                                                    grade: employee.grade,
-                                                    gross: <p
-                                                                onClick={() => {
-                                                                    setMoreGross(true);
-                                                                    setOpenForm(false);
-                                                                    setMoreInfo(false);
-                                                                    setEmployee_ID(employee._id);
-                                                                }}
-                                                            >{`NGN ${(employee.gross_salary).toLocaleString()}`}</p>,
-                                                    employment_type: employee.employee_type,
-                                                    status: <span className={employee.status === "Active" ? "green" : employee.status === "On Leave" ? "warning" : "red"}>{employee.status}</span>,
-                                                    more: <Link to={`/employees/${employee._id}`}>
-                                                            <Button>View</Button>
-                                                        </Link>
-                                                }
-                                            ))
+                                    <Analytics 
+                                        onClick = {
+                                            () => {
+                                                setOpenForm(false);
+                                                setMoreInfo(false);
+                                                setMoreGross(false);
+                                                setShowEmpTable(false);
+                                            }
                                         }
-                                        fixedHeader
-                                        pagination
-                                        className='datatables'
                                     />
+                                    <div className='employee_plus'>
+                                        <span className="plus" onClick={
+                                            () => {
+                                                setOpenForm(true);
+                                                setMoreInfo(false);
+                                                setMoreGross(false);
+                                            }
+                                        }><FiIcons.FiPlus /></span>
+                                    </div>
+                                    { openForm &&
+                                        <div className="enrollment-container">
+                                            <span className="close"><MdIcons.MdOutlineCancel className='close_btn' onClick={
+                                                () => {
+                                                    setOpenForm(false)
+                                                }
+                                            }/></span>
+                                            <form onSubmit={handleSubmit}>
+                                                <div className="field">
+                                                    <label>Staff ID:</label>
+                                                    <TextInput 
+                                                        type="text"
+                                                        value={staffid}
+                                                        onChange={Staff_IDnumberOnly}
+                                                        maxLength={4}
+                                                        minLength = {4}
+                                                        className = {staffid === "" ? "error" : ""}
+                                                        // className = {emptyFields?.includes("staff_ID") ? "error" : ""}
+                                                    />
+                                                </div>
+                                                <div className="field">
+                                                    <label>First Name:</label>
+                                                    <TextInput 
+                                                        type="text"
+                                                        value={firstName}
+                                                        onChange={firstNamelettersOnly}
+                                                        className = {firstName === "" ? "error" : ""}
+                                                        // className = {emptyFields?.includes("first_name") ? "error" : ""}
+                                                    />
+                                                </div>
+                                                <div className="field">
+                                                    <label>Last Name:</label>
+                                                    <TextInput 
+                                                        type="text"
+                                                        value={lastName}
+                                                        onChange={lastNamelettersOnly}
+                                                        className = {`last_name ${lastName === "" ? "error" : ""}`}
+                                                        // className = {`last_name ${emptyFields?.includes("last_name") ? "error" : ""}`}
+                                                    />
+                                                </div>
+                                                <div className="field ">
+                                                    <label>Email:</label>
+                                                    <TextInput 
+                                                        type="text"
+                                                        value={email}
+                                                        onChange={validateEmail}
+                                                        className = {`email ${email === "" ? "error" : ""}`}
+                                                        // className={`email ${emptyFields?.includes("emp_email") ? "error" : ""}`}
+                                                    />
+                                                    <span className="email_span">
+                                                        <p>{emailError}</p>
+                                                    </span>
+                                                </div>
+                                                <div className="field dob">
+                                                    <label>Date Of Birth:</label>
+                                                    <TextInput 
+                                                        type="date"
+                                                        value={dob}
+                                                        onChange={(e) => setDob(e.target.value)}
+                                                        className = {dob === "" ? "error" : ""}
+                                                        // className = {emptyFields?.includes("date_of_birth") ? "error" : ""}
+                                                    />
+                                                </div>
+                                                <div className="field ">
+                                                    <label>Phone Number:</label>
+                                                    <TextInput 
+                                                        type="text"
+                                                        value={phoneNumber}
+                                                        onChange={numberOnly}
+                                                        maxLength={11}
+                                                        minLength = {11}
+                                                        className = {phoneNumber === "" ? "error" : ""}
+                                                        // className = {emptyFields?.includes("phone_number") ? "error" : ""}
+                                                    />
+                                                </div>
+                                                <div className="field selectables">
+                                                    <div className="field">    
+                                                        <label>Department:</label>
+                                                        <select id="" value={department} /*</div>className = {emptyFields?.includes("department") ? "error" : ""}*/ className = {department === "" ? "error" : ""} onChange={(e) => setDepartment(e.target.value)}>
+                                                            <option value="" /*disabled hidden*/>Choose...</option>
+                                                            { 
+                                                                data?.dept?.length > 0 ?
+                                                                (
+                                                                    data?.dept?.map((dept) => (
+                                                                        <option value = {dept.dept_name} key = {dept._id}>
+                                                                            {dept.dept_name}
+                                                                        </option>
+                                                                    ))
+                                                                ) :
+                                                                (<option value="">No department(s)</option>)
+                                                            }
+                                                            {/* <option value="ACCOUNTING AND FINANCE">ACCOUNTING AND FINANCE</option>
+                                                            <option value="HUMAN RESOURCES">HUMAN RESOURCES</option>
+                                                            <option value="INFORMATION AND TECHNOLOGY">INFORMATION AND TECHNOLOGY</option>
+                                                            <option value="MARKETING AND SALES">MARKETING AND SALES</option> */}
+                                                        </select>
+                                                    </div>
+            
+                                                    <div className="field">
+                                                        <label>Unit:</label>
+                                                        <select id="" value={unit} /*className = {emptyFields?.includes("unit") ? "error" : ""}*/ className = {unit === "" ? "error" : ""} onChange={(e) => setUnit(e.target.value)}>
+                                                            <option value="" disabled hidden>Choose...</option>
+                                                            {
+                                                                data?.units?.length > 0 ?
+                                                                (
+                                                                    data?.units?.map((unit) => (
+                                                                        unit?.unit.length > 0 ? 
+                                                                        (
+                                                                            unit.unit?.map((unit_name) => (
+                                                                                <option value={unit_name.unit_name} key = {unit_name._id}>
+                                                                                    {unit_name.unit_name}
+                                                                                </option>
+                                                                            ))
+                                                                        ) : 
+                                                                        (
+                                                                            <option value="">No units</option>
+                                                                        )
+                                                                    ))
+                                                                ) :
+                                                                (
+                                                                    <option value="">Select department</option>
+                                                                )
+                                                            }
+                                                            {/* <option value="AUDIT">AUDIT</option>
+                                                            <option value="CUSTOMER SERVICE">CUSTOMER SERVICE</option>
+                                                            <option value="HEALTH AND SAFETY">HEALTH AND SAFETY</option>
+                                                            <option value="PROCUREMENT">PROCUREMENT</option>
+                                                            <option value="RECRUITMENT">RECRUITMENT</option> */}
+                                                        </select>
+                                                    </div>
+            
+                                                    <div className="field ">
+                                                        <label>Position:</label>
+                                                        <select id="" value={position} /*className = {emptyFields?.includes("position") ? "error" : ""}*/ className = {position === "" ? "error" : ""} onChange={(e) => setPosition(e.target.value)}>
+                                                            <option value="" disabled hidden>Choose...</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="field ">
+                                                        <label>Grade:</label>
+                                                        <select id="" value={grade} /*className = {emptyFields?.includes("grade") ? "error" : ""}*/ className = {grade === "" ? "error" : ""} onChange={(e) => setGrade(e.target.value)}>
+                                                            <option value="" disabled hidden>Choose...</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div className="field">
+                                                    <label>Enrollment date:</label>
+                                                    <TextInput 
+                                                        type="text"
+                                                        value={enrollDate}
+                                                        disabled={true}
+                                                        className = {emptyFields?.includes("enrollment_date") ? "error" : ""}
+                                                    />
+                                                </div>
+                                                <div className="field address">
+                                                    <label>Employment Type:</label>
+                                                    <select id="" value={employee_type} /*className = {emptyFields?.includes("employee_type") ? "error" : ""}*/ className = {employee_type === "" ? "error" : ""} onChange={(e) => setEmployee_Type(e.target.value)}>
+                                                        <option value="" disabled hidden>Choose...</option>
+                                                        <option value="Full-Time">Full-Time</option>
+                                                        <option value="Contracted">Contracted</option>
+                                                    </select>
+                                                </div>
+                                                <div className="field address">
+                                                    <label>Address:</label>
+                                                    <TextInput 
+                                                        type="text"
+                                                        value={state}
+                                                        onChange={statelettersOnly}
+                                                        placeholder="state"
+                                                        className = {state === "" ? "error" : ""}
+                                                        // className = {emptyFields?.includes("state") ? "error" : ""}
+                                                    />
+                                                </div>
+                                                <div className="field">
+                                                <TextInput 
+                                                        type="text"
+                                                        value={city}
+                                                        onChange={citylettersOnly}
+                                                        placeholder="city"
+                                                        className = {city === "" ? "error" : ""}
+                                                        // className = {emptyFields?.includes("city") ? "error" : ""}
+                                                    />
+                                                </div>
+                                                <div className="field">
+                                                <TextInput 
+                                                        type="text"
+                                                        value={street}
+                                                        onChange={streetlettersOnly}
+                                                        placeholder="street"
+                                                        className = {street === "" ? "error" : ""}
+                                                        // className= {`street ${emptyFields?.includes("street") ? "error" : ""}`}
+                                                        
+                                                    />
+                                                </div>
+                                                <Button type="submit">Enroll</Button>
+                                            </form>
+                                        </div> 
+                                    }
+                                    <div className='employee_table'>
+                                        <DataTable
+                                            columns={employeeColumn}
+                                            data={
+                                                enroll?.map(employee => (
+                                                    {
+                                                        staff_ID: employee.staff_ID,
+                                                        name: <div className="name_email">
+                                                                <p><b>{employee.last_name}</b></p>
+                                                                <small className="text-muted">{employee.first_name}</small>
+                                                            </div>,
+                                                        dob: employee.date_of_birth,
+                                                        phone_number: employee.phone_number,
+                                                        department: employee.status === "Terminated" ?
+                                                                        <>{employee.department}</>:
+                                                                        <>
+                                                                            <p className='hover'
+                                                                                onClick={() => {
+                                                                                    // setLoading(true);
+                                                                                    setMoreInfo(true);
+                                                                                    setOpenForm(false);
+                                                                                    setMoreGross(false);
+                                                                                    setPopupdept(employee.department);
+                                                                                    setEmployee_ID2(employee._id);
+                                                                                }}
+                                                                                >{employee.department}
+                                                                            </p>
+                                                                        </>,
+                                                        unit: employee.unit,
+                                                        position: employee.position,
+                                                        grade: employee.grade,
+                                                        gross: <p
+                                                                    onClick={() => {
+                                                                        setMoreGross(true);
+                                                                        setOpenForm(false);
+                                                                        setMoreInfo(false);
+                                                                        setEmployee_ID(employee._id);
+                                                                    }}
+                                                                >{`NGN ${(employee.gross_salary).toLocaleString()}`}</p>,
+                                                        employment_type: employee.employee_type,
+                                                        status: <span className={employee.status === "Active" ? "green" : employee.status === "On Leave" ? "warning" : "red"}>{employee.status}</span>,
+                                                        more: <Link to={`/employees/${employee._id}`}>
+                                                                <Button>View</Button>
+                                                            </Link>
+                                                    }
+                                                ))
+                                            }
+                                            fixedHeader
+                                            pagination
+                                            className='datatables'
+                                        />
+                                    </div>
+                                    { moreInfo &&
+                                        <div className='moreInfo'>
+                                            <span className="close"><MdIcons.MdOutlineCancel className='close_btn' 
+                                                onClick={() => {
+                                                    setMoreInfo(false);
+                                                    setMoreGross(false);
+                                                    setOpenForm(false);
+                                                }}
+                                            /></span>
+                                            <div className='dept_table'>
+                                                <DataTable
+                                                    columns={moreInfo ? moreInfoColumn : null}
+                                                    data = {
+                                                        moreInfo ? 
+                                                        (
+                                                            dept?.employees?.map((info) => (
+                                                            {
+                                                                    staff_ID: <p className = {employee_id2 === info._id ? "green" : ""}>{info.staff_ID}</p>,
+                                                                    name: <div className="name_email">
+                                                                            <p><b>{info.last_name}</b></p>
+                                                                            <small className="text-muted">{info.first_name}</small>
+                                                                        </div>,
+                                                                    unit: info.unit,
+                                                                    employment_type: info.employee_type
+            
+                                                            }
+                                                            ))
+                                                        ) :
+                                                        ("")
+                                                    }
+                                                    title = {<p className='title'>{dept?.departments?.dept_name}: {dept?.employees?.length}</p>}
+                                                    fixedHeader
+                                                    pagination
+                                                    className = "datatables"
+                                                />
+                                            </div>
+                                        </div> 
+                                    }
+                                </>   
+                            ) :
+                            (
+                                <>
+                                    {filtererror &&
+                                        (
+                                            <div className='filter_error'>
+                                                <div className="error_message">
+                                                    {filtererror}
+                                                </div>
+                                            </div>
+                                        )
+                                    }
+                                    <Cancel 
+                                        onClick={() => {
+                                            setShowEmpTable(true);
+                                            setEmpAtt(false)
+                                        }}
+                                    />
+                                    <div className="date_range">
+                                        <p><small>*Optional</small></p>
+                                        <TextInput
+                                            type = "text"
+                                            value = {attid}
+                                            className = "staff_id"
+                                            placeholder = "Staff ID"
+                                            maxLength={4}
+                                            minLength = {4}
+                                            onChange = {AttStaff_IDnumberOnly}
+                                        />
+                                        <span
+                                            onClick={() => setOpenDate(!openDate)}
+                                            className="dates"
+                                        >
+                                            {`${format(date[0].startDate, "yyyy-MM-dd")} - ${format(
+                                                date[0].endDate,
+                                                "yyyy-MM-dd"
+                                            )}`}
+                                        </span>
+                                        {openDate && (
+                                            <div>
+                                                <DateRange
+                                                    editableDateInputs={true}
+                                                    onChange={(item) => setDate([item.selection])}
+                                                    moveRangeOnFirstSelection={false}
+                                                    ranges={date}
+                                                    className="range"
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                    <LineChart 
+                                        onClick = {(point, event) => {
+                                            setDayMonYea(point.data.xFormatted);
+                                            setStatus(point.serieId);
+                                            setHour(point.data.yFormatted);
+                                            setEmpAtt(true)
+                                        }}
+                                        from = {from}
+                                    />
+                                    { empAtt &&
+                                        <div className='emp_att'>
+                                            <span className="close"><MdIcons.MdOutlineCancel className='close_btn' 
+                                                onClick={() => {
+                                                    setEmpAtt(false);
+                                                }}
+                                            /></span>
+                                            <div className='filtertable'>
+                                                <DataTable
+                                                    columns = {filterColumn}
+                                                    data = {filter?.length > 0 ? 
+                                                        (
+                                                            status === "Checked Out" ? 
+                                                            (
+                                                                filter?.filter((each) => (
+                                                                    each.in_time === status && each.date === dayMonYea && (each.out_time).slice(0,2) === (hour).slice(0,2)
+                                                                ))?.map((info) => (
+                                                                    {
+                                                                        staff_ID: info.staff_ID,
+                                                                        name: <>
+                                                                                <b>{info.last_name}</b>
+                                                                                    <small>
+                                                                                        <p className="text-muted">{info.first_name}</p>
+                                                                                    </small> 
+                                                                            </> ,
+                                                                        email: info.email,
+                                                                        date: info.date,
+                                                                        entry_time: info.in_time === "Checked Out" ? 
+                                                                                    (<p className="red">{info.in_time}</p>) :
+                                                                                    (<p>{info.in_time}</p>),
+                                                                        exit_time: info.out_time === "Still In" ? 
+                                                                                    (<p className="green">{info.out_time}</p>) :
+                                                                                    (<p>{info.out_time}</p>)
+                                                                    }
+                                                                ))
+                                                            ) :
+                                                            (
+                                                                (filter?.filter((each) => (
+                                                                    each.out_time === status && each.date === dayMonYea && (each.in_time).slice(0,2) === (hour).slice(0,2)
+                                                                )))?.map((info) => (
+                                                                    {
+                                                                        staff_ID: info.staff_ID,
+                                                                        name: <>
+                                                                                <b>{info.last_name}</b>
+                                                                                    <small>
+                                                                                        <p className="text-muted">{info.first_name}</p>
+                                                                                    </small> 
+                                                                            </> ,
+                                                                        email: info.email,
+                                                                        date: info.date,
+                                                                        entry_time: info.in_time === "Checked Out" ? 
+                                                                                    (<p className="red">{info.in_time}</p>) :
+                                                                                    (<p>{info.in_time}</p>),
+                                                                        exit_time: info.out_time === "Still In" ? 
+                                                                                    (<p className="green">{info.out_time}</p>) :
+                                                                                    (<p>{info.out_time}</p>)
+                                                                    }
+                                                                ))
+                                                            )
+                                                        ) :
+                                                        ("")
+                                                    }
+                                                    fixedHeader
+                                                    pagination
+                                                    className='datatables'
+                                                />
+                                            </div>
+                                        </div>
+                                    }
                                 </>
                             )
-                        }
-                        { moreInfo &&
-                            <div className='moreInfo'>
-                                <span className="close"><MdIcons.MdOutlineCancel className='close_btn' 
-                                    onClick={() => {
-                                        setMoreInfo(false);
-                                        setMoreGross(false);
-                                        setOpenForm(false);
-                                    }}
-                                /></span>
-                                <div className='dept_table'>
-                                    <DataTable
-                                        columns={moreInfo ? moreInfoColumn : null}
-                                        data = {
-                                            moreInfo ? 
-                                            (
-                                                dept?.employees?.map((info) => (
-                                                {
-                                                        staff_ID: <p className = {employee_id2 === info._id ? "green" : ""}>{info.staff_ID}</p>,
-                                                        name: <div className="name_email">
-                                                                <p>{info.first_name}</p>
-                                                                <small className="text-muted"><b>{info.last_name}</b></small>
-                                                            </div>,
-                                                        email: info.email,
-                                                        unit: info.unit,
-                                                        employment_type: info.employee_type
-
-                                                }
-                                                ))
-                                            ) :
-                                            ("")
-                                        }
-                                        title = {<p className='title'>{dept?.departments?.dept_name}: {dept?.employees?.length}</p>}
-                                        fixedHeader
-                                        pagination
-                                        className = "datatables"
-                                    />
-                                </div>
-                            </div> 
-                            // : moreGross ?
-                            // (
-                            //     <div className='moreInfo_form'>
-                            //         <form>
-                            //             <span className="close"><MdIcons.MdOutlineCancel className='close_btn' 
-                            //                 onClick={() => {
-                            //                     setMoreInfo(false);
-                            //                     setMoreGross(false);
-                            //                     setOpenForm(false);
-                            //                 }}
-                            //             /></span>
-                            //             <div className='form_container'>
-                            //                 <div className="field">
-                            //                     <label>Staff Id</label>
-                            //                     <input type="text" disabled placeholder={payroll ? payroll?.Staff_ID : "N/A"}/>
-                            //                 </div>
-                            //                 <div className="field">
-                            //                     <label>First Name</label>
-                            //                     <input type="text" disabled placeholder={payroll?.First_Name}/>
-                            //                 </div>
-                            //                 <div className="field">
-                            //                     <label>Last Name</label>
-                            //                     <input type="text" disabled placeholder={payroll?.Last_Name}/>
-                            //                 </div>
-                            //                 <div className="field email">
-                            //                     <label>Email</label>
-                            //                     <input type="text" disabled placeholder={payroll?.Employee_Email}/>
-                            //                 </div>
-                            //                 <div className="field">
-                            //                     <label>Days worked</label>
-                            //                     <input type="text" disabled placeholder={payroll?.Days_Worked}/>
-                            //                 </div>
-                            //                 <div className="field">
-                            //                     <label>Annual Gross</label>
-                            //                     <input type="text" disabled placeholder={payroll?.Employee_Gross}/>
-                            //                 </div>
-                            //                 <div className="field">
-                            //                     <label>Employment Type</label>
-                            //                     <input type="text" disabled placeholder={payroll?.Employee_Type}/>
-                            //                 </div>
-                            //                 { payroll?.Employee_Type === "Full-Time" ?
-                            //                     (
-                            //                         <div className='hours'>
-                            //                             <div className="hours_worked">
-                            //                                 <label>Total Hours Worked</label>
-                            //                                 <input type="text" disabled placeholder={payroll?.Hours_Worked}/>
-                            //                             </div>
-                            //                             <div className="over_time">
-                            //                                 <label>Total Extra Hours</label>
-                            //                                 <input type="text" disabled placeholder={payroll?.Extra_Hours}/>
-                            //                             </div>
-                            //                         </div>
-                            //                     ):
-                            //                     (
-                            //                         <div className='hours'>
-                            //                             <div className="hours_worked">
-                            //                                 <label>Hours Worked</label>
-                            //                                 <input type="text" disabled placeholder={payroll?.Hours_Worked}/>
-                            //                             </div>
-                            //                             <div className="over_time">
-                            //                                 <label>Net Salary (Per hours)</label>
-                            //                                 <input type="text" disabled placeholder={payroll?.Net_Salary}/>
-                            //                             </div>
-                            //                         </div>
-                            //                     )
-                            //                 }
-                            //                 { payroll?.Employee_Type === "Full-Time" ?
-                            //                     (
-                            //                         <>
-                            //                             <div className="field">
-                            //                                 <label>Net Salary (Per day)</label>
-                            //                                 <input type="text" disabled placeholder={payroll?.Net_Salary}/>
-                            //                             </div>
-                            //                             <div className='field'>
-                            //                                 <label>Total Leave Pay</label>
-                            //                                 <input type="text" disabled placeholder={payroll?.Leave_Pay}/>
-                            //                             </div>
-                            //                         </>
-                                                    
-                            //                     ) :
-                            //                     ("")
-                            //                 }
-                            //             </div>
-                            //         </form>
-                            //     </div>
-                            // ) :
-                            // ""
-                        }
-                    </>   
-                ) :
-                (
-                    <>
-                        {filtererror &&
-                            (
-                                <div className='filter_error'>
-                                    <div className="error_message">
-                                        {filtererror}
-                                    </div>
-                                </div>
-                            )
-                        }
-                        <Cancel 
-                            onClick={() => {
-                                setShowEmpTable(true);
-                                setEmpAtt(false)
-                            }}
-                        />
-                        <div className="date_range">
-                            <p><small>*Optional</small></p>
-                            <TextInput
-                                type = "text"
-                                value = {attid}
-                                className = "staff_id"
-                                placeholder = "Staff ID"
-                                maxLength={4}
-                                minLength = {4}
-                                onChange = {AttStaff_IDnumberOnly}
-                            />
-                            <span
-                                onClick={() => setOpenDate(!openDate)}
-                                className="dates"
-                            >
-                                {`${format(date[0].startDate, "yyyy-MM-dd")} - ${format(
-                                    date[0].endDate,
-                                    "yyyy-MM-dd"
-                                )}`}
-                            </span>
-                            {openDate && (
-                                <div>
-                                    <DateRange
-                                        editableDateInputs={true}
-                                        onChange={(item) => setDate([item.selection])}
-                                        moveRangeOnFirstSelection={false}
-                                        ranges={date}
-                                        className="range"
-                                    />
-                                </div>
-                            )}
-                        </div>
-                        <LineChart 
-                            onClick = {(point, event) => {
-                                setDayMonYea(point.data.xFormatted);
-                                setStatus(point.serieId);
-                                setHour(point.data.yFormatted);
-                                setEmpAtt(true)
-                            }}
-                            from = {from}
-                        />
-                        { empAtt &&
-                            <div className='emp_att'>
-                                <span className="close"><MdIcons.MdOutlineCancel className='close_btn' 
-                                    onClick={() => {
-                                        setEmpAtt(false);
-                                    }}
-                                /></span>
-                                <div className='filtertable'>
-                                    <DataTable
-                                        columns = {filterColumn}
-                                        data = {filter?.length > 0 ? 
-                                            (
-                                                status === "Checked Out" ? 
-                                                (
-                                                    filter?.filter((each) => (
-                                                        each.in_time === status && each.date === dayMonYea && (each.out_time).slice(0,2) === (hour).slice(0,2)
-                                                    ))?.map((info) => (
-                                                        {
-                                                            staff_ID: info.staff_ID,
-                                                            name: <>
-                                                                    <b>{info.last_name}</b>
-                                                                        <small>
-                                                                            <p className="text-muted">{info.first_name}</p>
-                                                                        </small> 
-                                                                </> ,
-                                                            email: info.email,
-                                                            date: info.date,
-                                                            entry_time: info.in_time === "Checked Out" ? 
-                                                                        (<p className="red">{info.in_time}</p>) :
-                                                                        (<p>{info.in_time}</p>),
-                                                            exit_time: info.out_time === "Still In" ? 
-                                                                        (<p className="green">{info.out_time}</p>) :
-                                                                        (<p>{info.out_time}</p>)
-                                                        }
-                                                    ))
-                                                ) :
-                                                (
-                                                    (filter?.filter((each) => (
-                                                        each.out_time === status && each.date === dayMonYea && (each.in_time).slice(0,2) === (hour).slice(0,2)
-                                                    )))?.map((info) => (
-                                                        {
-                                                            staff_ID: info.staff_ID,
-                                                            name: <>
-                                                                    <b>{info.last_name}</b>
-                                                                        <small>
-                                                                            <p className="text-muted">{info.first_name}</p>
-                                                                        </small> 
-                                                                </> ,
-                                                            email: info.email,
-                                                            date: info.date,
-                                                            entry_time: info.in_time === "Checked Out" ? 
-                                                                        (<p className="red">{info.in_time}</p>) :
-                                                                        (<p>{info.in_time}</p>),
-                                                            exit_time: info.out_time === "Still In" ? 
-                                                                        (<p className="green">{info.out_time}</p>) :
-                                                                        (<p>{info.out_time}</p>)
-                                                        }
-                                                    ))
-                                                )
-                                            ) :
-                                            ("")
-                                        }
-                                        fixedHeader
-                                        pagination
-                                        className='datatables'
-                                    />
-                                </div>
-                            </div>
+            
                         }
                     </>
                 )

@@ -5,9 +5,9 @@ import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
 import './ReportHero.css';
-// import 'rsuite/dist/rsuite.css'
-// import { DateRangePicker } from 'rsuite';
+import useFetch from "../../../../hooks/Fetch/useFetch";
 import AttendHistory from "../../../DataTables/AttendHistory";
+import Loading from "../../../Loading/Loading";
 
 const ReportHero = () =>{
     // const [date, setDate] = useState([]);
@@ -34,38 +34,48 @@ const ReportHero = () =>{
     const range_from = `${from_year}-${from_month}-${from_day}`;
     const range_to = `${to_year}-${to_month}-${to_day}`;
 
+    const { loading } = useFetch(`http://127.0.0.1:4040/api/attendance/attendance_report?from=""&to=""`);
+
+
     return(
+        
         <>
-            <div className="report-container">
-                <div className="search-by-date-time">
-                    <span
-                    onClick={() => setOpenDate(!openDate)}
-                    className="headerSearchText"
-                    >
-                        {`${format(date[0].startDate, "yyyy-MM-dd")} to ${format(
-                            date[0].endDate,
-                            "yyyy-MM-dd"
-                        )}`}
-                    </span>
-                    {openDate && (
-                        <div>
-                            <DateRange
-                            editableDateInputs={true}
-                            onChange={(item) => setDate([item.selection])}
-                            moveRangeOnFirstSelection={false}
-                            ranges={date}
-                            className="daterange"
+            { loading ?
+                ( <Loading /> ):
+                (
+                    <div className="report-container">
+                        <div className="search-by-date-time">
+                            <span
+                            onClick={() => setOpenDate(!openDate)}
+                            className="headerSearchText"
+                            >
+                                {`${format(date[0].startDate, "yyyy-MM-dd")} to ${format(
+                                    date[0].endDate,
+                                    "yyyy-MM-dd"
+                                )}`}
+                            </span>
+                            {openDate && (
+                                <div>
+                                    <DateRange
+                                    editableDateInputs={true}
+                                    onChange={(item) => setDate([item.selection])}
+                                    moveRangeOnFirstSelection={false}
+                                    ranges={date}
+                                    className="daterange"
+                                    />
+                                </div>
+                            )}
+                        </div>
+                        <div className="report-table">
+                            <AttendHistory
+                                from = {range_from}
+                                to = {range_to}
                             />
                         </div>
-                    )}
-                </div>
-                <div className="report-table">
-                    <AttendHistory
-                        from = {range_from}
-                        to = {range_to}
-                    />
-                </div>
-            </div>
+                    </div>
+                )
+
+            }
         </>
     )
 }

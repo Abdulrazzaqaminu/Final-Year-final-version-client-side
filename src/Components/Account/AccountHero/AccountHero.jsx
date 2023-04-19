@@ -3,9 +3,16 @@ import './AccountHero.css';
 import * as MdIcons from 'react-icons/md';
 import TextInput from "../../TextInput/TextInput";
 import Button from "../../Button/Button";
-import { useState } from "react";
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import { useState, useContext } from "react";
+import AuthContext from "../../../context/AuthContext";
+import axios from "axios";
 
 const AccountHero = () =>{
+    const { getLoggedIn } = useContext(AuthContext);
+    const [error, setError] = useState(null);
+    let userDetails = JSON.parse(localStorage?.getItem('admin'));
+
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -14,6 +21,34 @@ const AccountHero = () =>{
 
     const handleSubmit = async (e) =>{
         e.preventDefault()
+    }
+
+    const logOut = async () => {
+        try {
+            await axios.get("http://127.0.0.1:4040/api/log/logout");
+            getLoggedIn();
+            localStorage.clear();
+        } catch (error) {
+            setError(error);
+        }
+    }
+
+    const confirmLogOut = (e) => {
+        e.preventDefault()  
+        confirmAlert({
+            title: 'Confirm Logout',
+            message: 'Logout?.',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => logOut()
+              },
+              {
+                label: 'No',
+                onClick: () => alert('Click Ok')
+              }
+            ]
+        });
     }
     return(
         <>
@@ -72,7 +107,9 @@ const AccountHero = () =>{
                 <div className="acct_info">
                     <div className="profile_icon">
                         <div className="icon"><MdIcons.MdAccountCircle /> </div>
-                        <Button type="submit" className="logout">Log Out</Button>
+                        <Button type="submit" className="logout"
+                            onClick = {confirmLogOut}
+                        >Log Out</Button>
                     </div>
                     <div className="acct_org_info">
                         <form>

@@ -1,7 +1,6 @@
 import Employees from '../../DataTables/Employees';
 import './EmpHero.css'
 
-
 const EmpHero = () =>{
     return(
         <>

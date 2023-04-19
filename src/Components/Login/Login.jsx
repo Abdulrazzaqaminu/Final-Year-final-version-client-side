@@ -5,14 +5,15 @@ import Button from "../Button/Button";
 import axios from "axios";
 import validator from 'validator';
 import * as BsIcons from 'react-icons/bs';
-import {useNavigate, Navigate} from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
+import Loading from "../Loading/Loading";
 
 const Login = () => {
-    const navigate = useNavigate();
     const {getLoggedIn} = useContext(AuthContext)
     const { loggedIn } = useContext(AuthContext);
     const [email, setEmail] = useState("");
+    const [loading, setLoading] = useState(false);
     const [emailError, setEmailError] = useState("");
     const [password, setPassword] = useState("");
     const [passwordShown, setPasswordShown] = useState(false);
@@ -51,13 +52,15 @@ const Login = () => {
             }).then((response) => {
                 const userDetails = response.data;
                 localStorage.setItem('admin', JSON.stringify(userDetails));
-                getLoggedIn();
-                navigate("/");
+                setLoading(true);
+                setTimeout(() => {
+                    getLoggedIn();
+                }, 2000);
             }).catch((error) => {
                 setError(error.response.data.Message)
                 setTimeout(() => {
                     setError(null)
-                }, 5000)
+                }, 3000)
                 setEmptyFields(error.response.data.emptyFields)
             })
         } catch (error) {
@@ -69,47 +72,53 @@ const Login = () => {
         <>
             {loggedIn === false ?
                 <>
-                    {error &&
+                    { loading === false ?
                         (
-                            <div className="loginerror_message">
-                                {error}
-                            </div>
-                        )
+                            <>
+                                {error &&
+                                    (
+                                        <div className="loginerror_message">
+                                            {error}
+                                        </div>
+                                    )
+                                }         
+                                <div className="login_container">
+                                    <div className="login">
+                                        <p>Login</p>
+                                        <form onSubmit={handleSubmit}>
+                                            <div className="login_field">
+                                                <label>Email</label>
+                                                <TextInput
+                                                    type="text"
+                                                    value={email}
+                                                    onChange={validateEmail}
+                                                    className = {`email ${emptyFields?.includes("email") ? "error" : ""}`}
+                                                />
+                                                <span className="login_email">
+                                                    <p>{emailError}</p>
+                                                </span>
+                                            </div>
+                                            <div className="login_field">
+                                                <label>Password</label>
+                                                <TextInput
+                                                    type={passwordShown ? "text" : "password"}
+                                                    value={password}
+                                                    className = {emptyFields?.includes("password") ? "error" : ""}
+                                                    onChange={(e) => setPassword(e.target.value)}
+                                                />
+                                                {passwordShown ? 
+                                                    <BsIcons.BsEye className="hide_icon" onClick={() => setPasswordShown(false)}/> :
+                                                    <BsIcons.BsEyeSlash className="hide_icon" onClick={() => setPasswordShown(true)}/>
+                                                }
+                                            </div>
+                                            <Button type="submit">Login</Button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </>
+                        ) :
+                        ( <div className="loading_circle"><Loading/></div> )
                     }
-
-                    <div className="login_container">
-                        <div className="login">
-                            <p>Login</p>
-                            <form onSubmit={handleSubmit}>
-                                <div className="login_field">
-                                    <label>Email</label>
-                                    <TextInput
-                                        type="text"
-                                        value={email}
-                                        onChange={validateEmail}
-                                        className = {`email ${emptyFields?.includes("email") ? "error" : ""}`}
-                                    />
-                                    <span className="login_email">
-                                        <p>{emailError}</p>
-                                    </span>
-                                </div>
-                                <div className="login_field">
-                                    <label>Password</label>
-                                    <TextInput
-                                        type={passwordShown ? "text" : "password"}
-                                        value={password}
-                                        className = {emptyFields?.includes("password") ? "error" : ""}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                    />
-                                    {passwordShown ? 
-                                        <BsIcons.BsEye className="hide_icon" onClick={() => setPasswordShown(false)}/> :
-                                        <BsIcons.BsEyeSlash className="hide_icon" onClick={() => setPasswordShown(true)}/>
-                                    }
-                                </div>
-                                <Button type="submit">Login</Button>
-                            </form>
-                        </div>
-                    </div>
                 </> :
                 <Navigate replace to="/" />
             }
