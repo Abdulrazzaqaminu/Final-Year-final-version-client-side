@@ -11,7 +11,7 @@ import axios from "axios";
 const AccountHero = () =>{
     const { getLoggedIn } = useContext(AuthContext);
     const [error, setError] = useState(null);
-    let userDetails = JSON.parse(localStorage?.getItem('admin'));
+    // let userDetails = JSON.parse(localStorage?.getItem('admin'));
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -54,7 +54,7 @@ const AccountHero = () =>{
         <>
             <div className="acct-hero_container">
                 <div className="acct_update">
-                    <form action="" onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit}>
                         <div className="field">
                             <label>First Name:</label>
                             <TextInput 

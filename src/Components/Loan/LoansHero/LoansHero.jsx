@@ -13,6 +13,7 @@ import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
 import Loading from "../../Loading/Loading";
+import { confirmAlert } from 'react-confirm-alert'; // Import
 
 
 const LoansHero = () =>{
@@ -201,6 +202,22 @@ const LoansHero = () =>{
             setError(error);
         }
     }
+    const confirmLeave_request = () => {
+        confirmAlert({
+            title: 'Confirm to submit',
+            message: `Approve loan request?.`,
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => loan_payment()
+              },
+              {
+                label: 'No',
+                onClick: () => alert('Click Ok')
+              }
+            ]
+        });
+    }
 
     return(
         <>
@@ -282,7 +299,7 @@ const LoansHero = () =>{
                                             <label>Loan Description:</label>
                                             <textarea name="" value={loanDesc} /*className = {emptyFields?.includes("loan_details") ? "error" : ""}*/ className = {loanDesc === "" ? "error" : ""} onChange={desclettersOnly} id="" cols="30" rows="2"></textarea>
                                             
-                                            <Button type="submit" onClick={loan_payment}>Submit</Button>
+                                            <Button type="submit" onClick={confirmLeave_request}>Submit</Button>
                                         </div>
                                     </form>
                                     {openDate && (

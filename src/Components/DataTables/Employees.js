@@ -21,6 +21,7 @@ import Analytics from '../Analytics/Bar/Analytics';
 import Cancel from '../Analytics/Cancel';
 import LineChart from '../Graphs/Line/LineChart';
 import Loading from '../Loading/Loading';
+import { confirmAlert } from 'react-confirm-alert'; // Import
 
 const Employees = () => {
     const {enroll, enrolldispatch} = useEnrollContext();
@@ -171,7 +172,7 @@ const Employees = () => {
     };
     const validateEmail = (e) => {
         var email = e.target.value
-        const regex = /^[a-zA-Z@.\b]+$/;
+        const regex = /^[a-zA-Z0-9\b._@]+$/;
         if ((e.target.value) === "" || regex.test(e.target.value)) {
             setEmail(e.target.value);
             if(!email){
@@ -191,8 +192,7 @@ const Employees = () => {
         }
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
+    const handleSubmit = async () => {
         try {
             await axios.post("http://127.0.0.1:4040/api/enrollment", 
                 {
@@ -230,6 +230,23 @@ const Employees = () => {
         } catch (error) {
             setError(error);
         }
+    }
+    const confirmSubmit = (e) => {
+        e.preventDefault()
+        confirmAlert({
+            title: 'Confirm to submit',
+            message: `Enroll employee with staff ID ${staffid === "" ? "N/A" :  staffid}?.`,
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => handleSubmit()
+              },
+              {
+                label: 'No',
+                onClick: () => alert('Click Ok')
+              }
+            ]
+        });
     }
 
     const employeeColumn = [
@@ -414,7 +431,7 @@ const Employees = () => {
                                                     setOpenForm(false)
                                                 }
                                             }/></span>
-                                            <form onSubmit={handleSubmit}>
+                                            <form onSubmit={confirmSubmit}>
                                                 <div className="field">
                                                     <label>Staff ID:</label>
                                                     <TextInput 

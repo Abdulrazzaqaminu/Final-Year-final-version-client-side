@@ -10,27 +10,38 @@ const Attendance = () =>{
         {
             name: "Staff ID",
             selector: row => row.staff_ID,
-            sortable: true
+            sortable: true,
+            width: "100px",
         },
         {
             name: "Name",
             selector: row => row.name,
-            sortable: true
+            sortable: true,
+            width: "140px"
+        },
+        {
+            name: "Email",
+            selector: row => row.email,
+            sortable: true,
+            width: "230px"
         },
         {
             name: "Date",
             selector: row => row.date,
-            sortable: true
+            sortable: true,
+            width: "120px"
         },
         {
             name: "Entry Time",
             selector: row => row.entry_time,
-            sortable: true
+            sortable: true,
+            width: "120px"
         },
         {
             name: "Exit Time",
             selector: row => row.exit_time,
-            sortable: true
+            sortable: true,
+            width: "120px"
         },
     ]
 
@@ -47,11 +58,12 @@ const Attendance = () =>{
                         {
                             staff_ID: att.staff_ID,
                             name: <>
-                                    {att.first_name} <b>{att.last_name}</b>
+                                    <b>{att.last_name}</b>
                                         <small>
-                                            <p className="text-muted">{att.email}</p>
+                                            <p className="text-muted">{att.first_name}</p>
                                         </small> 
                                 </> ,
+                            email: att.email,
                             date: att.date,
                             entry_time: att.in_time === "Checked Out" ? 
                                         (<p className="red">{att.in_time}</p>) :

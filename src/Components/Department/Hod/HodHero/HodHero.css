@@ -1,26 +1,121 @@
-.single_employee_container .single_employee_info .profile_icon .remove{
-    position: absolute;
-    right: 148px;
+.single_employee_con{
+    height: 40vh;
+}
+
+.single_employee_innercon{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    margin: 110px 30px;
+    height: 76vh;
+    width: 100%;
+    background-color: var(--color-white);
+    box-shadow: var(--box-shadow);
+    border-radius: 5px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.single_employee_innercon::-webkit-scrollbar{
+    width: 8px;
+}
+.single_employee_innercon::-webkit-scrollbar-thumb{
+    border-radius: 5px;
+    background: var(--color-info-light); 
+}
+.single_employee_innercon::-webkit-scrollbar-thumb:hover{
+    background: #a2a2a2; 
+}
+
+.single_employee_innercon .options{
+    position: fixed;
+    background: var(--color-white);
+    box-shadow: 0rem 0.1rem 0rem 0rem rgb(222, 222, 222, 0.5);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    height: 40px;
+    width: 68.77%;
+}
+
+.single_employee_innercon .options ul{
+    display: flex;
+    justify-content: end;
+}
+
+.single_employee_innercon .options ul li{
+    padding: 5px 20px;
+}
+
+.single_employee_innercon .options ul li.unenroll_button_hover{
+    background-color: rgb(246, 194, 194);
+    color: red;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    transition: 0.3s ease;
+}
+.single_employee_innercon .options ul li.unenroll_button_hover:hover{
+    box-shadow: 0rem 0rem 0.5rem 0rem rgba(252, 147, 135, 0.5);
+}
+
+.single_employee_innercon .info{
+    margin-top: 40px;
+}
+
+.single_employee_innercon .top form{
+    display: grid;
+    grid-template-columns: 49% 50%;
     white-space: nowrap;
-    width: 130px;
-}
-.single_employee_container .single_employee_info input.email{
-    text-transform: lowercase;
 }
 
-.single_employee_container .single_employee_update form .field .green{
-    background-color: rgb(222, 255, 222);
+.single_employee_innercon .top form .field {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 8px;
+}
+
+.single_employee_innercon .top form .left{
+    display: grid;
+    grid-template-columns: 1fr;
+    /* background-color: red; */
+    height: 158%;
+    /* border-right: 1px dashed var(--color-info-light); */
+}
+
+.single_employee_innercon .top form .left .field p{
+    margin: 0px -60px;
+}
+
+.single_employee_innercon .top form .right {
+    display: grid;
+    grid-template-columns: 1fr;
+    height: 158%;
+}
+
+.single_employee_innercon .top form .right .field p{
+    margin: 0px -62px;
+}
+
+.single_employee_innercon .top form .right .field p.active_status{
+    background-color: rgb(210, 253, 210);
     color: green;
+    padding: 5px;
+    border-radius: 5px;
+    height: 30px;
+    width: 100%;
 }
-
-.single_employee_container .single_employee_update form .field .warning{
-    border: 1px solid yellowgreen;
-    background: rgb(252, 252, 230);
-    color: yellow;
+.single_employee_innercon .top form .right .field p.leave_status{
+    background-color: rgb(246, 246, 218);
+    color: rgb(156, 156, 6);
+    padding: 5px;
+    border-radius: 5px;
+    height: 30px;
+    width: 100%;
 }
-
-.single_employee_container .single_employee_update form .field .error{
-    border: 1px solid var(--color-danger);
-    background-color: rgb(248, 234, 234);
-    color: var(--color-danger);
+.single_employee_innercon .top form .right .field p.terminated_status{
+    background-color: rgb(251, 204, 204);
+    color: red;
+    padding: 5px;
+    border-radius: 5px;
+    height: 30px;
+    width: 100%;
 }

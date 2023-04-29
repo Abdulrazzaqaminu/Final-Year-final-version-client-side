@@ -11,6 +11,7 @@ import axios from "axios";
 import { useDepartmentContext } from "../../../hooks/useDepartmentContext";
 import { useUnitContext } from '../../../hooks/useUnitContext';
 import Loading from "../../Loading/Loading";
+import { confirmAlert } from 'react-confirm-alert'; // Import
 
 const DeptHero = () =>{
     const {departments, dispatch} = useDepartmentContext();
@@ -86,7 +87,7 @@ const DeptHero = () =>{
     }
     
     const [create_dept, setCreate_Dept] = useState("");
-    const [email, setEmail] = useState("");
+    const [staffid, setStaffid] = useState("");
     const [edit_deptName, setEdit_DeptName] = useState("");
     const [edit_unitName, setEdit_UnitName] = useState("");
 
@@ -139,10 +140,10 @@ const DeptHero = () =>{
             setCreate_Dept(e.target.value);
         }
     };
-    const emaillettersOnly = (e) => {
-        const regex = /^[a-zA-Z@.\b]+$/;
+    const Staff_IDnumberOnly = (e) => {
+        const regex = /^[0-9\b]+$/;
         if ((e.target.value) === "" || regex.test(e.target.value)) {
-            setEmail(e.target.value);
+          setStaffid(e.target.value);
         }
     };
 
@@ -264,6 +265,22 @@ const DeptHero = () =>{
             return error
         }
     }
+    const confirmDeptCreate = () => {
+        confirmAlert({
+            title: 'Confirm to submit',
+            message: 'Create Department?.',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => createDept()
+              },
+              {
+                label: 'No',
+                onClick: () => alert('Click Ok')
+              }
+            ]
+        });
+    }
 
     const editDept = async () => {
         try {
@@ -290,10 +307,27 @@ const DeptHero = () =>{
             setError(error);
         }
     }
+    const [edit_dept_name, setEdit_Dept_Name] = useState("");
+    const confirmDeptEdit = () => {
+        confirmAlert({
+            title: 'Confirm to submit',
+            message: `Edit ${edit_dept_name} department name?.`,
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => editDept()
+              },
+              {
+                label: 'No',
+                onClick: () => alert('Click Ok')
+              }
+            ]
+        });
+    }
 
     const assignHod = async () => {
         try {
-            await axios.put(`http://127.0.0.1:4040/api/hod/${Department_ID}`, {dept_HOD_email: email}, {
+            await axios.put(`http://127.0.0.1:4040/api/hod/${Department_ID}`, {dept_HOD_id: staffid}, {
                 headers: {
                     // 'application/json' is the modern content-type for JSON, but some
                     // older servers may use 'text/json'.
@@ -307,7 +341,7 @@ const DeptHero = () =>{
                     setError(null)
                     setSuccess(response.data.Message)
                     setEmptyFields([])
-                    setEmail("")
+                    setStaffid("")
                     dispatch({type: "EDIT_DEPARTMENT", payload: response.data})
                 }).catch((error) => {
                     setError(error.response.data.Message)
@@ -325,6 +359,23 @@ const DeptHero = () =>{
             setError(error);
             return error
         }
+    }
+    const [deptname, setDeptname] = useState('');
+    const confirmAssignHOD = () => {
+        confirmAlert({
+            title: 'Confirm to submit',
+            message: `Assign HOD to ${deptname} department?.`,
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => assignHod()
+              },
+              {
+                label: 'No',
+                onClick: () => alert('Click Ok')
+              }
+            ]
+        });
     }
 
     const del = async (Department_ID) => {
@@ -349,6 +400,22 @@ const DeptHero = () =>{
             setError(error);
             return error;
        }
+    }
+    const confirmDeptDelete = (Department_ID, deptname) => {
+        confirmAlert({
+            title: 'Confirm to submit',
+            message: `Delete ${deptname} Department?.`,
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => del(Department_ID)
+              },
+              {
+                label: 'No',
+                onClick: () => alert('Click Ok')
+              }
+            ]
+        });
     }
 
     const unitCreate = async () => {
@@ -390,6 +457,22 @@ const DeptHero = () =>{
             return error
         }
     }
+    const confirmUnitCreate = () => {
+        confirmAlert({
+            title: 'Confirm to submit',
+            message: 'Create Unit(s)?.',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => unitCreate()
+              },
+              {
+                label: 'No',
+                onClick: () => alert('Click Ok')
+              }
+            ]
+        });
+    }
 
     const unitUpdate = async () => {
         try {
@@ -417,6 +500,23 @@ const DeptHero = () =>{
             return error
         }
     }
+    const [unit_update_name, setUnit_Update_Name] = useState("");
+    const confirmUnitUpdate = () => {
+        confirmAlert({
+            title: 'Confirm to submit',
+            message: `Edit ${unit_update_name} unit name?.`,
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => unitUpdate()
+              },
+              {
+                label: 'No',
+                onClick: () => alert('Click Ok')
+              }
+            ]
+        });
+    }
 
     const unitDelete = async (unitId) => {
         try {
@@ -440,6 +540,22 @@ const DeptHero = () =>{
             setError(error);
             return error;
         }
+    }
+    const confirmUnitDelete = (unitId, unitname) => {
+        confirmAlert({
+            title: 'Confirm to submit',
+            message: `Delete ${unitname} unit?.`,
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => unitDelete(unitId)
+              },
+              {
+                label: 'No',
+                onClick: () => alert('Click Ok')
+              }
+            ]
+        });
     }
 
     const handleSubmit = (e) => {
@@ -523,7 +639,10 @@ const DeptHero = () =>{
                                                 ))
                                             }
                                             <div className="button">
-                                                <Button type="submit" onClick = {createDept}>Create</Button>
+                                                <Button type="submit" onClick = {() => {
+                                                    confirmDeptCreate()
+                                                    setOpen(false)
+                                                }}>Create</Button>
                                             </div>
                                         </div>
                                     </div>
@@ -536,17 +655,17 @@ const DeptHero = () =>{
                                         department_name: dept?.dept_name,
                                         hod: dept?.dept_HOD?.hod_id === "N/A" ? 
                                             (   <>
-                                                    {dept.dept_HOD?.hod_first_name}
+                                                    <b>{dept.dept_HOD?.hod_last_name}</b>
                                                     <small>
-                                                        <p className="text-muted"><b>{dept.dept_HOD?.hod_last_name}</b></p>
+                                                        <p className="text-muted">{dept.dept_HOD?.hod_first_name}</p>
                                                     </small> 
                                                 </>
                                             ) :
                                             (
                                                 <Link className="hod" to={`/department/hod/${dept.dept_HOD?.hod_id}`}>
-                                                    {dept.dept_HOD?.hod_first_name}
+                                                    <b>{dept.dept_HOD?.hod_last_name}</b>
                                                     <small>
-                                                        <p className="text-muted"><b>{dept.dept_HOD?.hod_last_name}</b></p>
+                                                        <p className="text-muted">{dept.dept_HOD?.hod_first_name}</p>
                                                     </small> 
                                                 </Link>
                                             ),
@@ -567,6 +686,9 @@ const DeptHero = () =>{
                                                 setListUnits(false);
                                                 setAssign_HOD(false);
                                                 setOpen(false);
+                                                setEdit_Dept_Name(dept?.dept_name);
+                                                setDeptname("");
+                                                setUnit_Update_Name("");
                                                 setShowAddUnit(false);
                                             }
                                         }>Edit</Button>,
@@ -577,12 +699,15 @@ const DeptHero = () =>{
                                                 setEditShow(false);
                                                 setListUnits(false);
                                                 setOpen(false);
+                                                setDeptname(dept?.dept_name);
+                                                setEdit_Dept_Name("");
+                                                setUnit_Update_Name("")
                                                 setShowAddUnit(false);
                                             }
                                         }>Assign</Button>,
                                         delete: <Button onClick={
                                             () => {
-                                                del(dept._id);
+                                                confirmDeptDelete(dept?._id, dept?.dept_name);
                                                 setEditShow(false);
                                                 setListUnits(false);
                                                 setAssign_HOD(false);
@@ -621,10 +746,22 @@ const DeptHero = () =>{
                                                                 edit: <Button className="edit_unit" onClick = {
                                                                     () => {
                                                                         setEditUnit(true);
+                                                                        setUnit_Update_Name(unit?.unit_name);
+                                                                        setDeptname("");
+                                                                        setEdit_Dept_Name("");
                                                                         navigate({pathname: '/department', search: `?dept_id=${Department_ID}&unit_id=${unit?._id}`});
+                                                                        setShowAddUnit(false);
                                                                     }
                                                                 }>Edit</Button>,
-                                                                delete: <Button onClick = {() => unitDelete(unit?._id)}>Delete</Button>
+                                                                delete: <Button onClick = {() => {
+                                                                    confirmUnitDelete(unit?._id, unit?.unit_name);
+                                                                    setUnit_Update_Name("");
+                                                                    setDeptname("");
+                                                                    setEdit_Dept_Name("");
+                                                                    setListUnits(false);
+                                                                    setEditUnit(false);
+                                                                    setShowAddUnit(false);
+                                                                }}>Delete</Button>
                                                             }
                                                         ))
                                                     // ) :
@@ -683,7 +820,10 @@ const DeptHero = () =>{
                                             value = {edit_deptName}
                                             onChange = {editlettersOnly}
                                         />
-                                        <Button type="submit" onClick = {editDept}>Edit</Button>
+                                        <Button type="submit" onClick = {() => {
+                                            confirmDeptEdit()
+                                            setEditShow(false);
+                                        }}>Edit</Button>
                                     </form>
                                 </div>
                             }
@@ -699,13 +839,17 @@ const DeptHero = () =>{
                                     } />
                                     <form onSubmit={handleSubmit}>
                                         <TextInput 
-                                            className = {`popup_input email ${emptyFields?.includes("hod_email") ? "error" : ""}`}
-                                            placeholder = "Employee Email"
+                                            className = {`popup_input ${emptyFields?.includes("hod_id") ? "error" : ""}`}
+                                            placeholder = "Staff ID"
                                             autoFocus = {true}
-                                            value = {email}
-                                            onChange = {emaillettersOnly}
+                                            maxLength={4}
+                                            value = {staffid}
+                                            onChange = {Staff_IDnumberOnly}
                                         />
-                                        <Button type="submit" onClick = {assignHod}>Assign</Button>
+                                        <Button type="submit" onClick = {() => {
+                                            confirmAssignHOD()
+                                            setAssign_HOD(false);
+                                        }}>Assign</Button>
                                     </form>
                                 </div>
                             }
@@ -747,7 +891,12 @@ const DeptHero = () =>{
                                             }
                                         </div>
 
-                                        <Button type="submit" onClick = {unitCreate}>Create</Button>
+                                        <Button type="submit" onClick = {() => {
+                                            confirmUnitCreate()
+                                            setListUnits(false);
+                                            setEditUnit(false);
+                                            setShowAddUnit(false);
+                                        }}>Create</Button>
                                     </form>
                                 </div>
                             }
@@ -767,7 +916,12 @@ const DeptHero = () =>{
                                             onChange = {unitlettersOnly}
                                             className = {emptyFields?.includes("edit_unit_name") ? "error" : ""}
                                         />
-                                        <Button type="submit" onClick = {unitUpdate}>Edit</Button>
+                                        <Button type="submit" onClick = {() => {
+                                            setListUnits(false);
+                                            setEditUnit(false);
+                                            confirmUnitUpdate();
+                                            setShowAddUnit(false);
+                                        }}>Edit</Button>
                                     </form>
                                 </div>
                             }

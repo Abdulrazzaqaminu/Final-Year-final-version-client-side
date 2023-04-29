@@ -15,7 +15,8 @@ import { format } from "date-fns";
 import Analytics from "../../Analytics/Pie/Analytics";
 import Cancel from "../../Analytics/Cancel";
 import PieChart from "../../Graphs/Pie/PieChart";
-import Loading from "../../Loading/Loading"
+import Loading from "../../Loading/Loading";
+import { confirmAlert } from 'react-confirm-alert'; // Import
 
 const LeaveHero = () => {
     const {leave, dispatch} = useLeaveContext();
@@ -229,6 +230,22 @@ const LeaveHero = () => {
             setError(error);
         }
     }
+    const confirmLeave_request = () => {
+        confirmAlert({
+            title: 'Confirm to submit',
+            message: `Approve leave request?.`,
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => leave_request()
+              },
+              {
+                label: 'No',
+                onClick: () => alert('Click Ok')
+              }
+            ]
+        });
+    }
 
     const filterLeaveType = async () => {
         try {
@@ -353,7 +370,7 @@ const LeaveHero = () => {
                                                                 )}`}
                                                             </span>
                                                         </div>
-                                                        <Button type="submit" onClick={leave_request}>Submit</Button>
+                                                        <Button type="submit" onClick={confirmLeave_request}>Submit</Button>
                                                     </div>
                                                 </form>
                                                 {openDate && (

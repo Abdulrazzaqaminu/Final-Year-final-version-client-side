@@ -45,9 +45,14 @@ const Profile = () =>{
     
     return(
         <>
+            { error &&
+                <div className='error_message'>
+                    {error}
+                </div>
+            }
             <div className="profile">
                 <div className="info">
-                    <p><b>{userDetails.first_name}</b></p>
+                    <p><b>{userDetails?.first_name}</b></p>
                     <small className='text-muted'>Admin</small>
                 </div>
                 {/* <Link to='/Account'> */}

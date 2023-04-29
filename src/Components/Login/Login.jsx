@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Login.css";
 import TextInput from "../TextInput/TextInput";
 import Button from "../Button/Button";
@@ -60,7 +60,7 @@ const Login = () => {
                 setError(error.response.data.Message)
                 setTimeout(() => {
                     setError(null)
-                }, 3000)
+                }, 5000)
                 setEmptyFields(error.response.data.emptyFields)
             })
         } catch (error) {
@@ -106,9 +106,17 @@ const Login = () => {
                                                     className = {emptyFields?.includes("password") ? "error" : ""}
                                                     onChange={(e) => setPassword(e.target.value)}
                                                 />
-                                                {passwordShown ? 
-                                                    <BsIcons.BsEye className="hide_icon" onClick={() => setPasswordShown(false)}/> :
-                                                    <BsIcons.BsEyeSlash className="hide_icon" onClick={() => setPasswordShown(true)}/>
+                                                { password === "" ?
+                                                    ("") :
+                                                    (
+                                                        <>
+                                                            {passwordShown ? 
+                                                                <BsIcons.BsEye className="hide_icon" onClick={() => setPasswordShown(false)}/> :
+                                                                <BsIcons.BsEyeSlash className="hide_icon" onClick={() => setPasswordShown(true)}/>
+                                                            }
+                                                        </>
+                                                    )
+
                                                 }
                                             </div>
                                             <Button type="submit">Login</Button>
