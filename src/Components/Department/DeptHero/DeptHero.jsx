@@ -97,6 +97,11 @@ const DeptHero = () =>{
     const [listUnits, setListUnits] = useState(false);
     const [editShow, setEditShow] = useState(false);
     const [assign_HOD, setAssign_HOD] = useState(false);
+    const [showHOD, setShowHOD] = useState(false);
+    const [hodinfo, setHodinfo] = useState({});
+    const [assigndate, setAssigndate] = useState("");
+    const [hodname, seHODname] = useState("");
+    const [hodid, seHODID] = useState("");
 
     useEffect(() => {
         const fetchDepartments = async () => {
@@ -219,6 +224,19 @@ const DeptHero = () =>{
                     setError(null)
                 }, 5000)
                 unitdispatch({type: "ALL_UNITS", payload: error.response.data})
+            })
+        } catch (error) {
+            setError(error)
+        }
+    }
+    const particularHOD = async (HOD_ID) => {
+        try {
+            await axios.get(`http://127.0.0.1:4040/api/hod/${HOD_ID}`)
+            .then((response) => {
+                setHodinfo(response.data)
+            })
+            .catch((error) => {
+                setError(error)  
             })
         } catch (error) {
             setError(error)
@@ -561,6 +579,49 @@ const DeptHero = () =>{
     const handleSubmit = (e) => {
         e.preventDefault()
     }
+
+    let today = new Date(assigndate);
+    let options = {
+        weekday: "long", 
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    }
+    let day = today.toLocaleDateString("en-us", options)
+
+    const removeHOD = async (Hod_ID) => {
+        try {
+            const response = await axios.delete(`http://127.0.0.1:4040/api/hod/${Hod_ID}`)
+            if(response) {
+                setShow(true)
+                setTimeout(() => {
+                    setShow(false)
+                }, 3000)
+                setError(null)
+                setSuccess(response.data.Message)
+                setShowHOD(false)
+                dispatch({type: "EDIT_DEPARTMENT", payload: response.data})
+            }
+        } catch (error) {
+            setError(error)
+        }
+    }
+    const confirmRemoveHod = () => {
+        confirmAlert({
+            title: 'Confirm to submit',
+            message: `Remove ${hodname} as HOD?.`,
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => removeHOD(hodid)
+              },
+              {
+                label: 'No',
+                onClick: () => alert('Click Ok')
+              }
+            ]
+        });
+    }
     
     return(
         <>
@@ -590,6 +651,7 @@ const DeptHero = () =>{
                                     setEditShow(false);
                                     setListUnits(false);
                                     setAssign_HOD(false);
+                                    setShowHOD(false);
                                     setEditUnit();
                                     // removeDeptID();
                                     // removeUnitIDParams();
@@ -655,19 +717,31 @@ const DeptHero = () =>{
                                         department_name: dept?.dept_name,
                                         hod: dept?.dept_HOD?.hod_id === "N/A" ? 
                                             (   <>
-                                                    <b>{dept.dept_HOD?.hod_last_name}</b>
+                                                    <b>{dept?.dept_HOD?.hod_last_name}</b>
                                                     <small>
-                                                        <p className="text-muted">{dept.dept_HOD?.hod_first_name}</p>
+                                                        <p className="text-muted">{dept?.dept_HOD?.hod_first_name}</p>
                                                     </small> 
                                                 </>
                                             ) :
                                             (
-                                                <Link className="hod" to={`/department/hod/${dept.dept_HOD?.hod_id}`}>
-                                                    <b>{dept.dept_HOD?.hod_last_name}</b>
+                                                <div className="hod" onClick={
+                                                    () => {
+                                                        setShowHOD(true);
+                                                        setListUnits(false); 
+                                                        setEditShow(false);
+                                                        setAssign_HOD(false);
+                                                        setOpen(false);
+                                                        particularHOD(dept?.dept_HOD?.hod_id);
+                                                        setAssigndate(dept?.dept_HOD?.hod_assign_date);
+                                                        seHODID(dept?.dept_HOD?.hod_id);
+                                                        seHODname(dept?.dept_HOD?.hod_last_name)
+                                                    }
+                                                    }>
+                                                    <b>{dept?.dept_HOD?.hod_last_name}</b>
                                                     <small>
-                                                        <p className="text-muted">{dept.dept_HOD?.hod_first_name}</p>
+                                                        <p className="text-muted">{dept?.dept_HOD?.hod_first_name}</p>
                                                     </small> 
-                                                </Link>
+                                                </div>
                                             ),
                                         unit: <Button className="units" onClick={
                                             () => {
@@ -677,6 +751,7 @@ const DeptHero = () =>{
                                                 setEditShow(false);
                                                 setAssign_HOD(false);
                                                 setOpen(false);
+                                                setShowHOD(false);
                                             }
                                         }>Units</Button>,
                                         edit: <Button className="edit" onClick={
@@ -690,6 +765,7 @@ const DeptHero = () =>{
                                                 setDeptname("");
                                                 setUnit_Update_Name("");
                                                 setShowAddUnit(false);
+                                                setShowHOD(false);
                                             }
                                         }>Edit</Button>,
                                         assign: <Button className="assign" onClick={
@@ -703,6 +779,7 @@ const DeptHero = () =>{
                                                 setEdit_Dept_Name("");
                                                 setUnit_Update_Name("")
                                                 setShowAddUnit(false);
+                                                setShowHOD(false);
                                             }
                                         }>Assign</Button>,
                                         delete: <Button onClick={
@@ -714,6 +791,7 @@ const DeptHero = () =>{
                                                 setOpen(false);
                                                 setShowAddUnit(false);
                                                 removeAll();
+                                                setShowHOD(false);
                                             }
                                         }>Delete</Button>
                                     }
@@ -722,6 +800,38 @@ const DeptHero = () =>{
                                 pagination
                                 className='datatables'
                             />
+
+                            { showHOD &&
+                                <div className="hod_pop_container">
+                                    <span className="close"><MdIcons.MdOutlineCancel onClick={() => {setShowHOD(false); setHodinfo({})}} className="close_icon"/></span>
+                                    <ul>
+                                        <li onClick={confirmRemoveHod}>Remove HOD</li>
+                                    </ul>
+                                    <form>
+                                        <div className="field">
+                                            <label>First Name:</label>
+                                            <p>{hodinfo?.hod_first_name}</p>
+                                        </div>
+                                        <div className="field">
+                                            <label>Last Name:</label>
+                                            <p><b>{hodinfo?.hod_last_name}</b></p>
+                                        </div>
+                                        <div className="field">
+                                            <label>Email:</label>
+                                            <p>{hodinfo?.hod_email}</p>
+                                        </div>
+                                        <div className="field">
+                                            <label>Department:</label>
+                                            <p>{hodinfo?.department?.dept_name}</p>
+                                        </div>
+                                        <div className="field">
+                                            <label>Assigned On:</label>
+                                            <p>{day}</p>
+                                        </div>
+                                    </form>
+                                </div>
+                            }
+
                             { listUnits && 
                                 <div className="list_units">
                                     <MdIcons.MdOutlineCancel className="unitlist_close" onClick={
@@ -730,6 +840,7 @@ const DeptHero = () =>{
                                                 setListUnits(false); 
                                                 setShowAddUnit(false); 
                                                 setEditUnit(false);
+                                                setShowHOD(false);
                                                 removeAll();
                                             }
                                         } />
@@ -751,6 +862,7 @@ const DeptHero = () =>{
                                                                         setEdit_Dept_Name("");
                                                                         navigate({pathname: '/department', search: `?dept_id=${Department_ID}&unit_id=${unit?._id}`});
                                                                         setShowAddUnit(false);
+                                                                        setShowHOD(false);
                                                                     }
                                                                 }>Edit</Button>,
                                                                 delete: <Button onClick = {() => {
@@ -761,6 +873,7 @@ const DeptHero = () =>{
                                                                     setListUnits(false);
                                                                     setEditUnit(false);
                                                                     setShowAddUnit(false);
+                                                                    setShowHOD(false);
                                                                 }}>Delete</Button>
                                                             }
                                                         ))
@@ -793,6 +906,7 @@ const DeptHero = () =>{
                                                                     setShowAddUnit(true);
                                                                     setEditShow(false);                 
                                                                     setEditUnit(false);
+                                                                    setShowHOD(false);
                                                                 }
                                                                 }/> </p>}
                                                         </>
@@ -805,13 +919,16 @@ const DeptHero = () =>{
                             }
                             { editShow &&
                                 <div className="popup">
-                                    <MdIcons.MdOutlineCancel className="popup_close" onClick={() => {
-                                            setEditShow(false); 
-                                            setShowAddUnit(false);
-                                            setEditUnit(false);
-                                            removeAll();
-                                        }} 
-                                    />
+                                    <span className="popup_close">
+                                        <MdIcons.MdOutlineCancel className="popup_close_icon" onClick={() => {
+                                                setEditShow(false); 
+                                                setShowAddUnit(false);
+                                                setEditUnit(false);
+                                                setShowHOD(false);
+                                                removeAll();
+                                            }} 
+                                        />
+                                    </span>
                                     <form onSubmit={handleSubmit}>
                                         <TextInput 
                                             className = {`popup_input ${emptyFields?.includes("edit_dept_name") ? "error" : ""}`}
@@ -829,14 +946,17 @@ const DeptHero = () =>{
                             }
                             { assign_HOD && 
                                 <div className="popup"> 
-                                    <MdIcons.MdOutlineCancel className="popup_close" onClick={
-                                        () => {
-                                            setAssign_HOD(false);
-                                            setShowAddUnit(false);
-                                            setEditUnit(false);
-                                            removeAll();
-                                        }
-                                    } />
+                                    <span className="popup_close">
+                                        <MdIcons.MdOutlineCancel className="popup_close_icon" onClick={
+                                            () => {
+                                                setAssign_HOD(false);
+                                                setShowAddUnit(false);
+                                                setEditUnit(false);
+                                                setShowHOD(false);
+                                                removeAll();
+                                            }
+                                        } />
+                                    </span>
                                     <form onSubmit={handleSubmit}>
                                         <TextInput 
                                             className = {`popup_input ${emptyFields?.includes("hod_id") ? "error" : ""}`}
@@ -858,7 +978,8 @@ const DeptHero = () =>{
                                     <MdIcons.MdOutlineCancel className="popup_close" onClick={
                                         () => {
                                             setShowAddUnit(false);
-                                        }}/>
+                                            setShowHOD(false);
+                                    }}/>
                                     <form onSubmit={handleSubmit}>
                                         <div className="field">
                                             <span className="add_unit" onClick={() => createUnit()}>Add unit <FiIcons.FiPlus/></span>
@@ -896,18 +1017,22 @@ const DeptHero = () =>{
                                             setListUnits(false);
                                             setEditUnit(false);
                                             setShowAddUnit(false);
+                                            setShowHOD(false);
                                         }}>Create</Button>
                                     </form>
                                 </div>
                             }
                             { editUnit && 
                                 <div className="edit_popup">
-                                    <MdIcons.MdOutlineCancel className="popup_close" onClick={
-                                        () => {
-                                            setEditUnit(false);
-                                            removeUnitIDParams();
-                                        }
+                                    <span className="popup_close">
+                                        <MdIcons.MdOutlineCancel className="popup_close_icon" onClick={
+                                            () => {
+                                                setEditUnit(false);
+                                                setShowHOD(false);
+                                                removeUnitIDParams();
+                                            }
                                         }/>
+                                    </span>
                                     <form onSubmit={handleSubmit}>
                                         <TextInput 
                                             placeholder = "Unit Name"
@@ -920,6 +1045,7 @@ const DeptHero = () =>{
                                             setListUnits(false);
                                             setEditUnit(false);
                                             confirmUnitUpdate();
+                                            setShowHOD(false);
                                             setShowAddUnit(false);
                                         }}>Edit</Button>
                                     </form>

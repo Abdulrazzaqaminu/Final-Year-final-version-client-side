@@ -29,13 +29,13 @@
 
 .leave_container .leave .leave_form{
     position: absolute;
-    top: 184px;
+    top: 198px;
     right: 125px;
     /* background: red; */
     width: 25%;
-    height: 63vh;
+    height: 60.5vh;
     z-index: 2;
-    border-radius: 7px;
+    border-radius: 5px;
     transition: all 300ms ease;
     background: var(--color-white);
     box-shadow: var(--box-shadow);
@@ -49,6 +49,8 @@
     height: 30px;
     width: 25%;
     transition: 0.3s ease;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
     cursor: pointer;
     background: var(--color-white);
     box-shadow: 0rem 0.1rem 0rem 0rem rgb(222, 222, 222, 0.5);
@@ -70,8 +72,8 @@
 .leave_container .leave .leave_form form{
     display: grid;
     grid-template-columns: 1fr;
-    padding: 2px;
-    margin-top: 20px;
+    padding: 0px;
+    margin-top: 26px;
 }
 
 
@@ -100,9 +102,7 @@
     background-color: rgb(248, 234, 234);
     color: var(--color-danger);
 }
-.leave_container .leave_form form button{
-   margin-top: 15px;
-}
+
 
 .leave_container .leave_form form .field .duration{
     margin: 10px 0px;

@@ -87,15 +87,15 @@
 }
 
 .edit form{
-    margin-top: 30px;
+    margin-top: 38px;
 }
 
 .edit::-webkit-scrollbar {
     display: none;
 }
-.edit .field{
+.edit form .field{
     padding: 0px 6px;
-    margin-top: 12px;
+    margin-top: 8px;
 }
 
 .edit .field input{
@@ -212,11 +212,12 @@
     box-shadow: var(--box-shadow);
     border-radius: 5px;
     overflow-y: auto;
-    overflow-x: hidden;
+    overflow-x: auto;
 }
 
 .single_employee_container::-webkit-scrollbar{
-    width: 8px;
+    width: 5px;
+    height: 5px;
 }
 .single_employee_container::-webkit-scrollbar-thumb{
     border-radius: 5px;
@@ -288,7 +289,7 @@
 .single_employee_container .top form{
     display: grid;
     grid-template-columns: 49% 50%;
-    white-space: nowrap;
+    /* white-space: nowrap; */
 }
 
 .single_employee_container .top form .field {
@@ -313,7 +314,7 @@
 }
 
 .single_employee_container .top form .right .field p{
-    margin: 0px -62px;
+    margin-left: -40px;
 }
 
 .single_employee_container .top form .right .field p.active_status{
@@ -352,7 +353,7 @@
 }
 
 .single_employee_container .bottom table th , td{
-    padding: 8px 0px;
+    padding: 8.9px 0px;
     text-align: left;
 }
 

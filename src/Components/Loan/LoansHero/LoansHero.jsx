@@ -93,7 +93,8 @@ const LoansHero = () =>{
         {
             name: "Duration",
             selector: row => row.duration,
-            sortable: true
+            sortable: true,
+            width: "100px"
         },
         {
             name: "Loan Description",

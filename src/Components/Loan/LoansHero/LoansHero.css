@@ -74,7 +74,7 @@
 .loans_container .loan .loan-form form{
     display: grid;
     grid-template-columns: 1fr;
-    padding: 2px;
+    padding: 10px 1px;
     margin-top: 25px;
     height: 59vh;
     border-radius: 5px;
@@ -98,10 +98,11 @@
     font-size: 1rem;
     border-radius: var(--border-radius-1);
     text-transform: capitalize;
+    margin-top: 5px;
 }
 
 .loans_container .loan .loan-form form .field button{
-    margin: 20px 0px 3px 0px;
+    margin: 20px 0px 1px 0px;
 }
 
 .loans_container .loan .loan-form form .duration{

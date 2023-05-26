@@ -253,68 +253,59 @@ const Employees = () => {
         {
             name: "Staff ID",
             selector: row => row.staff_ID,
-            // sortable: true,
             width: "100px",
         },
         {
             name: "Name",
             selector: row => row.name,
-            // sortable: true,
             width: "120px"
         },
         {
             name: "Date of Birth",
             selector: row => row.dob,
-            sortable: true
         },
         {
             name: "Phone Number",
             selector: row => row.phone_number,
-            sortable: true
+            width: "140px"
         },
         {
             name: "Department",
             selector: row => row.department,
-            sortable: true
+            width: "180px"
         },
         {
             name: "Unit",
             selector: row => row.unit,
-            sortable: true
+            width: "150px"
         },
         {
             name: "Position",
             selector: row => row.position,
-            sortable: true,
             width: "96px",
         },
         {
             name: "Grade",
             selector: row => row.grade,
-            sortable: true,
             width: "86px",
         },
         {
             name: "Annual Gross",
             selector: row => row.gross,
-            sortable: true,
             width: "129px",
         },
         {
             name: "Employment Type",
             selector: row => row.employment_type,
-            sortable: true
         },
         {
             name: "Status",
             selector: row => row.status,
-            sortable: true,
             width: "129px"
         },
         {
             name: "More",
             selector: row => row.more,
-            sortable: true
         },
     ]
 
@@ -322,24 +313,20 @@ const Employees = () => {
         {
             name: "Staff ID",
             selector: row => row.staff_ID,
-            sortable: true,
             width: "100px",
         },
         {
             name: "Name",
             selector: row => row.name,
-            sortable: true,
             width: "150px"
         },
         {
             name: "Unit",
             selector: row => row.unit,
-            sortable: true,
         },
         {
             name: "Employment Type",
             selector: row => row.employment_type,
-            sortable: true
         },
     ]
 
@@ -347,37 +334,31 @@ const Employees = () => {
         {
             name: "Staff ID",
             selector: row => row.staff_ID,
-            sortable: true,
             width: "100px",
         },
         {
             name: "Name",
             selector: row => row.name,
-            sortable: true,
             width: "120px"
         },
         {
             name: "Email",
             selector: row => row.email,
-            sortable: true,
             width: "170px"
         },
         {
             name: "Date",
             selector: row => row.date,
-            sortable: true,
             width: "125px"
         },
         {
             name: "Entry Time",
             selector: row => row.entry_time,
-            sortable: true,
             width: "125px"
         },
         {
             name: "Exit Time",
             selector: row => row.exit_time,
-            sortable: true
         },
     ]
 

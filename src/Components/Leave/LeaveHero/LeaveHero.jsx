@@ -90,13 +90,13 @@ const LeaveHero = () => {
             name: "Duration",
             selector: row => row.duration,
             sortable: true,
-            width: "120px"
+            width: "100px"
         },
         {
             name: "Paid",
             selector: row => row.paid,
             sortable: true,
-            width: "100px"
+            width: "80px"
         },
         {
             name: "Status",
@@ -122,7 +122,7 @@ const LeaveHero = () => {
             name: "Leave Type",
             selector: row => row.leave_type,
             sortable: true,
-            width: "150px"
+            width: "120px"
         },
         {
             name: "Approval Date",
@@ -139,7 +139,7 @@ const LeaveHero = () => {
             name: "Duration",
             selector: row => row.duration,
             sortable: true,
-            width: "130px"
+            width: "100px"
         },
         {
             name: "Paid",

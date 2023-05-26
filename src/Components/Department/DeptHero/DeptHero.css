@@ -34,7 +34,7 @@
     z-index: 100;
     /* height: 50%; */
     max-height: 62.8%;
-    overflow: auto;
+    overflow-y: auto;
     width: 27%;
     background-color: var(--color-white) ;
     /* box-shadow: var(--box-shadow); */
@@ -43,7 +43,12 @@
 }
 
 .dept .dept_popup::-webkit-scrollbar{
-    display: none;
+    width: 5px;
+}
+
+.dept .dept_popup::-webkit-scrollbar-thumb{
+    border-radius: 2px;
+    background: var(--color-info-light); 
 }
 
 .dept .dept_popup .button{
@@ -188,10 +193,12 @@
     height: 18.4%;
     border-radius: 5px;
     background-color: var(--color-white);
-    padding: 0px 8px;
     box-shadow: 0rem 0rem 1rem 0.5rem rgb(222, 222, 222, 0.8)
 }
 
+.dept .popup form{
+    padding: 2px 5px;
+}
 .dept .popup .popup_input{
     margin-top: 32px;
     width: 100%;
@@ -202,16 +209,29 @@
 }
 
 .dept .popup .popup_close{
-    font-size: 20px;
-    position: absolute;
+    position: fixed;
+    display: inline-block;
     z-index: 100;
+    padding: 5px 0px;
+    height: 28px;
+    width: 25%;
+    transition: 0.3s ease;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    background: var(--color-white);
+    box-shadow: 0rem 0.1rem 0rem 0rem rgb(222, 222, 222, 0.5);
+}
+
+.dept .popup .popup_close .popup_close_icon{
+    position: absolute;
     top: 6px;
     right: 6px;
+    font-size: 18px;
     cursor: pointer;
     transition: 0.3s ease;
 }
 
-.dept .popup .popup_close:hover{
+.dept .popup .popup_close .popup_close_icon:hover{
     color: red;
 }
 
@@ -309,18 +329,38 @@
     height: 18.4%;
     border-radius: 5px;
     background-color: var(--color-white);
-    padding: 0px 8px;
     box-shadow: 0rem 0rem 1rem 0.5rem rgb(222, 222, 222, 0.8)
 }
 
+.dept .edit_popup form{
+    padding: 2px 5px;
+}
+
 .dept .edit_popup .popup_close{
-    font-size: 20px;
-    position: absolute;
+    position: fixed;
+    display: inline-block;
     z-index: 100;
+    padding: 1px;
+    height: 28px;
+    width: 25%;
+    transition: 0.3s ease;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    background: var(--color-white);
+    box-shadow: 0rem 0.1rem 0rem 0rem rgb(222, 222, 222, 0.5);
+}
+
+.dept .edit_popup .popup_close .popup_close_icon{
+    position: absolute;
     top: 6px;
     right: 6px;
+    font-size: 18px;
     cursor: pointer;
     transition: 0.3s ease;
+}
+
+.dept .edit_popup .popup_close .popup_close_icon:hover{
+    color: red;
 }
 
 .dept .edit_popup input{
@@ -361,7 +401,8 @@
 }
 
 .hod:hover{
-    color: black;
+
+    cursor: pointer;
 }
 
 input{
@@ -399,3 +440,95 @@ input.error {
     color: var(--color-danger);
 } */
 
+.hod_pop_container{
+    position: absolute;
+    display: flex;
+    top: 200px;
+    right: 125px;
+    width: 25%;
+    height: 200px;
+    background-color: var(--color-white);
+    box-shadow: 0rem 0rem 1rem 0.2rem rgba(176, 176, 176, 0.3);
+    z-index: 20;
+    border-radius: 5px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.hod_pop_container::-webkit-scrollbar{
+    height: 5px;
+}
+.hod_pop_container::-webkit-scrollbar-thumb{
+    border-radius: 2px;
+    background: var(--color-info-light); 
+}
+
+.hod_pop_container .close{
+    position: fixed;
+    display: inline-block;
+    z-index: 100;
+    padding: 5px 0px;
+    height: 33px;
+    width: 25%;
+    transition: 0.3s ease;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    background: var(--color-white);
+    box-shadow: 0rem 0.1rem 0rem 0rem rgb(222, 222, 222, 0.5);
+}
+
+.hod_pop_container .close .close_icon{
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.hod_pop_container .close .close_icon:hover{
+    color: red;
+}
+
+.hod_pop_container form {
+    margin-top: 30px;
+    padding: 10px 6px;
+}
+
+.hod_pop_container form .field{
+    display: grid;
+    white-space: nowrap;
+    grid-template-columns: 40% 60%;
+    margin-bottom: 13px;
+    margin-left: -40px;
+}
+
+.hod_pop_container form .field label{
+    margin-left: 40px;
+}
+
+.hod_pop_container form .field p{
+    margin-left: 30px;
+}
+
+.hod_pop_container ul{
+    position: absolute;
+    z-index: 110;
+    color: red;
+}
+
+.hod_pop_container ul li{
+    padding: 2px 5px;
+}
+
+.hod_pop_container ul li{
+    background-color: rgb(246, 194, 194);
+    color: red;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 4px;
+    transition: 0.3s ease;
+}
+.hod_pop_container ul li:hover{
+    box-shadow: 0rem 0rem 0.5rem 0rem rgba(252, 147, 135, 0.5);
+}

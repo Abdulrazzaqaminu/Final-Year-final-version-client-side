@@ -190,6 +190,24 @@ const SingleEmpHero = () =>{
         });
     }
 
+    let assign = new Date(employee?.employee_details?.hod?.assigned_date);
+    let assignoptions = {
+        weekday: "long", 
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    }
+    let assignDate = assign.toLocaleDateString("en-us", assignoptions)
+
+    let remove = new Date(employee?.employee_details?.hod?.remove_date);
+    let removeoptions = {
+        weekday: "long", 
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    }
+    let removeDate = remove.toLocaleDateString("en-us", removeoptions)
+
     return(
         <>
             {error &&
@@ -331,8 +349,6 @@ const SingleEmpHero = () =>{
                 )
             }
 
-            {/* <div className="icon"><MdIcons.MdAccountCircle /> </div>
-            <Button type="submit" disabled = {employee?.status == "Terminated" ? true : false} className="uneroll" onClick={unenroll}>Unenroll</Button> */}
             <div className="employee-container">
                 <div className="single_employee_container">
                     <div className="options">
@@ -421,6 +437,29 @@ const SingleEmpHero = () =>{
                                         <label>Address:</label>
                                         <p>{`${employee?.employee_details?.address?.street}, ${employee?.employee_details?.address?.city}, ${employee?.employee_details?.address?.state}`}</p>
                                     </div>
+                                    { employee?.employee_details?.hod?.status === false ?
+                                        <>
+                                            { employee?.employee_details?.hod?.remove_date ?
+                                                (
+                                                    <div className="field">
+                                                        <label>Removed as HOD:</label>
+                                                        <p>{removeDate} {`(${employee?.employee_details?.hod?.dept_name})`}</p>
+                                                    </div>
+                                                ) :
+                                                (
+                                                    <div className="field">
+                                                        <label>Assigned as HOD:</label>
+                                                        <p>No</p>
+                                                    </div>
+                                                )
+
+                                            }
+                                        </> :
+                                        <div className="field">
+                                            <label>Assigned as HOD:</label>
+                                            <p>{`${assignDate} (${employee?.employee_details?.hod?.dept_name})`}</p>
+                                        </div>
+                                    }
                                     <div className="field">
                                         <label>Status:</label>
                                         <p className={
@@ -479,7 +518,7 @@ const SingleEmpHero = () =>{
                                                 <td>Loan</td>
                                                 <td>-</td>
                                                 <td>{
-                                                        employee?.employee_leave_pay === "NaN" ?
+                                                        employee?.loan === "NaN" ?
                                                         "-" :
                                                         `NGN ${(employee?.loan)}`
                                                     }

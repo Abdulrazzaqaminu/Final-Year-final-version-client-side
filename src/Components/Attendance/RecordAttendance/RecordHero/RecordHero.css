@@ -97,8 +97,8 @@
 .record_container .recording_section form .field{
     display: grid;
     grid-template-columns: 1fr;
-    padding: 8px;
-    margin-bottom: -7px;
+    padding: 6px;
+    margin-bottom: -2px;
 }
 
 .first{

@@ -24,7 +24,7 @@ const Payroll = () => {
             name: "Email",
             selector: row => row.email,
             sortable: true,
-            width: "200px"
+            width: "220px"
         },
         {
             name: "Loans",
