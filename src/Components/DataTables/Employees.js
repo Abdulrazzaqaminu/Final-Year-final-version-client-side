@@ -2,7 +2,7 @@ import './Datatable.css'
 import { Link } from "react-router-dom";
 import Button from "../Button/Button";
 import DataTable from 'react-data-table-component';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import TextInput from '../TextInput/TextInput';
 import * as FiIcons from "react-icons/fi"
@@ -14,14 +14,17 @@ import { format } from "date-fns";
 import validator from 'validator';
 import useFetch from '../../hooks/Fetch/useFetch';
 import useDeptFetch from '../../hooks/Fetch/useDeptFetch';
-import useEmpPayrollFetch from '../../hooks/Fetch/useEmpPayrollFetch';
-import useAttFilterFetch from "../../hooks/Fetch/useAttFilterFetch"
+import { useReactToPrint } from "react-to-print";
+import useAttFilterFetch from "../../hooks/Fetch/useAttFilterFetch";
+import useLocalGovFetch from '../../hooks/Fetch/useLocalGovFetch';
 import { useEnrollContext } from "../../hooks/useEnrollContext";
 import Analytics from '../Analytics/Bar/Analytics';
 import Cancel from '../Analytics/Cancel';
 import LineChart from '../Graphs/Line/LineChart';
 import Loading from '../Loading/Loading';
-import { confirmAlert } from 'react-confirm-alert'; // Import
+import { confirmAlert } from 'react-confirm-alert'; // 
+import * as AiIcons from 'react-icons/ai';
+import EmployeeList from '../PrintForms/EmployeeList/EmployeeList';
 
 const Employees = () => {
     const {enroll, enrolldispatch} = useEnrollContext();
@@ -41,8 +44,6 @@ const Employees = () => {
     const [phoneNumber, setPhoneNumber] = useState("");
     const [enrollDate, setEnrollDate] = useState("");
     const [employee_type, setEmployee_Type] = useState("");
-    const [state, setState] = useState("");
-    const [city, setCity] = useState("");
     const [street, setStreet] = useState("");
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
@@ -50,18 +51,18 @@ const Employees = () => {
     const [show, setShow] = useState(false);
     const [emptyFields, setEmptyFields] = useState([]);
     const [moreInfo, setMoreInfo] = useState(false);
-    const [moreGross, setMoreGross] = useState(false);
     const [showEmpTable, setShowEmpTable] = useState(true);
     const [empAtt, setEmpAtt] = useState(false);
 
     const [popupdept, setPopupdept] = useState("");
-    const [employee_id, setEmployee_ID] = useState("");
     const [employee_id2, setEmployee_ID2] = useState("");
     const [openDate, setOpenDate] = useState(false);
 
     const [status, setStatus] = useState("");
     const [hour, setHour] = useState("");
     const [dayMonYea, setDayMonYea] = useState("");
+    const [statePick, setStatePick] = useState("")
+    const [cityPick, setCityPick] = useState("")
 
     const day = new Date();
     const [date, setDate] = useState([
@@ -87,13 +88,13 @@ const Employees = () => {
     const to = `${to_year}-${to_month}-${to_day}`;
     
     const first_name_capitalize = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-    const state_capitalize = state.charAt(0).toUpperCase() + state.slice(1).toLowerCase();
-    const city_capitalize = city.charAt(0).toUpperCase() + city.slice(1).toLowerCase();
+    const state_capitalize = statePick.charAt(0).toUpperCase() + statePick.slice(1).toLowerCase();
+    const city_capitalize = cityPick.charAt(0).toUpperCase() + cityPick.slice(1).toLowerCase();
 
     const { data, reFetch } = useFetch(`http://127.0.0.1:4040/api/department/filter?dept_name=${department}`);
     const { dept, reFetchDept } = useDeptFetch(`http://127.0.0.1:4040/api/department/filter_department?dept_name=${popupdept}`);
-    const { filter, filtererror } = useAttFilterFetch(`http://127.0.0.1:4040/api/attendance/attendance_report/filter_date?staff_ID=${attid}&from=${from}&to=${to}`) ;
-    const { payroll, reFetchPayroll } = useEmpPayrollFetch(`http://127.0.0.1:4040/api/payroll/employee_salary/${moreGross ? employee_id : "636a8841e238f4196ca49427"}`);
+    const { filter, filtererror } = useAttFilterFetch(`http://127.0.0.1:4040/api/attendance/attendance_report/filter_date?staff_ID=${attid}&from=${from}&to=${to}`);
+    const { localGov, reFetchLocalGov } = useLocalGovFetch(`http://127.0.0.1:4040/api/localGov/getStateCities?state=${statePick}`);
 
     useEffect(() => {
         const fetchEmployees = async () => {
@@ -156,18 +157,6 @@ const Employees = () => {
         const regex = /^[a-zA-Z'\b]+$/;
         if ((e.target.value) === "" || regex.test(e.target.value)) {
           setLastName(e.target.value);
-        }
-    };
-    const statelettersOnly = (e) => {
-        const regex = /^[a-zA-Z\b]+$/;
-        if ((e.target.value) === "" || regex.test(e.target.value)) {
-          setState(e.target.value);
-        }
-    };
-    const citylettersOnly = (e) => {
-        const regex = /^[a-zA-Z\b]+$/;
-        if ((e.target.value) === "" || regex.test(e.target.value)) {
-          setCity(e.target.value);
         }
     };
     const validateEmail = (e) => {
@@ -259,6 +248,11 @@ const Employees = () => {
             name: "Name",
             selector: row => row.name,
             width: "120px"
+        },
+        {
+            name: "Email",
+            selector: row => row.email,
+            width: "200px"
         },
         {
             name: "Date of Birth",
@@ -362,6 +356,13 @@ const Employees = () => {
         },
     ]
 
+    const componentRef = useRef();
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+        documentTitle: `Enrolled employees`,
+        onAfterPrint: () => alert("Ok")
+    })
+
     return(
         <>
             {error &&
@@ -391,17 +392,27 @@ const Employees = () => {
                                             () => {
                                                 setOpenForm(false);
                                                 setMoreInfo(false);
-                                                setMoreGross(false);
                                                 setShowEmpTable(false);
                                             }
                                         }
                                     />
+                                    {
+                                        enroll?.length > 0 ?
+                                        (
+                                            <div className="printEmp" onClick={handlePrint}>
+                                                <div className="printEmp_icon">
+                                                    <AiIcons.AiFillPrinter />
+                                                </div>
+                                            </div>
+                                        ) :
+                                        ("")
+                                    }
+                                    <EmployeeList componentref={componentRef} enrollDetails={enroll}/>
                                     <div className='employee_plus'>
                                         <span className="plus" onClick={
                                             () => {
                                                 setOpenForm(true);
                                                 setMoreInfo(false);
-                                                setMoreGross(false);
                                             }
                                         }><FiIcons.FiPlus /></span>
                                     </div>
@@ -574,24 +585,54 @@ const Employees = () => {
                                                 </div>
                                                 <div className="field address">
                                                     <label>Address:</label>
-                                                    <TextInput 
+                                                    {/* <TextInput 
                                                         type="text"
                                                         value={state}
                                                         onChange={statelettersOnly}
                                                         placeholder="state"
                                                         className = {state === "" ? "error" : ""}
                                                         // className = {emptyFields?.includes("state") ? "error" : ""}
-                                                    />
+                                                    /> */}
+                                                    <select value={statePick} onChange={(e) => setStatePick(e.target.value)} className={`state ${statePick === "" ? "error" : ""}`}>
+                                                        <option value="">Choose state...</option>
+                                                        {
+                                                            localGov?.Local_gov.length > 0 ?
+                                                            (
+                                                                localGov?.Local_gov?.map((state) => (
+                                                                    <option value={state.state} key={state._id}>
+                                                                        {state.state}
+                                                                    </option>
+                                                                ))
+                                                            ) :
+                                                            (<option value="">No States</option>)
+                                                        }
+                                                    </select>
                                                 </div>
                                                 <div className="field">
-                                                <TextInput 
+                                                    {/* <TextInput 
                                                         type="text"
                                                         value={city}
                                                         onChange={citylettersOnly}
                                                         placeholder="city"
                                                         className = {city === "" ? "error" : ""}
                                                         // className = {emptyFields?.includes("city") ? "error" : ""}
-                                                    />
+                                                    /> */}
+                                                    <select value={cityPick} onChange={(e) => setCityPick(e.target.value)} className={`city ${cityPick === "" ? "error" : ""}`}>
+                                                        <option value="">Choose City...</option>
+                                                        {
+                                                            localGov?.Local_gov.length <= 1 ?
+                                                            (
+                                                                localGov?.Local_gov?.map((cities) => (
+                                                                    cities.cities?.map((city) => (
+                                                                        <option value={city} key={city}>
+                                                                            {city}
+                                                                        </option>
+                                                                    ))
+                                                                ))
+                                                            ) :
+                                                            (<option value="">Select State</option>)
+                                                        }
+                                                    </select>
                                                 </div>
                                                 <div className="field">
                                                 <TextInput 
@@ -619,6 +660,7 @@ const Employees = () => {
                                                                 <p><b>{employee.last_name}</b></p>
                                                                 <small className="text-muted">{employee.first_name}</small>
                                                             </div>,
+                                                        email: employee.email,
                                                         dob: employee.date_of_birth,
                                                         phone_number: employee.phone_number,
                                                         department: employee.status === "Terminated" ?
@@ -629,7 +671,7 @@ const Employees = () => {
                                                                                     // setLoading(true);
                                                                                     setMoreInfo(true);
                                                                                     setOpenForm(false);
-                                                                                    setMoreGross(false);
+                                
                                                                                     setPopupdept(employee.department);
                                                                                     setEmployee_ID2(employee._id);
                                                                                 }}
@@ -641,10 +683,8 @@ const Employees = () => {
                                                         grade: employee.grade,
                                                         gross: <p
                                                                     onClick={() => {
-                                                                        setMoreGross(true);
                                                                         setOpenForm(false);
                                                                         setMoreInfo(false);
-                                                                        setEmployee_ID(employee._id);
                                                                     }}
                                                                 >{`NGN ${(employee.gross_salary).toLocaleString()}`}</p>,
                                                         employment_type: employee.employee_type,
@@ -665,7 +705,7 @@ const Employees = () => {
                                             <span className="close"><MdIcons.MdOutlineCancel className='close_btn' 
                                                 onClick={() => {
                                                     setMoreInfo(false);
-                                                    setMoreGross(false);
+
                                                     setOpenForm(false);
                                                 }}
                                             /></span>

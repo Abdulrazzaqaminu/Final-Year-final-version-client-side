@@ -1,0 +1,10 @@
+.LeaveListPrint table{
+    white-space: nowrap;
+    padding: 5px;
+}
+
+@media print {
+    .LeaveListPrint{
+        display: block !important;
+    }
+}

@@ -1,0 +1,10 @@
+.LoanListPrint table{
+    white-space: nowrap;
+    padding: 5px;
+}
+
+@media print {
+    .LoanListPrint{
+        display: block !important;
+    }
+}

@@ -185,6 +185,12 @@
 .enrollment-container form .field input.last_name{
     text-transform: uppercase;
 }
+.enrollment-container form .field select.city{
+    margin-top: 10px;
+}
+.enrollment-container form .field select.state{
+    width: 100%;
+}
 .enrollment-container form .field select{
     background: var(--color-info-light);
     outline: none;
@@ -506,4 +512,85 @@ input[type=checkbox]{
 
 .emp_att .filtertable .datatables {
     height: 50vh;
+}
+
+.printEmp{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 68px;
+    right: 180px;
+}
+
+.printEmp .printEmp_icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    padding: 5px;
+    border-radius: 50%;
+    color: black;
+    background: var(--color-white);
+    box-shadow: 0rem 0rem 0.7rem 0rem rgb(222, 222, 222, 0.8);
+    transition: all 300ms ease;
+}
+
+.printEmp .printEmp_icon:hover{
+    cursor: pointer;
+    box-shadow: 0rem 0rem 0.5rem 0rem rgba(136, 136, 136, 0.8);
+}
+
+.printPayroll{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 68px;
+    right: 120px;
+}
+
+.printPayroll .printPayroll_icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    padding: 5px;
+    border-radius: 50%;
+    color: black;
+    background: var(--color-white);
+    box-shadow: 0rem 0rem 0.7rem 0rem rgb(222, 222, 222, 0.8);
+    transition: all 300ms ease;
+}
+
+.printPayroll .printPayroll_icon:hover{
+    cursor: pointer;
+    box-shadow: 0rem 0rem 0.5rem 0rem rgba(136, 136, 136, 0.8);
+}
+
+.printAttHistory{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 68px;
+    right: 120px;
+}
+
+.printAttHistory .printAttHistory_icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    padding: 5px;
+    border-radius: 50%;
+    color: black;
+    background: var(--color-white);
+    box-shadow: 0rem 0rem 0.7rem 0rem rgb(222, 222, 222, 0.8);
+    transition: all 300ms ease;
+}
+
+.printAttHistory .printAttHistory_icon:hover{
+    cursor: pointer;
+    box-shadow: 0rem 0rem 0.5rem 0rem rgba(136, 136, 136, 0.8);
 }

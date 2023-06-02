@@ -1,0 +1,10 @@
+.payrollListPrint table{
+    white-space: nowrap;
+    padding: 5px;
+}
+
+@media print {
+    .payrollListPrint{
+        display: block !important;
+    }
+}

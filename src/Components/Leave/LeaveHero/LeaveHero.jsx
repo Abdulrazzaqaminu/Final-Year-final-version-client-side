@@ -2,7 +2,7 @@ import React from "react";
 import './LeaveHero.css'
 import TextInput from "../../TextInput/TextInput";
 import Button from "../../Button/Button";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLeaveContext } from "../../../hooks/useLeaveContext";
 import * as FiIcons from "react-icons/fi"
 import * as MdIcons from "react-icons/md"
@@ -17,6 +17,9 @@ import Cancel from "../../Analytics/Cancel";
 import PieChart from "../../Graphs/Pie/PieChart";
 import Loading from "../../Loading/Loading";
 import { confirmAlert } from 'react-confirm-alert'; // Import
+import * as AiIcons from 'react-icons/ai';
+import { useReactToPrint } from "react-to-print";
+import LeaveList from "../../PrintForms/LeaveList/LeaveList";
 
 const LeaveHero = () => {
     const {leave, dispatch} = useLeaveContext();
@@ -72,6 +75,12 @@ const LeaveHero = () => {
             width: "120px"
         },
         {
+            name: "Email",
+            selector: row => row.email,
+            sortable: true,
+            width: "255px"
+        },
+        {
             name: "Leave Type",
             selector: row => row.leave_type,
             sortable: true
@@ -79,7 +88,8 @@ const LeaveHero = () => {
         {
             name: "Approval Date",
             selector: row => row.approval_date,
-            sortable: true
+            sortable: true,
+            width: "135px"
         },
         {
             name: "Start - End",
@@ -281,6 +291,13 @@ const LeaveHero = () => {
         }
     }
 
+    const componentRef = useRef();
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+        documentTitle: `Employee leave requests`,
+        onAfterPrint: () => alert("Ok")
+    })
+
     return (
         <>
             {error &&
@@ -300,7 +317,8 @@ const LeaveHero = () => {
             }
             { loading ?
                 ( <Loading /> ):
-                (
+                <>
+                    <LeaveList componentref={componentRef} leaveDetails={leave}/>
                     <div className="con">
                         { showLeaveTable === true ? 
                             (   
@@ -311,6 +329,17 @@ const LeaveHero = () => {
                                             filterLeaveType();
                                         }}
                                     />
+                                     {
+                                        leave?.length > 0 ?
+                                            (
+                                                <div className="printLeave" onClick={handlePrint}>
+                                                    <div className="printLeave_icon">
+                                                        <AiIcons.AiFillPrinter />
+                                                    </div>
+                                                </div>
+                                            ) :
+                                            ("")
+                                    }
                                     <div className="leave">
                                         <span className="plus" onClick={
                                             () => {
@@ -397,6 +426,7 @@ const LeaveHero = () => {
                                                                     <p><b>{leave?.last_name}</b></p>
                                                                     <small className="text-muted">{leave?.first_name}</small>
                                                                 </div>,
+                                                            email: leave?.email,
                                                             leave_type: leave?.leave_type,
                                                             approval_date: leave?.approval_date,
                                                             start_end: <div className="name_email">
@@ -482,7 +512,7 @@ const LeaveHero = () => {
                             </div>
                         }
                     </div>
-                )
+                </>
             }
         </>
     )

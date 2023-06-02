@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import './DeptHero.css';
 import TextInput from "../../TextInput/TextInput";
 import * as FiIcons from "react-icons/fi"

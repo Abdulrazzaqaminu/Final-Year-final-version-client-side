@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import './SingleEmpHero.css'
 import TextInput from "../../../TextInput/TextInput";
 import Button from "../../../Button/Button";
@@ -10,13 +10,20 @@ import * as MdIcons from "react-icons/md"
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEmpContext } from "../../../../hooks/useEmpContext"
 import useFetch from "../../../../hooks/Fetch/useFetch";
+import { useReactToPrint } from "react-to-print";
 import axios from "axios"
 
 const SingleEmpHero = () =>{
+    const componentRef = useRef();
     const location = useLocation();
     const Employee_ID = location.pathname.split("/")[2];
     const {employee, dispatch} = useEmpContext()
     const navigate = useNavigate();
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+        documentTitle: `${Employee_ID}, ${employee?.employee_details?.email} profile details`,
+        onAfterPrint: () => alert("Ok")
+    })
 
     const [moveStaff_ID, setMoveStaff_ID] = useState("");
     const [moveUnit, setMoveUnit] = useState("");
@@ -191,22 +198,40 @@ const SingleEmpHero = () =>{
     }
 
     let assign = new Date(employee?.employee_details?.hod?.assigned_date);
-    let assignoptions = {
+    let assignOptions = {
         weekday: "long", 
         day: "numeric",
         month: "long",
         year: "numeric"
     }
-    let assignDate = assign.toLocaleDateString("en-us", assignoptions)
+    let assignDate = assign?.toLocaleDateString("en-us", assignOptions)
 
     let remove = new Date(employee?.employee_details?.hod?.remove_date);
-    let removeoptions = {
+    let removeOptions = {
         weekday: "long", 
         day: "numeric",
         month: "long",
         year: "numeric"
     }
-    let removeDate = remove.toLocaleDateString("en-us", removeoptions)
+    let removeDate = remove?.toLocaleDateString("en-us", removeOptions)
+
+    let profileEdit = new Date(employee?.employee_details?.updatedAt);
+    let profileOption = {
+        weekday: "long", 
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    }
+    let profileEditDate = profileEdit?.toLocaleDateString("en-us", profileOption)
+    let hour = profileEdit.getHours();
+    let minute = profileEdit.getMinutes();
+    let seconds = profileEdit.getSeconds();
+    var ampm = hour >= 12 ? 'PM' : 'AM';
+    hour = hour % 12;
+    hour = hour ? hour : 12; // the hour '0' should be '12'
+    minute = minute < 10 ? '0'+minute : minute;
+    hour = hour < 10 ? '0'+hour : hour;
+    seconds = seconds < 10 ? '0'+seconds : seconds;
 
     return(
         <>
@@ -349,13 +374,21 @@ const SingleEmpHero = () =>{
                 )
             }
 
-            <div className="employee-container">
+            <div className="employee-container" >
                 <div className="single_employee_container">
+                    <div className="profileEdit">
+                        <p className="text-muted">{`Last edited: ${profileEditDate} at ${hour}:${minute}:${seconds} ${ampm}`}</p>
+                    </div>
                     <div className="options">
                         { employee?.employee_details?.status === "Terminated" ?
-                            (""):
                             (
                                 <ul>
+                                    <li className="print_button_hover" onClick={handlePrint}>Print</li>
+                                </ul>
+                            ):
+                            (
+                                <ul>
+                                    <li className="print_button_hover" onClick={handlePrint}>Print</li>
                                     <li className="edit_button_hover" onClick={() => {
                                         setEdit(true);
                                         setClick(false);
@@ -541,6 +574,190 @@ const SingleEmpHero = () =>{
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="printout_cont" ref={componentRef} style={{display: "none"}}>
+                <div className="printout">
+                    <div className="form_1">
+                        <form>
+                            <div className="field">
+                                <label>Staff ID:</label>
+                                <p>{employee?.employee_details?.staff_ID}</p>
+                            </div>
+                            <div className="field">
+                                <label>First Name:</label>
+                                <p>{employee?.employee_details?.first_name}</p>
+                            </div>
+                            <div className="field">
+                                <label>Last Name:</label>
+                                <p><b>{employee?.employee_details?.last_name}</b></p>
+                            </div>
+                            <div className="field">
+                                <label>Email:</label>
+                                <p>{employee?.employee_details?.email}</p>
+                            </div>
+                            <div className="field">
+                                <label>Date of birth:</label>
+                                <p>{employee?.employee_details?.date_of_birth}</p>
+                            </div>
+                            <div className="field">
+                                <label>Enorllment Date:</label>
+                                <p>{employee?.employee_details?.enrollment_date}</p>
+                            </div>
+                            <div className="field">
+                                <label>Department:</label>
+                                <p>{employee?.employee_details?.department}</p>
+                            </div>
+                            <div className="field">
+                                <label>Unit:</label>
+                                <p>{employee?.employee_details?.unit}</p>
+                            </div>
+                            <div className="field">
+                                <label>Last edited:</label>
+                                <p>{`${profileEditDate} at ${hour}:${minute}:${seconds} ${ampm}`}</p>
+                            </div>
+                        </form>
+                    </div>
+                    <div className="form_2">
+                        <form>
+                            <div className="field">
+                                <label>Position:</label>
+                                <p>{employee?.employee_details?.position}</p>
+                            </div>
+                            <div className="field">
+                                <label>Grade:</label>
+                                <p>{employee?.employee_details?.grade}</p>
+                            </div>
+                            <div className="field">
+                                <label>Phone Number:</label>
+                                <p>{employee?.employee_details?.phone_number}</p>
+                            </div>
+                            <div className="field">
+                                <label>Annual Gross:</label>
+                                <p>{`NGN ${(employee?.employee_details?.gross_salary)?.toLocaleString()}`}</p>
+                            </div>
+                            <div className="field">
+                                <label>Employment Type:</label>
+                                <p>{employee?.employee_details?.employee_type}</p>
+                            </div>
+                            <div className="field">
+                                <label>Address:</label>
+                                <p>{`${employee?.employee_details?.address?.street}, ${employee?.employee_details?.address?.city}, ${employee?.employee_details?.address?.state}`}</p>
+                            </div>
+                            { employee?.employee_details?.hod?.status === false ?
+                                <>
+                                    { employee?.employee_details?.hod?.remove_date ?
+                                        <>
+                                            <div className="field">
+                                                <label>Removed as HOD:</label>
+                                                <p>{removeDate}</p>
+                                            </div>
+                                            <div className="field">
+                                                <label></label>
+                                                <p>{`(${employee?.employee_details?.hod?.dept_name})`}</p>
+                                            </div>
+                                        </> :
+                                        (
+                                            <div className="field">
+                                                <label>Assigned as HOD:</label>
+                                                <p>No</p>
+                                            </div>
+                                        )
+
+                                    }
+                                </> :
+                                <>
+                                    <div className="field">
+                                        <label>Assigned as HOD:</label>
+                                        <p>{assignDate}</p>
+                                    </div>
+                                    <div className="field">
+                                        <label></label>
+                                        <p>{`(${employee?.employee_details?.hod?.dept_name})`}</p>
+                                    </div>
+                                </>
+                            }
+                            <div className="field">
+                                <label>Status:</label>
+                                <p className={
+                                    employee?.employee_details?.status === "Active" ? "active_status" :
+                                    employee?.employee_details?.status === "Leave" ? "leave_status" :
+                                    employee?.employee_details?.status === "Terminated" ? "terminated_status" : ""
+                                }>
+                                    {employee?.employee_details?.status}
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                    <div className="desc">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Amount</th>
+                                    <th>Deductions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Annual Gross</td>
+                                    <td>{`NGN ${(employee?.employee_details?.gross_salary)?.toLocaleString()}`}</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>Days Worked</td>
+                                    <td>{employee?.days_worked}</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>Worked Hours</td>
+                                    <td>{employee?.hours_worked}</td>
+                                    <td>-</td>
+                                </tr>
+                                {
+                                    employee?.employee_details?.employee_type === "Full-Time" ?
+                                    <>
+                                        <tr>
+                                            <td>Extra Hours</td>
+                                            <td>{employee?.overtime}</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Leave Pay</td>
+                                            <td>{
+                                                employee?.employee_leave_pay === "NaN" ?
+                                                "-" :
+                                                `NGN ${employee?.employee_leave_pay}`}</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Loan</td>
+                                            <td>-</td>
+                                            <td>{
+                                                    employee?.loan === "NaN" ?
+                                                    "-" :
+                                                    `NGN ${(employee?.loan)}`
+                                                }
+                                            </td>
+                                        </tr>
+                                    </> :
+                                    ("")
+                                }
+                                
+                                <tr>
+                                    <td>Net Salary (per days)</td>
+                                    <td>{
+                                            employee?.net === "NaN" ?
+                                            "-" :
+                                            `NGN ${employee?.net}`
+                                        }
+                                    </td>
+                                    <td>-</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

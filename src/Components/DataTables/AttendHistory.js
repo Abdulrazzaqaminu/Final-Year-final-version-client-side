@@ -2,6 +2,7 @@ import React from "react";
 import './Datatable.css'
 import DataTable from "react-data-table-component";
 import useFetch from "../../hooks/Fetch/useFetch";
+import * as AiIcons from 'react-icons/ai';
 
 const AttendHistory = ({from, to}) => {
     const { data } = useFetch(`http://127.0.0.1:4040/api/attendance/attendance_report?from=${from}&to=${to}`);
@@ -47,6 +48,11 @@ const AttendHistory = ({from, to}) => {
     
     return(
         <>
+            <div className="printAttHistory">
+                <div className="printAttHistory_icon">
+                    <AiIcons.AiFillPrinter />
+                </div>
+            </div>
             <DataTable 
                 columns = {attendanceColumn}
                 data = {

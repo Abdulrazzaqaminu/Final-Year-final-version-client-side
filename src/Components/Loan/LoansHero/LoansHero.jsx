@@ -2,7 +2,7 @@ import React from "react";
 import './LoansHero.css';
 import TextInput from "../../TextInput/TextInput";
 import Button from "../../Button/Button";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLoanContext } from "../../../hooks/useLoanContext"
 import axios from "axios"
 import * as FiIcons from "react-icons/fi"
@@ -14,6 +14,9 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
 import Loading from "../../Loading/Loading";
 import { confirmAlert } from 'react-confirm-alert'; // Import
+import * as AiIcons from 'react-icons/ai';
+import { useReactToPrint } from "react-to-print";
+import LoanList from "../../PrintForms/LoansList/LoanList";
 
 
 const LoansHero = () =>{
@@ -59,31 +62,27 @@ const LoansHero = () =>{
         {
             name: "Staff ID",
             selector: row => row.staff_ID,
-            sortable: true,
             width: "100px"
         },
         {
             name: "Name",
             selector: row => row.name,
-            sortable: true,
             width: "120px"
         },
         {
             name: "Email",
             selector: row => row.email,
-            sortable: true,
-            width: "200px"
+            width: "255px"
         },
         {
             name: "Amount",
             selector: row => row.amount,
-            sortable: true,
             width: "120px"
         },
         {
             name: "Approval Date",
             selector: row => row.approval_date,
-            sortable: true
+            width: "135px"
         },
         {
             name: "Fom - To",
@@ -93,7 +92,6 @@ const LoansHero = () =>{
         {
             name: "Duration",
             selector: row => row.duration,
-            sortable: true,
             width: "100px"
         },
         {
@@ -220,6 +218,13 @@ const LoansHero = () =>{
         });
     }
 
+    const componentRef = useRef();
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+        documentTitle: `Employee loan requests`,
+        onAfterPrint: () => alert("Ok")
+    })
+
     return(
         <>
             {error &&
@@ -239,7 +244,19 @@ const LoansHero = () =>{
             }
             { loading ?
                 ( <Loading /> ):
-                (
+                <>
+                    {
+                        loans?.length > 0 ?
+                            (
+                                <div className="printLoans" onClick={handlePrint}>
+                                    <div className="printLoans_icon">
+                                        <AiIcons.AiFillPrinter />
+                                    </div>
+                                </div>
+                            ) :
+                            ("")
+                    }
+                    <LoanList loanDetails={loans} componentref={componentRef}/>
                     <div className="loans_container">
                         <div className="loan">
                             <span className="plus" onClick={
@@ -336,7 +353,6 @@ const LoansHero = () =>{
                                                         </div>,
                                                 duration: <p>{loan?.amount_of_days} {loan?.amount_of_days === 1 ? "day" : "days"}</p> ,
                                                 desc: loan?.loan_details,
-                                                // pay_off: <Link to={`/loans/pay_off/${loan.employee_ID}`}><Button>Pay Off</Button></Link>
                                             }
                                         ))
                                     }
@@ -347,7 +363,7 @@ const LoansHero = () =>{
                             </div>
                         </div>
                     </div>
-                )
+                </>
             }
         </>
     )

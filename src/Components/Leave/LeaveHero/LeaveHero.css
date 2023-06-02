@@ -218,3 +218,30 @@
     padding: 3px 10px;
     border-radius: 8px;
 }
+
+.printLeave{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 68px;
+    right: 180px;
+}
+
+.printLeave .printLeave_icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    padding: 5px;
+    border-radius: 50%;
+    color: black;
+    background: var(--color-white);
+    box-shadow: 0rem 0rem 0.7rem 0rem rgb(222, 222, 222, 0.8);
+    transition: all 300ms ease;
+}
+
+.printLeave .printLeave_icon:hover{
+    cursor: pointer;
+    box-shadow: 0rem 0rem 0.5rem 0rem rgba(136, 136, 136, 0.8);
+}
