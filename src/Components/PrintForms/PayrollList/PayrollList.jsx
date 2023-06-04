@@ -4,6 +4,7 @@ import "./PayrollList.css";
 function PayrollList({payrollDetails, componentref}) {
   return (
     <div ref={componentref} style={{display: "none"}} className="payrollListPrint">
+        <h1>List of employees on payroll</h1>
         <table style={{width: "100%"}}>
             <thead>
                 <tr>

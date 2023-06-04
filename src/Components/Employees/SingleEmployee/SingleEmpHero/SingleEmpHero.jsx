@@ -12,6 +12,7 @@ import { useEmpContext } from "../../../../hooks/useEmpContext"
 import useFetch from "../../../../hooks/Fetch/useFetch";
 import { useReactToPrint } from "react-to-print";
 import axios from "axios"
+import * as AiIcons from 'react-icons/ai';
 
 const SingleEmpHero = () =>{
     const componentRef = useRef();
@@ -172,10 +173,13 @@ const SingleEmpHero = () =>{
 
     const unenroll = async () => {
         try {
-            const response = await axios.delete(`http://127.0.0.1:4040/api/enrollment/${Employee_ID}`)
-            if(response) {
+            await axios.delete(`http://127.0.0.1:4040/api/enrollment/${Employee_ID}`)
+            .then(() => {
                 navigate("/employees")
-            }
+            })
+            .catch((error) => {
+                setError(error.response.data.Message);
+            })
         } catch (error) {
             setError(error);
         }
@@ -377,15 +381,17 @@ const SingleEmpHero = () =>{
             <div className="employee-container" >
                 <div className="single_employee_container">
                     <div className="profileEdit">
-                        <p className="text-muted">{`Last edited: ${profileEditDate} at ${hour}:${minute}:${seconds} ${ampm}`}</p>
+                        <p className="text-muted">{`Last updated: ${profileEditDate} at ${hour}:${minute}:${seconds} ${ampm}`}</p>
                     </div>
                     <div className="options">
                         { employee?.employee_details?.status === "Terminated" ?
                             (
-                                <ul>
-                                    <li className="print_button_hover" onClick={handlePrint}>Print</li>
-                                </ul>
-                            ):
+                                <div className="print_button_hover" onClick={handlePrint}>
+                                    <div className="print_button_hover_icon">
+                                        <AiIcons.AiFillPrinter />
+                                    </div>
+                                </div>
+                            ) :
                             (
                                 <ul>
                                     <li className="print_button_hover" onClick={handlePrint}>Print</li>
@@ -580,6 +586,7 @@ const SingleEmpHero = () =>{
 
             <div className="printout_cont" ref={componentRef} style={{display: "none"}}>
                 <div className="printout">
+                <h1>Employee profile details</h1>
                     <div className="form_1">
                         <form>
                             <div className="field">
@@ -615,7 +622,7 @@ const SingleEmpHero = () =>{
                                 <p>{employee?.employee_details?.unit}</p>
                             </div>
                             <div className="field">
-                                <label>Last edited:</label>
+                                <label>Last updated:</label>
                                 <p>{`${profileEditDate} at ${hour}:${minute}:${seconds} ${ampm}`}</p>
                             </div>
                         </form>

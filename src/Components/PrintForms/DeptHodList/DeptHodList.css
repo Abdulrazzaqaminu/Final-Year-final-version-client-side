@@ -1,14 +1,13 @@
-.payrollListPrint table{
+.DeptHodListPrint table{
     white-space: nowrap;
     padding: 5px;
 }
-
-.payrollListPrint h1{
+.DeptHodListPrint h1{
     padding: 0px 15px;
 }
 
 @media print {
-    .payrollListPrint{
+    .DeptHodListPrint{
         display: block !important;
     }
 }

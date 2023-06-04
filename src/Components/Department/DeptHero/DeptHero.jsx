@@ -12,6 +12,9 @@ import { useDepartmentContext } from "../../../hooks/useDepartmentContext";
 import { useUnitContext } from '../../../hooks/useUnitContext';
 import Loading from "../../Loading/Loading";
 import { confirmAlert } from 'react-confirm-alert'; // Import
+import HodIcon from "../../Analytics/HodIcon/HodIcon";
+import Cancel from "../../Analytics/Cancel";
+import HodList from "../HodList/HodList";
 
 const DeptHero = () =>{
     const {departments, dispatch} = useDepartmentContext();
@@ -43,7 +46,7 @@ const DeptHero = () =>{
         }
     }
 
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
     const [emptyFields, setEmptyFields] = useState([])
     const [open, setOpen] = useState(false);
     const [addinputs, setAddinputs] = useState([]);
@@ -102,6 +105,7 @@ const DeptHero = () =>{
     const [assigndate, setAssigndate] = useState("");
     const [hodname, seHODname] = useState("");
     const [hodid, seHODID] = useState("");
+    const [hodList, setHodList] = useState(false);
 
     useEffect(() => {
         const fetchDepartments = async () => {
@@ -156,58 +160,48 @@ const DeptHero = () =>{
         {
             name: "Department Name",
             selector: row => row.department_name,
-            sortable: true,
             width: "180px"
         },
         {
             name: "HOD",
-            selector: row => row.hod,
-            sortable: true
+            selector: row => row.hod
         },
         {
             name: "Unit",
-            selector: row => row.unit,
-            sortable: true
+            selector: row => row.unit
         },
         {
             name: "Edit",
-            selector: row => row.edit,
-            sortable: true
+            selector: row => row.edit
         },
         {
             name: "Assign HOD",
-            selector: row => row.assign,
-            sortable: true
+            selector: row => row.assign
         },
         {
             name: "Delete",
-            selector: row => row.delete,
-            sortable: true
+            selector: row => row.delete
         },
     ]
     const unitColumn = [
         {
             name: "Unit Name",
             selector: row => row.unit_name,
-            sortable: true,
             width: "180px"
 
         },
         {
             name: "Employees",
             selector: row => row.num_emp,
-            sortable: true,
             width: "120px"
         },
         {
             name: "Edit",
-            selector: row => row.edit,
-            sortable: true
+            selector: row => row.edit
         },
         {
             name: "Delete",
-            selector: row => row.delete,
-            sortable: true
+            selector: row => row.delete
         },
     ]
 
@@ -643,416 +637,452 @@ const DeptHero = () =>{
             { loading ?
                 ( <Loading /> ):
                 (
-                    <div className="dept_container">
-                        <div className="dept">
-                            <span className="plus" onClick={
-                                () => {
-                                    setOpen(true); 
-                                    setEditShow(false);
-                                    setListUnits(false);
-                                    setAssign_HOD(false);
-                                    setShowHOD(false);
-                                    setEditUnit();
-                                    // removeDeptID();
-                                    // removeUnitIDParams();
-                                    removeAll();
-                                    setShowAddUnit(false);
-                                }
-                            }><FiIcons.FiPlus/></span>
-                            { open &&
-                                <form onSubmit={handleSubmit}>
-                                    <div className="dept_popup">
-                                        <span className="close"><MdIcons.MdOutlineCancel onClick={() => setOpen(false)} className="close_icon"/></span>
-                                        <div className="dept_popup_container">
-                                            <div className="field">
-                                                <label> Department Name</label>
-                                                <TextInput
-                                                    autoFocus = {true}
-                                                    onChange = {deptlettersOnly}
-                                                    value = {create_dept}
-                                                    className = {create_dept === "" ? "error" : ""}
-                                                    // className = {emptyFields?.includes("dept_name") ? "error" : ""}
-                                                />
-                                            </div>
-                                            <div className="field">
-                                                <span className="add_unit" onClick={() => addUnit()}>Add unit <FiIcons.FiPlus/></span>
-                                            </div>
-                                            { 
-                                                addinputs.map((element, index) => (
-                                                    <div className="field" key={index}>
-                                                        <TextInput
-                                                            value = {element?.unit_name || ""}
-                                                            name = "unit_name"
-                                                            autoComplete = "off"
-                                                            autoFocus = {true}
-                                                            placeholder = "Enter unit name"
-                                                            className = {`unit_names ${element?.unit_name === "" ? "error" : ""}`}
-                                                            onChange = {e => handleInputChange(index, e)}
-                                                        />
-                                                        { index ?
-                                                            (
-                                                                <span onClick={() => removeUnit(index)}>
-                                                                    <MdIcons.MdOutlineCancel className="unit_close" />
-                                                                </span>
-                                                            ) :
-                                                            null
-                                                        }
-                                                    </div>
-                                                ))
+                    <>
+                        {
+                            hodList === true ?
+                                (
+                                    <>
+                                        <Cancel onClick={
+                                            () => {
+                                                setHodList(false);
+                                                setOpen(false); 
+                                                setEditShow(false);
+                                                setListUnits(false);
+                                                setAssign_HOD(false);
+                                                setShowHOD(false);
                                             }
-                                            <div className="button">
-                                                <Button type="submit" onClick = {() => {
-                                                    confirmDeptCreate()
-                                                    setOpen(false)
-                                                }}>Create</Button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            }  
-                            <DataTable
-                                columns={departmentColumn}
-                                data={departments?.map((dept, index) => (
-                                    {
-                                        department_name: dept?.dept_name,
-                                        hod: dept?.dept_HOD?.hod_id === "N/A" ? 
-                                            (   <>
-                                                    <b>{dept?.dept_HOD?.hod_last_name}</b>
-                                                    <small>
-                                                        <p className="text-muted">{dept?.dept_HOD?.hod_first_name}</p>
-                                                    </small> 
-                                                </>
-                                            ) :
-                                            (
-                                                <div className="hod" onClick={
+                                        }
+                                        />
+                                        <HodList />
+                                    </>
+                                ) :
+                                (
+                                    <>
+                                        <HodIcon onClick={
+                                            () => {
+                                                setHodList(true)
+                                                setOpen(false); 
+                                                setEditShow(false);
+                                                setListUnits(false);
+                                                setAssign_HOD(false);
+                                                setShowHOD(false);
+                                            }
+                                        }
+                                        />
+                                        <div className="dept_container">
+                                            <div className="dept">
+                                                <span className="plus" onClick={
                                                     () => {
-                                                        setShowHOD(true);
-                                                        setListUnits(false); 
+                                                        setOpen(true); 
                                                         setEditShow(false);
+                                                        setListUnits(false);
                                                         setAssign_HOD(false);
-                                                        setOpen(false);
-                                                        particularHOD(dept?.dept_HOD?.hod_id);
-                                                        setAssigndate(dept?.dept_HOD?.hod_assign_date);
-                                                        seHODID(dept?.dept_HOD?.hod_id);
-                                                        seHODname(dept?.dept_HOD?.hod_last_name)
+                                                        setShowHOD(false);
+                                                        setEditUnit();
+                                                        // removeDeptID();
+                                                        // removeUnitIDParams();
+                                                        removeAll();
+                                                        setShowAddUnit(false);
                                                     }
-                                                    }>
-                                                    <b>{dept?.dept_HOD?.hod_last_name}</b>
-                                                    <small>
-                                                        <p className="text-muted">{dept?.dept_HOD?.hod_first_name}</p>
-                                                    </small> 
-                                                </div>
-                                            ),
-                                        unit: <Button className="units" onClick={
-                                            () => {
-                                                navigate({pathname: '/department', search: `?dept_id=${dept._id}`});
-                                                listOfUnits(dept._id);
-                                                setListUnits(true); 
-                                                setEditShow(false);
-                                                setAssign_HOD(false);
-                                                setOpen(false);
-                                                setShowHOD(false);
-                                            }
-                                        }>Units</Button>,
-                                        edit: <Button className="edit" onClick={
-                                            () => {
-                                                setEditShow(true);
-                                                navigate({pathname: '/department', search: `?dept_id=${dept._id}`});
-                                                setListUnits(false);
-                                                setAssign_HOD(false);
-                                                setOpen(false);
-                                                setEdit_Dept_Name(dept?.dept_name);
-                                                setDeptname("");
-                                                setUnit_Update_Name("");
-                                                setShowAddUnit(false);
-                                                setShowHOD(false);
-                                            }
-                                        }>Edit</Button>,
-                                        assign: <Button className="assign" onClick={
-                                            () => {
-                                                setAssign_HOD(true); 
-                                                navigate({pathname: '/department', search: `?dept_id=${dept._id}`});
-                                                setEditShow(false);
-                                                setListUnits(false);
-                                                setOpen(false);
-                                                setDeptname(dept?.dept_name);
-                                                setEdit_Dept_Name("");
-                                                setUnit_Update_Name("")
-                                                setShowAddUnit(false);
-                                                setShowHOD(false);
-                                            }
-                                        }>Assign</Button>,
-                                        delete: <Button onClick={
-                                            () => {
-                                                confirmDeptDelete(dept?._id, dept?.dept_name);
-                                                setEditShow(false);
-                                                setListUnits(false);
-                                                setAssign_HOD(false);
-                                                setOpen(false);
-                                                setShowAddUnit(false);
-                                                removeAll();
-                                                setShowHOD(false);
-                                            }
-                                        }>Delete</Button>
-                                    }
-                                ))}
-                                fixedHeader
-                                pagination
-                                className='datatables'
-                            />
-
-                            { showHOD &&
-                                <div className="hod_pop_container">
-                                    <span className="close"><MdIcons.MdOutlineCancel onClick={() => {setShowHOD(false); setHodinfo({})}} className="close_icon"/></span>
-                                    <ul>
-                                        <li onClick={confirmRemoveHod}>Remove HOD</li>
-                                    </ul>
-                                    <form>
-                                        <div className="field">
-                                            <label>First Name:</label>
-                                            <p>{hodinfo?.hod_first_name}</p>
-                                        </div>
-                                        <div className="field">
-                                            <label>Last Name:</label>
-                                            <p><b>{hodinfo?.hod_last_name}</b></p>
-                                        </div>
-                                        <div className="field">
-                                            <label>Email:</label>
-                                            <p>{hodinfo?.hod_email}</p>
-                                        </div>
-                                        <div className="field">
-                                            <label>Department:</label>
-                                            <p>{hodinfo?.department?.dept_name}</p>
-                                        </div>
-                                        <div className="field">
-                                            <label>Assigned On:</label>
-                                            <p>{day}</p>
-                                        </div>
-                                    </form>
-                                </div>
-                            }
-
-                            { listUnits && 
-                                <div className="list_units">
-                                    <MdIcons.MdOutlineCancel className="unitlist_close" onClick={
-                                        () => 
-                                            {
-                                                setListUnits(false); 
-                                                setShowAddUnit(false); 
-                                                setEditUnit(false);
-                                                setShowHOD(false);
-                                                removeAll();
-                                            }
-                                        } />
-                                        <div className="table">
-                                            <DataTable
-                                                columns={unitColumn}
-                                                data={
-                                                    // units?.unit.length > 0 ? 
-                                                    // (
-                                                        units?.map((unit) => (
-                                                            {
-                                                                unit_name: unit?.unit_name,
-                                                                num_emp: unit?.employee_ids?.length,
-                                                                edit: <Button className="edit_unit" onClick = {
-                                                                    () => {
-                                                                        setEditUnit(true);
-                                                                        setUnit_Update_Name(unit?.unit_name);
-                                                                        setDeptname("");
-                                                                        setEdit_Dept_Name("");
-                                                                        navigate({pathname: '/department', search: `?dept_id=${Department_ID}&unit_id=${unit?._id}`});
-                                                                        setShowAddUnit(false);
-                                                                        setShowHOD(false);
-                                                                    }
-                                                                }>Edit</Button>,
-                                                                delete: <Button onClick = {() => {
-                                                                    confirmUnitDelete(unit?._id, unit?.unit_name);
-                                                                    setUnit_Update_Name("");
-                                                                    setDeptname("");
-                                                                    setEdit_Dept_Name("");
-                                                                    setListUnits(false);
-                                                                    setEditUnit(false);
-                                                                    setShowAddUnit(false);
-                                                                    setShowHOD(false);
-                                                                }}>Delete</Button>
-                                                            }
-                                                        ))
-                                                    // ) :
-                                                    // (
-                                                    //     units?.map((unit) => (
-                                                    //         {
-                                                    //             unit_name: unit?.unit_name,
-                                                    //             num_emp: unit?.employee_ids?.length,
-                                                    //             edit: <Button className="edit_unit" onClick = {
-                                                    //                 () => {
-                                                    //                     setEditUnit(true);
-                                                    //                     navigate({pathname: '/department', search: `?dept_id=${Department_ID}&unit_id=${unit?._id}`});
-                                                    //                 }
-                                                    //             }>Edit</Button>,
-                                                    //             delete: <Button onClick = {() => unitDelete(unit?._id)}>Delete</Button>
-                                                    //         }
-                                                    //     ))
-                                                    // )
-                                                }
-                                                fixedHeader
-                                                pagination
-                                                title = {
-                                                    units === null ? 
-                                                    ("") :
-                                                    (
-                                                        <>
-                                                            {<p className="dept_name">{units ? units[0]?.dept_name : ""} <FiIcons.FiPlus className="unit_plus" onClick={
+                                                }><FiIcons.FiPlus/></span>
+                                                { open &&
+                                                    <form onSubmit={handleSubmit}>
+                                                        <div className="dept_popup">
+                                                            <span className="close"><MdIcons.MdOutlineCancel onClick={() => setOpen(false)} className="close_icon"/></span>
+                                                            <div className="dept_popup_container">
+                                                                <div className="field">
+                                                                    <label> Department Name</label>
+                                                                    <TextInput
+                                                                        autoFocus = {true}
+                                                                        onChange = {deptlettersOnly}
+                                                                        value = {create_dept}
+                                                                        className = {create_dept === "" ? "error" : ""}
+                                                                        // className = {emptyFields?.includes("dept_name") ? "error" : ""}
+                                                                    />
+                                                                </div>
+                                                                <div className="field">
+                                                                    <span className="add_unit" onClick={() => addUnit()}>Add unit <FiIcons.FiPlus/></span>
+                                                                </div>
+                                                                { 
+                                                                    addinputs.map((element, index) => (
+                                                                        <div className="field" key={index}>
+                                                                            <TextInput
+                                                                                value = {element?.unit_name || ""}
+                                                                                name = "unit_name"
+                                                                                autoComplete = "off"
+                                                                                autoFocus = {true}
+                                                                                placeholder = "Enter unit name"
+                                                                                className = {`unit_names ${element?.unit_name === "" ? "error" : ""}`}
+                                                                                onChange = {e => handleInputChange(index, e)}
+                                                                            />
+                                                                            { index ?
+                                                                                (
+                                                                                    <span onClick={() => removeUnit(index)}>
+                                                                                        <MdIcons.MdOutlineCancel className="unit_close" />
+                                                                                    </span>
+                                                                                ) :
+                                                                                null
+                                                                            }
+                                                                        </div>
+                                                                    ))
+                                                                }
+                                                                <div className="button">
+                                                                    <Button type="submit" onClick = {() => {
+                                                                        confirmDeptCreate()
+                                                                        setOpen(false)
+                                                                    }}>Create</Button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                }  
+                                                <DataTable
+                                                    columns={departmentColumn}
+                                                    data={departments?.map((dept, index) => (
+                                                        {
+                                                            department_name: dept?.dept_name,
+                                                            hod: dept?.dept_HOD?.hod_id === "N/A" ? 
+                                                                (   <>
+                                                                        <b>{dept?.dept_HOD?.hod_last_name}</b>
+                                                                        <small>
+                                                                            <p className="text-muted">{dept?.dept_HOD?.hod_first_name}</p>
+                                                                        </small> 
+                                                                    </>
+                                                                ) :
+                                                                (
+                                                                    <div className="hod" onClick={
+                                                                        () => {
+                                                                            setShowHOD(true);
+                                                                            setListUnits(false); 
+                                                                            setEditShow(false);
+                                                                            setAssign_HOD(false);
+                                                                            setOpen(false);
+                                                                            particularHOD(dept?.dept_HOD?.hod_id);
+                                                                            setAssigndate(dept?.dept_HOD?.hod_assign_date);
+                                                                            seHODID(dept?.dept_HOD?.hod_id);
+                                                                            seHODname(dept?.dept_HOD?.hod_last_name)
+                                                                        }
+                                                                        }>
+                                                                        <b>{dept?.dept_HOD?.hod_last_name}</b>
+                                                                        <small>
+                                                                            <p className="text-muted">{dept?.dept_HOD?.hod_first_name}</p>
+                                                                        </small> 
+                                                                    </div>
+                                                                ),
+                                                            unit: <Button className="units" onClick={
                                                                 () => {
-                                                                    setShowAddUnit(true);
-                                                                    setEditShow(false);                 
-                                                                    setEditUnit(false);
+                                                                    navigate({pathname: '/department', search: `?dept_id=${dept._id}`});
+                                                                    listOfUnits(dept._id);
+                                                                    setListUnits(true); 
+                                                                    setEditShow(false);
+                                                                    setAssign_HOD(false);
+                                                                    setOpen(false);
                                                                     setShowHOD(false);
                                                                 }
-                                                                }/> </p>}
-                                                        </>
-                                                    )
-                                                }
-                                                className='datatables'
-                                            />
-                                        </div>
-                                </div>
-                            }
-                            { editShow &&
-                                <div className="popup">
-                                    <span className="popup_close">
-                                        <MdIcons.MdOutlineCancel className="popup_close_icon" onClick={() => {
-                                                setEditShow(false); 
-                                                setShowAddUnit(false);
-                                                setEditUnit(false);
-                                                setShowHOD(false);
-                                                removeAll();
-                                            }} 
-                                        />
-                                    </span>
-                                    <form onSubmit={handleSubmit}>
-                                        <TextInput 
-                                            className = {`popup_input ${emptyFields?.includes("edit_dept_name") ? "error" : ""}`}
-                                            placeholder = "Department name"
-                                            autoFocus = {true}
-                                            value = {edit_deptName}
-                                            onChange = {editlettersOnly}
-                                        />
-                                        <Button type="submit" onClick = {() => {
-                                            confirmDeptEdit()
-                                            setEditShow(false);
-                                        }}>Edit</Button>
-                                    </form>
-                                </div>
-                            }
-                            { assign_HOD && 
-                                <div className="popup"> 
-                                    <span className="popup_close">
-                                        <MdIcons.MdOutlineCancel className="popup_close_icon" onClick={
-                                            () => {
-                                                setAssign_HOD(false);
-                                                setShowAddUnit(false);
-                                                setEditUnit(false);
-                                                setShowHOD(false);
-                                                removeAll();
-                                            }
-                                        } />
-                                    </span>
-                                    <form onSubmit={handleSubmit}>
-                                        <TextInput 
-                                            className = {`popup_input ${emptyFields?.includes("hod_id") ? "error" : ""}`}
-                                            placeholder = "Staff ID"
-                                            autoFocus = {true}
-                                            maxLength={4}
-                                            value = {staffid}
-                                            onChange = {Staff_IDnumberOnly}
-                                        />
-                                        <Button type="submit" onClick = {() => {
-                                            confirmAssignHOD()
-                                            setAssign_HOD(false);
-                                        }}>Assign</Button>
-                                    </form>
-                                </div>
-                            }
-                            { showAddUnit && 
-                                <div className="add_unit_poppup">
-                                    <MdIcons.MdOutlineCancel className="popup_close" onClick={
-                                        () => {
-                                            setShowAddUnit(false);
-                                            setShowHOD(false);
-                                    }}/>
-                                    <form onSubmit={handleSubmit}>
-                                        <div className="field">
-                                            <span className="add_unit" onClick={() => createUnit()}>Add unit <FiIcons.FiPlus/></span>
-                                        </div>
-                                        <br />
-                                        <br />
-                                        <div className="below_add">
-                                            { 
-                                                addUnitInputs.map((element, index) => (
-                                                    <div className="field" key={index}>
-                                                        <TextInput
-                                                            value = {element?.unit_name || ""}
-                                                            name = "unit_name"
-                                                            autoComplete = "off"
-                                                            autoFocus = {true}
-                                                            placeholder = "Enter unit name"
-                                                            onChange = {e => handleUnitInputChange(index, e)}
-                                                            className = {`${element?.unit_name === "" ? "error" : ""}`}
-                                                        />
-                                                        { index >= 0  ?
-                                                            (
-                                                                <span onClick={() => removecreateUnit(index)}>
-                                                                    <MdIcons.MdOutlineCancel className="unit_close" />
-                                                                </span>
-                                                            ) :
-                                                            null
+                                                            }>Units</Button>,
+                                                            edit: <Button className="edit" onClick={
+                                                                () => {
+                                                                    setEditShow(true);
+                                                                    navigate({pathname: '/department', search: `?dept_id=${dept._id}`});
+                                                                    setListUnits(false);
+                                                                    setAssign_HOD(false);
+                                                                    setOpen(false);
+                                                                    setEdit_Dept_Name(dept?.dept_name);
+                                                                    setDeptname("");
+                                                                    setUnit_Update_Name("");
+                                                                    setShowAddUnit(false);
+                                                                    setShowHOD(false);
+                                                                }
+                                                            }>Edit</Button>,
+                                                            assign: <Button className="assign" onClick={
+                                                                () => {
+                                                                    setAssign_HOD(true); 
+                                                                    navigate({pathname: '/department', search: `?dept_id=${dept._id}`});
+                                                                    setEditShow(false);
+                                                                    setListUnits(false);
+                                                                    setOpen(false);
+                                                                    setDeptname(dept?.dept_name);
+                                                                    setEdit_Dept_Name("");
+                                                                    setUnit_Update_Name("")
+                                                                    setShowAddUnit(false);
+                                                                    setShowHOD(false);
+                                                                }
+                                                            }>Assign</Button>,
+                                                            delete: <Button onClick={
+                                                                () => {
+                                                                    confirmDeptDelete(dept?._id, dept?.dept_name);
+                                                                    setEditShow(false);
+                                                                    setListUnits(false);
+                                                                    setAssign_HOD(false);
+                                                                    setOpen(false);
+                                                                    setShowAddUnit(false);
+                                                                    removeAll();
+                                                                    setShowHOD(false);
+                                                                }
+                                                            }>Delete</Button>
                                                         }
-                                                    </div>
-                                                ))
-                                            }
-                                        </div>
+                                                    ))}
+                                                    fixedHeader
+                                                    pagination
+                                                    className='datatables'
+                                                />
 
-                                        <Button type="submit" onClick = {() => {
-                                            confirmUnitCreate()
-                                            setListUnits(false);
-                                            setEditUnit(false);
-                                            setShowAddUnit(false);
-                                            setShowHOD(false);
-                                        }}>Create</Button>
-                                    </form>
-                                </div>
-                            }
-                            { editUnit && 
-                                <div className="edit_popup">
-                                    <span className="popup_close">
-                                        <MdIcons.MdOutlineCancel className="popup_close_icon" onClick={
-                                            () => {
-                                                setEditUnit(false);
-                                                setShowHOD(false);
-                                                removeUnitIDParams();
-                                            }
-                                        }/>
-                                    </span>
-                                    <form onSubmit={handleSubmit}>
-                                        <TextInput 
-                                            placeholder = "Unit Name"
-                                            autoFocus = {true}
-                                            value = {edit_unitName}
-                                            onChange = {unitlettersOnly}
-                                            className = {emptyFields?.includes("edit_unit_name") ? "error" : ""}
-                                        />
-                                        <Button type="submit" onClick = {() => {
-                                            setListUnits(false);
-                                            setEditUnit(false);
-                                            confirmUnitUpdate();
-                                            setShowHOD(false);
-                                            setShowAddUnit(false);
-                                        }}>Edit</Button>
-                                    </form>
-                                </div>
-                            }
-                        </div>
-                    </div>
+                                                { showHOD &&
+                                                    <div className="hod_pop_container">
+                                                        <span className="close"><MdIcons.MdOutlineCancel onClick={() => {setShowHOD(false); setHodinfo({})}} className="close_icon"/></span>
+                                                        <ul>
+                                                            <li onClick={confirmRemoveHod}>Remove HOD</li>
+                                                        </ul>
+                                                        <form>
+                                                            <div className="field">
+                                                                <label>First Name:</label>
+                                                                <p>{hodinfo?.hod_first_name}</p>
+                                                            </div>
+                                                            <div className="field">
+                                                                <label>Last Name:</label>
+                                                                <p><b>{hodinfo?.hod_last_name}</b></p>
+                                                            </div>
+                                                            <div className="field">
+                                                                <label>Email:</label>
+                                                                <p>{hodinfo?.hod_email}</p>
+                                                            </div>
+                                                            <div className="field">
+                                                                <label>Department:</label>
+                                                                <p>{hodinfo?.department?.dept_name}</p>
+                                                            </div>
+                                                            <div className="field">
+                                                                <label>Assigned On:</label>
+                                                                <p>{day}</p>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                }
+
+                                                { listUnits && 
+                                                    <div className="list_units">
+                                                        <MdIcons.MdOutlineCancel className="unitlist_close" onClick={
+                                                            () => 
+                                                                {
+                                                                    setListUnits(false); 
+                                                                    setShowAddUnit(false); 
+                                                                    setEditUnit(false);
+                                                                    setShowHOD(false);
+                                                                    removeAll();
+                                                                }
+                                                            } />
+                                                            <div className="table">
+                                                                <DataTable
+                                                                    columns={unitColumn}
+                                                                    data={
+                                                                        // units?.unit.length > 0 ? 
+                                                                        // (
+                                                                            units?.map((unit) => (
+                                                                                {
+                                                                                    unit_name: unit?.unit_name,
+                                                                                    num_emp: unit?.employee_ids?.length,
+                                                                                    edit: <Button className="edit_unit" onClick = {
+                                                                                        () => {
+                                                                                            setEditUnit(true);
+                                                                                            setUnit_Update_Name(unit?.unit_name);
+                                                                                            setDeptname("");
+                                                                                            setEdit_Dept_Name("");
+                                                                                            navigate({pathname: '/department', search: `?dept_id=${Department_ID}&unit_id=${unit?._id}`});
+                                                                                            setShowAddUnit(false);
+                                                                                            setShowHOD(false);
+                                                                                        }
+                                                                                    }>Edit</Button>,
+                                                                                    delete: <Button onClick = {() => {
+                                                                                        confirmUnitDelete(unit?._id, unit?.unit_name);
+                                                                                        setUnit_Update_Name("");
+                                                                                        setDeptname("");
+                                                                                        setEdit_Dept_Name("");
+                                                                                        setListUnits(false);
+                                                                                        setEditUnit(false);
+                                                                                        setShowAddUnit(false);
+                                                                                        setShowHOD(false);
+                                                                                    }}>Delete</Button>
+                                                                                }
+                                                                            ))
+                                                                        // ) :
+                                                                        // (
+                                                                        //     units?.map((unit) => (
+                                                                        //         {
+                                                                        //             unit_name: unit?.unit_name,
+                                                                        //             num_emp: unit?.employee_ids?.length,
+                                                                        //             edit: <Button className="edit_unit" onClick = {
+                                                                        //                 () => {
+                                                                        //                     setEditUnit(true);
+                                                                        //                     navigate({pathname: '/department', search: `?dept_id=${Department_ID}&unit_id=${unit?._id}`});
+                                                                        //                 }
+                                                                        //             }>Edit</Button>,
+                                                                        //             delete: <Button onClick = {() => unitDelete(unit?._id)}>Delete</Button>
+                                                                        //         }
+                                                                        //     ))
+                                                                        // )
+                                                                    }
+                                                                    fixedHeader
+                                                                    pagination
+                                                                    title = {
+                                                                        units === null ? 
+                                                                        ("") :
+                                                                        (
+                                                                            <>
+                                                                                {<p className="dept_name">{units ? units[0]?.dept_name : ""} <FiIcons.FiPlus className="unit_plus" onClick={
+                                                                                    () => {
+                                                                                        setShowAddUnit(true);
+                                                                                        setEditShow(false);                 
+                                                                                        setEditUnit(false);
+                                                                                        setShowHOD(false);
+                                                                                    }
+                                                                                    }/> </p>}
+                                                                            </>
+                                                                        )
+                                                                    }
+                                                                    className='datatables'
+                                                                />
+                                                            </div>
+                                                    </div>
+                                                }
+                                                { editShow &&
+                                                    <div className="popup">
+                                                        <span className="popup_close">
+                                                            <MdIcons.MdOutlineCancel className="popup_close_icon" onClick={() => {
+                                                                    setEditShow(false); 
+                                                                    setShowAddUnit(false);
+                                                                    setEditUnit(false);
+                                                                    setShowHOD(false);
+                                                                    removeAll();
+                                                                }} 
+                                                            />
+                                                        </span>
+                                                        <form onSubmit={handleSubmit}>
+                                                            <TextInput 
+                                                                className = {`popup_input ${emptyFields?.includes("edit_dept_name") ? "error" : ""}`}
+                                                                placeholder = "Department name"
+                                                                autoFocus = {true}
+                                                                value = {edit_deptName}
+                                                                onChange = {editlettersOnly}
+                                                            />
+                                                            <Button type="submit" onClick = {() => {
+                                                                confirmDeptEdit()
+                                                                setEditShow(false);
+                                                            }}>Edit</Button>
+                                                        </form>
+                                                    </div>
+                                                }
+                                                { assign_HOD && 
+                                                    <div className="popup"> 
+                                                        <span className="popup_close">
+                                                            <MdIcons.MdOutlineCancel className="popup_close_icon" onClick={
+                                                                () => {
+                                                                    setAssign_HOD(false);
+                                                                    setShowAddUnit(false);
+                                                                    setEditUnit(false);
+                                                                    setShowHOD(false);
+                                                                    removeAll();
+                                                                }
+                                                            } />
+                                                        </span>
+                                                        <form onSubmit={handleSubmit}>
+                                                            <TextInput 
+                                                                className = {`popup_input ${emptyFields?.includes("hod_id") ? "error" : ""}`}
+                                                                placeholder = "Staff ID"
+                                                                autoFocus = {true}
+                                                                maxLength={4}
+                                                                value = {staffid}
+                                                                onChange = {Staff_IDnumberOnly}
+                                                            />
+                                                            <Button type="submit" onClick = {() => {
+                                                                confirmAssignHOD()
+                                                                setAssign_HOD(false);
+                                                            }}>Assign</Button>
+                                                        </form>
+                                                    </div>
+                                                }
+                                                { showAddUnit && 
+                                                    <div className="add_unit_poppup">
+                                                        <MdIcons.MdOutlineCancel className="popup_close" onClick={
+                                                            () => {
+                                                                setShowAddUnit(false);
+                                                                setShowHOD(false);
+                                                        }}/>
+                                                        <form onSubmit={handleSubmit}>
+                                                            <div className="field">
+                                                                <span className="add_unit" onClick={() => createUnit()}>Add unit <FiIcons.FiPlus/></span>
+                                                            </div>
+                                                            <br />
+                                                            <br />
+                                                            <div className="below_add">
+                                                                { 
+                                                                    addUnitInputs.map((element, index) => (
+                                                                        <div className="field" key={index}>
+                                                                            <TextInput
+                                                                                value = {element?.unit_name || ""}
+                                                                                name = "unit_name"
+                                                                                autoComplete = "off"
+                                                                                autoFocus = {true}
+                                                                                placeholder = "Enter unit name"
+                                                                                onChange = {e => handleUnitInputChange(index, e)}
+                                                                                className = {`${element?.unit_name === "" ? "error" : ""}`}
+                                                                            />
+                                                                            { index >= 0  ?
+                                                                                (
+                                                                                    <span onClick={() => removecreateUnit(index)}>
+                                                                                        <MdIcons.MdOutlineCancel className="unit_close" />
+                                                                                    </span>
+                                                                                ) :
+                                                                                null
+                                                                            }
+                                                                        </div>
+                                                                    ))
+                                                                }
+                                                            </div>
+
+                                                            <Button type="submit" onClick = {() => {
+                                                                confirmUnitCreate()
+                                                                setListUnits(false);
+                                                                setEditUnit(false);
+                                                                setShowAddUnit(false);
+                                                                setShowHOD(false);
+                                                            }}>Create</Button>
+                                                        </form>
+                                                    </div>
+                                                }
+                                                { editUnit && 
+                                                    <div className="edit_popup">
+                                                        <span className="popup_close">
+                                                            <MdIcons.MdOutlineCancel className="popup_close_icon" onClick={
+                                                                () => {
+                                                                    setEditUnit(false);
+                                                                    setShowHOD(false);
+                                                                    removeUnitIDParams();
+                                                                }
+                                                            }/>
+                                                        </span>
+                                                        <form onSubmit={handleSubmit}>
+                                                            <TextInput 
+                                                                placeholder = "Unit Name"
+                                                                autoFocus = {true}
+                                                                value = {edit_unitName}
+                                                                onChange = {unitlettersOnly}
+                                                                className = {emptyFields?.includes("edit_unit_name") ? "error" : ""}
+                                                            />
+                                                            <Button type="submit" onClick = {() => {
+                                                                setListUnits(false);
+                                                                setEditUnit(false);
+                                                                confirmUnitUpdate();
+                                                                setShowHOD(false);
+                                                                setShowAddUnit(false);
+                                                            }}>Edit</Button>
+                                                        </form>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </>
+                                )
+                        }
+                    </>
                 )
             }
         </>

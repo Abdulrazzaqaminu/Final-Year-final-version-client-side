@@ -3,6 +3,10 @@
     padding: 5px;
 }
 
+.LeaveListPrint h1{
+    padding: 0px 15px;
+}
+
 @media print {
     .LeaveListPrint{
         display: block !important;

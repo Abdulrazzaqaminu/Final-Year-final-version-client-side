@@ -25,6 +25,7 @@ import Loading from '../Loading/Loading';
 import { confirmAlert } from 'react-confirm-alert'; // 
 import * as AiIcons from 'react-icons/ai';
 import EmployeeList from '../PrintForms/EmployeeList/EmployeeList';
+import svgson from 'svgson';
 
 const Employees = () => {
     const {enroll, enrolldispatch} = useEnrollContext();
@@ -363,6 +364,26 @@ const Employees = () => {
         onAfterPrint: () => alert("Ok")
     })
 
+    const handleFileUpload = async (event) => {
+        const file = event.target.files[0];
+      
+        if (!file) {
+          return;
+        }
+      
+        const reader = new FileReader();
+      
+        reader.onload = async (e) => {
+          const svgText = e.target.result;
+          const json = await svgson(svgText);
+      
+          // Do something with the JSON data
+          console.log(json);
+        };
+      
+        reader.readAsText(file);
+    };
+
     return(
         <>
             {error &&
@@ -407,6 +428,11 @@ const Employees = () => {
                                         ) :
                                         ("")
                                     }
+                                    <TextInput 
+                                        type="file"
+                                        accept=".svg"
+                                        onChange={handleFileUpload}
+                                    />
                                     <EmployeeList componentref={componentRef} enrollDetails={enroll}/>
                                     <div className='employee_plus'>
                                         <span className="plus" onClick={

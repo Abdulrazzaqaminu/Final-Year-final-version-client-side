@@ -27,8 +27,8 @@
   --box-shadow: 0 2rem 3rem var(--color-light) ;
 }
 
-@page:first {
-  size: "A4";
+@page {
+  size: landscape;
 }
 
 *{

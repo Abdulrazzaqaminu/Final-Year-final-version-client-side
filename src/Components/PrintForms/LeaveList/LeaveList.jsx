@@ -4,6 +4,7 @@ import "./LeaveList.css";
 function LeaveList({leaveDetails, componentref}) {
   return (
     <div ref={componentref} style={{display: "none"}} className="LeaveListPrint">
+        <h1>List of employee's leave status</h1>
         <table style={{width: "100%"}}>
             <thead>
                 <tr>

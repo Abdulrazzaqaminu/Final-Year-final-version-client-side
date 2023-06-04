@@ -4,6 +4,7 @@ import "./LoanList.css";
 function LoanList({loanDetails, componentref}) {
   return (
     <div ref={componentref} style={{display: "none"}} className="LoanListPrint">
+        <h1>List of employee loan requests</h1>
         <table style={{width: "100%"}}>
             <thead>
                 <tr>

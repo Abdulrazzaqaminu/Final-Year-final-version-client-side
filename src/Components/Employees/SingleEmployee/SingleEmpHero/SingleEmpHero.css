@@ -252,16 +252,31 @@
     padding: 5px 20px;
 }
 
-.single_employee_container .options ul li.print_button_hover{
-    background-color: rgb(222, 246, 218);
-    color: rgb(6, 156, 8);
-    cursor: pointer;
-    border-radius: 5px;
-    margin: 5px;
-    transition: 0.3s ease;
+.print_button_hover{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: -42px;
+    right: 0px;
 }
-.single_employee_container .options ul li.print_button_hover:hover{
-    box-shadow: 0rem 0rem 0.5rem 0rem rgba(131, 196, 116, 0.5);
+
+.print_button_hover .print_button_hover_icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    padding: 5px;
+    border-radius: 50%;
+    color: black;
+    background: var(--color-white);
+    box-shadow: 0rem 0rem 0.7rem 0rem rgb(222, 222, 222, 0.8);
+    transition: all 300ms ease;
+}
+
+.print_button_hover .print_button_hover_icon:hover{
+    cursor: pointer;
+    box-shadow: 0rem 0rem 0.5rem 0rem rgba(136, 136, 136, 0.8);
 }
 
 .single_employee_container .options ul li.edit_button_hover{
@@ -396,15 +411,22 @@
     display: none;
 }
 
+
 .printout{
     position: absolute;
     right: 0;
+    top: 12px;
     display: grid;
     grid-template-columns: 50% 50%;
     grid-gap: 5px;
     width: 100vw;
     height: 95vh;
     background: var(--color-white);
+}
+.printout_cont .printout h1{
+    position: absolute;
+    margin-top: -35px;
+    margin-left: 8px;
 }
 
 .printout .form_1 form{

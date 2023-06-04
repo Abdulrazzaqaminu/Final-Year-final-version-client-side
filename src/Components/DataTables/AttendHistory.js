@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useRef } from "react";
 import './Datatable.css'
 import DataTable from "react-data-table-component";
 import useFetch from "../../hooks/Fetch/useFetch";
 import * as AiIcons from 'react-icons/ai';
+import AttendanceHistoryList from "../PrintForms/AttendanceHistoryList/AttendanceHistoryList";
+import { useReactToPrint } from "react-to-print";
 
 const AttendHistory = ({from, to}) => {
     const { data } = useFetch(`http://127.0.0.1:4040/api/attendance/attendance_report?from=${from}&to=${to}`);
@@ -18,13 +20,13 @@ const AttendHistory = ({from, to}) => {
             name: "Name",
             selector: row => row.name,
             sortable: true,
-            width: "140px"
+            width: "120px"
         },
         {
             name: "Email",
             selector: row => row.email,
             sortable: true,
-            width: "230px"
+            width: "255px"
         },
         {
             name: "Date",
@@ -45,14 +47,28 @@ const AttendHistory = ({from, to}) => {
             width: "120px"
         },
     ]
+
+    const componentRef = useRef();
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+        documentTitle: `Attendance History`,
+        onAfterPrint: () => alert("Ok")
+    })
     
     return(
         <>
-            <div className="printAttHistory">
-                <div className="printAttHistory_icon">
-                    <AiIcons.AiFillPrinter />
-                </div>
-            </div>
+            {
+                data?.length > 0 ?
+                    (
+                        <div className="printAttHistory" onClick={handlePrint}>
+                            <div className="printAttHistory_icon">
+                                <AiIcons.AiFillPrinter />
+                            </div>
+                        </div>
+                    ): 
+                    ("")
+            }
+            <AttendanceHistoryList attHistoryDetails={data} componentref={componentRef}/>
             <DataTable 
                 columns = {attendanceColumn}
                 data = {

@@ -5,6 +5,7 @@ function EmployeeList ({enrollDetails, componentref}) {
     return (
         <>
             <div ref={componentref} style={{display: "none"}} className="employeeListPrint">
+            <h1>List of enrolled employees</h1>
                 <table style={{width: "100%"}}>
                     <thead>
                         <tr>
