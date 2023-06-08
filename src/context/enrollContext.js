@@ -10,9 +10,16 @@ export const enrollReducer = (state, action) => {
             }
         case "ENROLL_EMPLOYEE" :
             const enrolled = action.payload.enrolledEmployee;
-            return {
-                ...state,
-                enroll: [enrolled, ...state.enroll]
+            if(Array.isArray(enrolled)) {
+                const array1 = enrolled;
+                const array2 = state?.enroll
+                const joined = array1?.concat(array2)
+                return {enroll: joined}
+            } else {
+                return {
+                    ...state,
+                    enroll: [enrolled, ...state.enroll]
+                }
             }
         default:
             return state

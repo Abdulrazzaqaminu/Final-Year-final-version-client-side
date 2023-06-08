@@ -394,7 +394,11 @@ const SingleEmpHero = () =>{
                             ) :
                             (
                                 <ul>
-                                    <li className="print_button_hover" onClick={handlePrint}>Print</li>
+                                    <div className="print_button_hover" onClick={handlePrint}>
+                                        <div className="print_button_hover_icon">
+                                            <AiIcons.AiFillPrinter />
+                                        </div>
+                                    </div>
                                     <li className="edit_button_hover" onClick={() => {
                                         setEdit(true);
                                         setClick(false);
@@ -474,7 +478,7 @@ const SingleEmpHero = () =>{
                                     </div>
                                     <div className="field">
                                         <label>Address:</label>
-                                        <p>{`${employee?.employee_details?.address?.street}, ${employee?.employee_details?.address?.city}, ${employee?.employee_details?.address?.state}`}</p>
+                                        <p>{`${employee?.employee_details?.street}, ${employee?.employee_details?.city}, ${employee?.employee_details?.state}`}</p>
                                     </div>
                                     { employee?.employee_details?.hod?.status === false ?
                                         <>
@@ -651,7 +655,7 @@ const SingleEmpHero = () =>{
                             </div>
                             <div className="field">
                                 <label>Address:</label>
-                                <p>{`${employee?.employee_details?.address?.street}, ${employee?.employee_details?.address?.city}, ${employee?.employee_details?.address?.state}`}</p>
+                                <p>{`${employee?.employee_details?.street}, ${employee?.employee_details?.city}, ${employee?.employee_details?.state}`}</p>
                             </div>
                             { employee?.employee_details?.hod?.status === false ?
                                 <>

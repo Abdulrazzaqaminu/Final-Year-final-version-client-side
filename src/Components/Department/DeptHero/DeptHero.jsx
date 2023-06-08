@@ -160,11 +160,12 @@ const DeptHero = () =>{
         {
             name: "Department Name",
             selector: row => row.department_name,
-            width: "180px"
+            width: "250px"
         },
         {
             name: "HOD",
-            selector: row => row.hod
+            selector: row => row.hod,
+            width: "120px"
         },
         {
             name: "Unit",

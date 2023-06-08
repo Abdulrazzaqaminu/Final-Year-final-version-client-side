@@ -25,7 +25,7 @@ import Loading from '../Loading/Loading';
 import { confirmAlert } from 'react-confirm-alert'; // 
 import * as AiIcons from 'react-icons/ai';
 import EmployeeList from '../PrintForms/EmployeeList/EmployeeList';
-import svgson from 'svgson';
+import csvtojson from 'csvtojson';
 
 const Employees = () => {
     const {enroll, enrolldispatch} = useEnrollContext();
@@ -189,11 +189,9 @@ const Employees = () => {
                     staff_ID: staffid, first_name: first_name_capitalize, last_name: lastName, email: email, 
                     date_of_birth: dob, phone_number: phoneNumber, department: department, unit: unit, 
                     position: position, grade: grade, enrollment_date: enrollDate, employee_type: employee_type, 
-                    address: {
-                        state: state_capitalize,
-                        city: city_capitalize,
-                        street: street
-                    }
+                    state: state_capitalize,
+                    city: city_capitalize,
+                    street: street
                 },
                 {
                     headers: {
@@ -364,25 +362,53 @@ const Employees = () => {
         onAfterPrint: () => alert("Ok")
     })
 
+    const [jsonData, setJsonData] = useState(null);
+
     const handleFileUpload = async (event) => {
         const file = event.target.files[0];
-      
-        if (!file) {
-          return;
-        }
-      
         const reader = new FileReader();
-      
-        reader.onload = async (e) => {
-          const svgText = e.target.result;
-          const json = await svgson(svgText);
-      
-          // Do something with the JSON data
-          console.log(json);
+    
+        reader.onload = async (event) => {
+          const csvData = event.target.result;
+          const parsedData = await csvtojson().fromString(csvData);
+          setJsonData(parsedData);
         };
-      
+        
         reader.readAsText(file);
     };
+
+    const enrollEmpCsv = async () => {
+        try {
+            await axios.post("http://127.0.0.1:4040/api/enrollment/csv", 
+                {
+                    formttedCsv: jsonData
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }
+            ).then((response) => {
+                setShow(true)
+                setOpenForm(false)
+                setTimeout(() => {
+                    setShow(false)
+                }, 2000)
+                setSuccess(response.data.Message)
+                setError(null);
+                setJsonData(null);
+                enrolldispatch({type: "ENROLL_EMPLOYEE", payload: response.data})
+            }).catch((error) => {
+                setJsonData(null);
+                setError(error.response.data.Message)
+            })
+        } catch (error) {
+            setError(error);
+        }
+    }
+    if(jsonData !== null) {
+        enrollEmpCsv();
+    }
 
     return(
         <>
@@ -430,7 +456,7 @@ const Employees = () => {
                                     }
                                     <TextInput 
                                         type="file"
-                                        accept=".svg"
+                                        accept=".csv, .xlsx, .xls"
                                         onChange={handleFileUpload}
                                     />
                                     <EmployeeList componentref={componentRef} enrollDetails={enroll}/>
@@ -712,7 +738,7 @@ const Employees = () => {
                                                                         setOpenForm(false);
                                                                         setMoreInfo(false);
                                                                     }}
-                                                                >{`NGN ${(employee.gross_salary).toLocaleString()}`}</p>,
+                                                                >{`NGN ${(employee.gross_salary)?.toLocaleString()}`}</p>,
                                                         employment_type: employee.employee_type,
                                                         status: <span className={employee.status === "Active" ? "green" : employee.status === "On Leave" ? "warning" : "red"}>{employee.status}</span>,
                                                         more: <Link to={`/employees/${employee._id}`}>
