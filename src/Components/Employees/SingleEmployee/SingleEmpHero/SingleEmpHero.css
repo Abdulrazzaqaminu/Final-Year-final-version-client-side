@@ -344,10 +344,11 @@
 .single_employee_container .top form .right {
     display: grid;
     grid-template-columns: 1fr;
+    margin-left: 10px;
 }
 
 .single_employee_container .top form .right .field p{
-    margin-left: -40px;
+    margin-left: -20px;
 }
 
 .single_employee_container .top form .right .field p.active_status{
@@ -444,7 +445,7 @@
     font-weight: 400;
     font-size: 14px;
     white-space: nowrap;
-    margin-left: -50px;
+    margin-left: -100px;
 }
 
 .printout .form_1 form .field label{
@@ -466,7 +467,7 @@
 .printout .form_2 form .field p{
     font-weight: 400;
     font-size: 14px;
-    margin-left: -50px;
+    margin-left: -10px;
     white-space: nowrap;
 }
 

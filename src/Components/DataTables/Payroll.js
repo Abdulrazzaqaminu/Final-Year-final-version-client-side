@@ -34,7 +34,7 @@ const Payroll = () => {
         {
             name: "Annual Gross",
             selector: row => row.annual_gross,
-            width: "120px"
+            width: "129px",
         },
         {
             name: "Employment Type",

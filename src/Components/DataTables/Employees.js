@@ -14,17 +14,22 @@ import { format } from "date-fns";
 import validator from 'validator';
 import useFetch from '../../hooks/Fetch/useFetch';
 import useDeptFetch from '../../hooks/Fetch/useDeptFetch';
+import useEmployeeFilterFetch from '../../hooks/Fetch/useEmployeeFilterFetch';
 import { useReactToPrint } from "react-to-print";
 import useAttFilterFetch from "../../hooks/Fetch/useAttFilterFetch";
 import useLocalGovFetch from '../../hooks/Fetch/useLocalGovFetch';
+import useDeptAllFetch from '../../hooks/Fetch/useDeptAllFetch';
+import useUnitAllFetch from '../../hooks/Fetch/useUnitAllFetch';
 import { useEnrollContext } from "../../hooks/useEnrollContext";
 import Analytics from '../Analytics/Bar/Analytics';
+import EmployeeFilter from '../Analytics/EmployeeFilter/EmployeeFilter';
 import Cancel from '../Analytics/Cancel';
 import LineChart from '../Graphs/Line/LineChart';
 import Loading from '../Loading/Loading';
 import { confirmAlert } from 'react-confirm-alert'; // 
 import * as AiIcons from 'react-icons/ai';
 import EmployeeList from '../PrintForms/EmployeeList/EmployeeList';
+import FilteredEmployee from '../PrintForms/FilteredEmployee.js/FilteredEmployee';
 import csvtojson from 'csvtojson';
 
 const Employees = () => {
@@ -45,7 +50,6 @@ const Employees = () => {
     const [phoneNumber, setPhoneNumber] = useState("");
     const [enrollDate, setEnrollDate] = useState("");
     const [employee_type, setEmployee_Type] = useState("");
-    const [street, setStreet] = useState("");
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -54,6 +58,9 @@ const Employees = () => {
     const [moreInfo, setMoreInfo] = useState(false);
     const [showEmpTable, setShowEmpTable] = useState(true);
     const [empAtt, setEmpAtt] = useState(false);
+    const [employeeFilter, setEmployeeFilter] = useState(false);
+    const [attendanceReport, setAttendanceReport] = useState(false);
+    const [employeeFilterInput, setEmployeeFilterInput] = useState(false);
 
     const [popupdept, setPopupdept] = useState("");
     const [employee_id2, setEmployee_ID2] = useState("");
@@ -62,8 +69,10 @@ const Employees = () => {
     const [status, setStatus] = useState("");
     const [hour, setHour] = useState("");
     const [dayMonYea, setDayMonYea] = useState("");
-    const [statePick, setStatePick] = useState("")
-    const [cityPick, setCityPick] = useState("")
+    const [statePick, setStatePick] = useState("");
+    const [localGovmt, setLocalGovmt] = useState("");
+    const [employeeFilterSelect, setEmployeeFilterSelect] = useState('');
+    const [employeeFilterValue, setEmployeeFilterValue] = useState('');
 
     const day = new Date();
     const [date, setDate] = useState([
@@ -90,12 +99,15 @@ const Employees = () => {
     
     const first_name_capitalize = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
     const state_capitalize = statePick.charAt(0).toUpperCase() + statePick.slice(1).toLowerCase();
-    const city_capitalize = cityPick.charAt(0).toUpperCase() + cityPick.slice(1).toLowerCase();
+    const localGov_capitalize = localGovmt.charAt(0).toUpperCase() + localGovmt.slice(1).toLowerCase();
 
-    const { data, reFetch } = useFetch(`http://127.0.0.1:4040/api/department/filter?dept_name=${department}`);
-    const { dept, reFetchDept } = useDeptFetch(`http://127.0.0.1:4040/api/department/filter_department?dept_name=${popupdept}`);
+    const { data } = useFetch(`http://127.0.0.1:4040/api/department/filter?dept_name=${department}`);
+    const { empfilter } = useEmployeeFilterFetch(`http://127.0.0.1:4040/api/enrollment/enroll/employeeFilter?filterCategory=${employeeFilterSelect}&filterInput=${employeeFilterValue}`)
+    const { deptAll } = useDeptAllFetch(`http://127.0.0.1:4040/api/enrollment/enroll/employeeFilter/dept`)
+    const { unitAll } = useUnitAllFetch(`http://127.0.0.1:4040/api/enrollment/enroll/employeeFilter/unit`)
+    const { dept } = useDeptFetch(`http://127.0.0.1:4040/api/department/filter_department?dept_name=${popupdept}`);
     const { filter, filtererror } = useAttFilterFetch(`http://127.0.0.1:4040/api/attendance/attendance_report/filter_date?staff_ID=${attid}&from=${from}&to=${to}`);
-    const { localGov, reFetchLocalGov } = useLocalGovFetch(`http://127.0.0.1:4040/api/localGov/getStateCities?state=${statePick}`);
+    const { localGov } = useLocalGovFetch(`http://127.0.0.1:4040/api/localGov/getStateCities?state=${statePick}`);
 
     useEffect(() => {
         const fetchEmployees = async () => {
@@ -175,12 +187,6 @@ const Employees = () => {
             }
         }
     }
-    const streetlettersOnly = (e) => {
-        const regex = /^[a-zA-Z0-9\b\s]+$/;
-        if ((e.target.value) === "" || regex.test(e.target.value)) {
-            setStreet(e.target.value);
-        }
-    };
 
     const handleSubmit = async () => {
         try {
@@ -189,9 +195,8 @@ const Employees = () => {
                     staff_ID: staffid, first_name: first_name_capitalize, last_name: lastName, email: email, 
                     date_of_birth: dob, phone_number: phoneNumber, department: department, unit: unit, 
                     position: position, grade: grade, enrollment_date: enrollDate, employee_type: employee_type, 
-                    state: state_capitalize,
-                    city: city_capitalize,
-                    street: street
+                    state_of_origin: state_capitalize,
+                    localGov: localGov_capitalize,
                 },
                 {
                     headers: {
@@ -302,6 +307,67 @@ const Employees = () => {
         },
     ]
 
+    const employeeFilterColumn = [
+        {
+            name: "Staff ID",
+            selector: row => row.staff_ID,
+            width: "100px",
+        },
+        {
+            name: "Name",
+            selector: row => row.name,
+            width: "120px"
+        },
+        {
+            name: "Email",
+            selector: row => row.email,
+            width: "200px"
+        },
+        {
+            name: "Date of Birth",
+            selector: row => row.dob,
+        },
+        {
+            name: "Phone Number",
+            selector: row => row.phone_number,
+            width: "140px"
+        },
+        {
+            name: "Department",
+            selector: row => row.department,
+            width: "180px"
+        },
+        {
+            name: "Unit",
+            selector: row => row.unit,
+            width: "150px"
+        },
+        {
+            name: "Position",
+            selector: row => row.position,
+            width: "96px",
+        },
+        {
+            name: "Grade",
+            selector: row => row.grade,
+            width: "86px",
+        },
+        {
+            name: "Annual Gross",
+            selector: row => row.gross,
+            width: "129px",
+        },
+        {
+            name: "Employment Type",
+            selector: row => row.employment_type,
+        },
+        {
+            name: "Status",
+            selector: row => row.status,
+            width: "129px"
+        },
+    ]
+
     const moreInfoColumn = [
         {
             name: "Staff ID",
@@ -359,6 +425,12 @@ const Employees = () => {
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
         documentTitle: `Enrolled employees`,
+        onAfterPrint: () => alert("Ok")
+    })
+    const componentRef2 = useRef();
+    const handlePrint2 = useReactToPrint({
+        content: () => componentRef2.current,
+        documentTitle: `Filtered employees`,
         onAfterPrint: () => alert("Ok")
     })
 
@@ -431,7 +503,7 @@ const Employees = () => {
                 ( <Loading /> ) :
                 (
                     <>
-                        { showEmpTable === true ?
+                        { showEmpTable && 
                             (
                                 <>
                                     <Analytics 
@@ -440,6 +512,17 @@ const Employees = () => {
                                                 setOpenForm(false);
                                                 setMoreInfo(false);
                                                 setShowEmpTable(false);
+                                                setAttendanceReport(true);
+                                            }
+                                        }
+                                    />
+                                    <EmployeeFilter 
+                                        onClick={
+                                            () => {
+                                                setEmployeeFilter(true);
+                                                setMoreInfo(false);
+                                                setShowEmpTable(false);
+                                                setEmpAtt(false);
                                             }
                                         }
                                     />
@@ -485,7 +568,6 @@ const Employees = () => {
                                                         maxLength={4}
                                                         minLength = {4}
                                                         className = {staffid === "" ? "error" : ""}
-                                                        // className = {emptyFields?.includes("staff_ID") ? "error" : ""}
                                                     />
                                                 </div>
                                                 <div className="field">
@@ -495,7 +577,6 @@ const Employees = () => {
                                                         value={firstName}
                                                         onChange={firstNamelettersOnly}
                                                         className = {firstName === "" ? "error" : ""}
-                                                        // className = {emptyFields?.includes("first_name") ? "error" : ""}
                                                     />
                                                 </div>
                                                 <div className="field">
@@ -505,7 +586,6 @@ const Employees = () => {
                                                         value={lastName}
                                                         onChange={lastNamelettersOnly}
                                                         className = {`last_name ${lastName === "" ? "error" : ""}`}
-                                                        // className = {`last_name ${emptyFields?.includes("last_name") ? "error" : ""}`}
                                                     />
                                                 </div>
                                                 <div className="field ">
@@ -515,7 +595,6 @@ const Employees = () => {
                                                         value={email}
                                                         onChange={validateEmail}
                                                         className = {`email ${email === "" ? "error" : ""}`}
-                                                        // className={`email ${emptyFields?.includes("emp_email") ? "error" : ""}`}
                                                     />
                                                     <span className="email_span">
                                                         <p>{emailError}</p>
@@ -528,7 +607,6 @@ const Employees = () => {
                                                         value={dob}
                                                         onChange={(e) => setDob(e.target.value)}
                                                         className = {dob === "" ? "error" : ""}
-                                                        // className = {emptyFields?.includes("date_of_birth") ? "error" : ""}
                                                     />
                                                 </div>
                                                 <div className="field ">
@@ -540,7 +618,6 @@ const Employees = () => {
                                                         maxLength={11}
                                                         minLength = {11}
                                                         className = {phoneNumber === "" ? "error" : ""}
-                                                        // className = {emptyFields?.includes("phone_number") ? "error" : ""}
                                                     />
                                                 </div>
                                                 <div className="field selectables">
@@ -559,10 +636,6 @@ const Employees = () => {
                                                                 ) :
                                                                 (<option value="">No department(s)</option>)
                                                             }
-                                                            {/* <option value="ACCOUNTING AND FINANCE">ACCOUNTING AND FINANCE</option>
-                                                            <option value="HUMAN RESOURCES">HUMAN RESOURCES</option>
-                                                            <option value="INFORMATION AND TECHNOLOGY">INFORMATION AND TECHNOLOGY</option>
-                                                            <option value="MARKETING AND SALES">MARKETING AND SALES</option> */}
                                                         </select>
                                                     </div>
             
@@ -591,11 +664,6 @@ const Employees = () => {
                                                                     <option value="">Select department</option>
                                                                 )
                                                             }
-                                                            {/* <option value="AUDIT">AUDIT</option>
-                                                            <option value="CUSTOMER SERVICE">CUSTOMER SERVICE</option>
-                                                            <option value="HEALTH AND SAFETY">HEALTH AND SAFETY</option>
-                                                            <option value="PROCUREMENT">PROCUREMENT</option>
-                                                            <option value="RECRUITMENT">RECRUITMENT</option> */}
                                                         </select>
                                                     </div>
             
@@ -637,14 +705,6 @@ const Employees = () => {
                                                 </div>
                                                 <div className="field address">
                                                     <label>Address:</label>
-                                                    {/* <TextInput 
-                                                        type="text"
-                                                        value={state}
-                                                        onChange={statelettersOnly}
-                                                        placeholder="state"
-                                                        className = {state === "" ? "error" : ""}
-                                                        // className = {emptyFields?.includes("state") ? "error" : ""}
-                                                    /> */}
                                                     <select value={statePick} onChange={(e) => setStatePick(e.target.value)} className={`state ${statePick === "" ? "error" : ""}`}>
                                                         <option value="">Choose state...</option>
                                                         {
@@ -661,42 +721,24 @@ const Employees = () => {
                                                     </select>
                                                 </div>
                                                 <div className="field">
-                                                    {/* <TextInput 
-                                                        type="text"
-                                                        value={city}
-                                                        onChange={citylettersOnly}
-                                                        placeholder="city"
-                                                        className = {city === "" ? "error" : ""}
-                                                        // className = {emptyFields?.includes("city") ? "error" : ""}
-                                                    /> */}
-                                                    <select value={cityPick} onChange={(e) => setCityPick(e.target.value)} className={`city ${cityPick === "" ? "error" : ""}`}>
+                                                    <select value={localGovmt} onChange={(e) => setLocalGovmt(e.target.value)} className={`city ${localGov?.Local_gov.length > 1 ? "error" : ""}`}>
                                                         <option value="">Choose City...</option>
                                                         {
                                                             localGov?.Local_gov.length <= 1 ?
                                                             (
-                                                                localGov?.Local_gov?.map((cities) => (
-                                                                    cities.cities?.map((city) => (
-                                                                        <option value={city} key={city}>
-                                                                            {city}
+                                                                localGov?.Local_gov?.map((localGov) => (
+                                                                    localGov.localGov?.map((localGov) => (
+                                                                        <option value={localGov} key={localGov}>
+                                                                            {localGov}
                                                                         </option>
                                                                     ))
                                                                 ))
                                                             ) :
-                                                            (<option value="">Select State</option>)
+                                                            (<option value="" >Select State</option>)
                                                         }
                                                     </select>
                                                 </div>
-                                                <div className="field">
-                                                <TextInput 
-                                                        type="text"
-                                                        value={street}
-                                                        onChange={streetlettersOnly}
-                                                        placeholder="street"
-                                                        className = {street === "" ? "error" : ""}
-                                                        // className= {`street ${emptyFields?.includes("street") ? "error" : ""}`}
-                                                        
-                                                    />
-                                                </div>
+                                                <br />
                                                 <Button type="submit">Enroll</Button>
                                             </form>
                                         </div> 
@@ -791,137 +833,279 @@ const Employees = () => {
                                         </div> 
                                     }
                                 </>   
-                            ) :
-                            (
-                                <>
-                                    {filtererror &&
-                                        (
-                                            <div className='filter_error'>
-                                                <div className="error_message">
-                                                    {filtererror}
-                                                </div>
-                                            </div>
-                                        )
-                                    }
-                                    <Cancel 
-                                        onClick={() => {
-                                            setShowEmpTable(true);
-                                            setEmpAtt(false)
-                                        }}
-                                    />
-                                    <div className="date_range">
-                                        <p><small>*Optional</small></p>
-                                        <TextInput
-                                            type = "text"
-                                            value = {attid}
-                                            className = "staff_id"
-                                            placeholder = "Staff ID"
-                                            maxLength={4}
-                                            minLength = {4}
-                                            onChange = {AttStaff_IDnumberOnly}
-                                        />
-                                        <span
-                                            onClick={() => setOpenDate(!openDate)}
-                                            className="dates"
-                                        >
-                                            {`${format(date[0].startDate, "yyyy-MM-dd")} - ${format(
-                                                date[0].endDate,
-                                                "yyyy-MM-dd"
-                                            )}`}
-                                        </span>
-                                        {openDate && (
-                                            <div>
-                                                <DateRange
-                                                    editableDateInputs={true}
-                                                    onChange={(item) => setDate([item.selection])}
-                                                    moveRangeOnFirstSelection={false}
-                                                    ranges={date}
-                                                    className="range"
-                                                />
-                                            </div>
-                                        )}
-                                    </div>
-                                    <LineChart 
-                                        onClick = {(point, event) => {
-                                            setDayMonYea(point.data.xFormatted);
-                                            setStatus(point.serieId);
-                                            setHour(point.data.yFormatted);
-                                            setEmpAtt(true)
-                                        }}
-                                        from = {from}
-                                    />
-                                    { empAtt &&
-                                        <div className='emp_att'>
-                                            <span className="close"><MdIcons.MdOutlineCancel className='close_btn' 
-                                                onClick={() => {
-                                                    setEmpAtt(false);
-                                                }}
-                                            /></span>
-                                            <div className='filtertable'>
-                                                <DataTable
-                                                    columns = {filterColumn}
-                                                    data = {filter?.length > 0 ? 
-                                                        (
-                                                            status === "Checked Out" ? 
-                                                            (
-                                                                filter?.filter((each) => (
-                                                                    each.in_time === status && each.date === dayMonYea && (each.out_time).slice(0,2) === (hour).slice(0,2)
-                                                                ))?.map((info) => (
-                                                                    {
-                                                                        staff_ID: info.staff_ID,
-                                                                        name: <>
-                                                                                <b>{info.last_name}</b>
-                                                                                    <small>
-                                                                                        <p className="text-muted">{info.first_name}</p>
-                                                                                    </small> 
-                                                                            </> ,
-                                                                        email: info.email,
-                                                                        date: info.date,
-                                                                        entry_time: info.in_time === "Checked Out" ? 
-                                                                                    (<p className="red">{info.in_time}</p>) :
-                                                                                    (<p>{info.in_time}</p>),
-                                                                        exit_time: info.out_time === "Still In" ? 
-                                                                                    (<p className="green">{info.out_time}</p>) :
-                                                                                    (<p>{info.out_time}</p>)
-                                                                    }
-                                                                ))
-                                                            ) :
-                                                            (
-                                                                (filter?.filter((each) => (
-                                                                    each.out_time === status && each.date === dayMonYea && (each.in_time).slice(0,2) === (hour).slice(0,2)
-                                                                )))?.map((info) => (
-                                                                    {
-                                                                        staff_ID: info.staff_ID,
-                                                                        name: <>
-                                                                                <b>{info.last_name}</b>
-                                                                                    <small>
-                                                                                        <p className="text-muted">{info.first_name}</p>
-                                                                                    </small> 
-                                                                            </> ,
-                                                                        email: info.email,
-                                                                        date: info.date,
-                                                                        entry_time: info.in_time === "Checked Out" ? 
-                                                                                    (<p className="red">{info.in_time}</p>) :
-                                                                                    (<p>{info.in_time}</p>),
-                                                                        exit_time: info.out_time === "Still In" ? 
-                                                                                    (<p className="green">{info.out_time}</p>) :
-                                                                                    (<p>{info.out_time}</p>)
-                                                                    }
-                                                                ))
-                                                            )
-                                                        ) :
-                                                        ("")
-                                                    }
-                                                    fixedHeader
-                                                    pagination
-                                                    className='datatables'
-                                                />
+                            )
+                        }
+
+                        { attendanceReport &&
+                            <>
+                                {filtererror &&
+                                    (
+                                        <div className='filter_error'>
+                                            <div className="error_message">
+                                                {filtererror}
                                             </div>
                                         </div>
+                                    )
+                                }
+                                <Cancel 
+                                    onClick={() => {
+                                        setShowEmpTable(true);
+                                        setEmpAtt(false);
+                                        setAttendanceReport(false);
+                                        setEmployeeFilter(false);
+                                    }}
+                                />
+                                <div className="date_range">
+                                    <p><small>*Optional</small></p>
+                                    <TextInput
+                                        type = "text"
+                                        value = {attid}
+                                        className = "staff_id"
+                                        placeholder = "Staff ID"
+                                        maxLength={4}
+                                        minLength = {4}
+                                        onChange = {AttStaff_IDnumberOnly}
+                                    />
+                                    <span
+                                        onClick={() => setOpenDate(!openDate)}
+                                        className="dates"
+                                    >
+                                        {`${format(date[0].startDate, "yyyy-MM-dd")} - ${format(
+                                            date[0].endDate,
+                                            "yyyy-MM-dd"
+                                        )}`}
+                                    </span>
+                                    {openDate && (
+                                        <div>
+                                            <DateRange
+                                                editableDateInputs={true}
+                                                onChange={(item) => setDate([item.selection])}
+                                                moveRangeOnFirstSelection={false}
+                                                ranges={date}
+                                                className="range"
+                                            />
+                                        </div>
+                                    )}
+                                </div>
+                                <LineChart 
+                                    onClick = {(point, event) => {
+                                        setDayMonYea(point.data.xFormatted);
+                                        setStatus(point.serieId);
+                                        setHour(point.data.yFormatted);
+                                        setEmpAtt(true)
+                                    }}
+                                    from = {from}
+                                />
+                                { empAtt &&
+                                    <div className='emp_att'>
+                                        <span className="close"><MdIcons.MdOutlineCancel className='close_btn' 
+                                            onClick={() => {
+                                                setEmpAtt(false);
+                                            }}
+                                        /></span>
+                                        <div className='filtertable'>
+                                            <DataTable
+                                                columns = {filterColumn}
+                                                data = {filter?.length > 0 ? 
+                                                    (
+                                                        status === "Checked Out" ? 
+                                                        (
+                                                            filter?.filter((each) => (
+                                                                each.in_time === status && each.date === dayMonYea && (each.out_time).slice(0,2) === (hour).slice(0,2)
+                                                            ))?.map((info) => (
+                                                                {
+                                                                    staff_ID: info.staff_ID,
+                                                                    name: <>
+                                                                            <b>{info.last_name}</b>
+                                                                                <small>
+                                                                                    <p className="text-muted">{info.first_name}</p>
+                                                                                </small> 
+                                                                        </> ,
+                                                                    email: info.email,
+                                                                    date: info.date,
+                                                                    entry_time: info.in_time === "Checked Out" ? 
+                                                                                (<p className="red">{info.in_time}</p>) :
+                                                                                (<p>{info.in_time}</p>),
+                                                                    exit_time: info.out_time === "Still In" ? 
+                                                                                (<p className="green">{info.out_time}</p>) :
+                                                                                (<p>{info.out_time}</p>)
+                                                                }
+                                                            ))
+                                                        ) :
+                                                        (
+                                                            (filter?.filter((each) => (
+                                                                each.out_time === status && each.date === dayMonYea && (each.in_time).slice(0,2) === (hour).slice(0,2)
+                                                            )))?.map((info) => (
+                                                                {
+                                                                    staff_ID: info.staff_ID,
+                                                                    name: <>
+                                                                            <b>{info.last_name}</b>
+                                                                                <small>
+                                                                                    <p className="text-muted">{info.first_name}</p>
+                                                                                </small> 
+                                                                        </> ,
+                                                                    email: info.email,
+                                                                    date: info.date,
+                                                                    entry_time: info.in_time === "Checked Out" ? 
+                                                                                (<p className="red">{info.in_time}</p>) :
+                                                                                (<p>{info.in_time}</p>),
+                                                                    exit_time: info.out_time === "Still In" ? 
+                                                                                (<p className="green">{info.out_time}</p>) :
+                                                                                (<p>{info.out_time}</p>)
+                                                                }
+                                                            ))
+                                                        )
+                                                    ) :
+                                                    ("")
+                                                }
+                                                fixedHeader
+                                                pagination
+                                                className='datatables'
+                                            />
+                                        </div>
+                                    </div>
+                                }
+                            </>
+                        }
+
+                        { employeeFilter &&
+                            <>
+                                <Cancel 
+                                    onClick={() => {
+                                        setShowEmpTable(true);
+                                        setEmpAtt(false);
+                                        setEmployeeFilter(false)
+                                        setAttendanceReport(false);
+                                        setEmployeeFilterSelect('');
+                                        setEmployeeFilterValue('');
+                                        setEmployeeFilterInput('');
+                                    }}
+                                />
+                                { empfilter?.length > 0 ?
+                                    <div className="printemployeeFilter" onClick={handlePrint2}>
+                                        <div className="printemployeeFilter_icon">
+                                            <AiIcons.AiFillPrinter />
+                                        </div>
+                                    </div> : 
+                                    ''
+                                }
+                                <FilteredEmployee enrollDetails={empfilter} componentref={componentRef2}/>
+                                <div className='employeeFilterMainContainer'>
+                                    <select className="employeeFilterSelect" value={employeeFilterSelect} onChange={(e) => setEmployeeFilterSelect(e.target.value)} onClick={() => setEmployeeFilterInput(true)}>
+                                        <option value="">Filter Category  ...</option>
+                                        <option value="Status">Status</option>
+                                        <option value="Department">Department</option>
+                                        <option value="Unit">Unit</option>
+                                        <option value="Position">Position</option>
+                                        <option value="Grade">Grade</option>
+                                        <option value="Employment Type">Employment Type</option>
+                                    </select>
+                                    { employeeFilterInput &&
+                                        <>
+                                            <select className='employeeFilterInput' value={employeeFilterValue} onChange={(e) => setEmployeeFilterValue(e.target.value)}>
+                                                { employeeFilterSelect === 'Status' ?
+                                                    <>
+                                                        <option vlaue=''>Choose Status...</option>
+                                                        <option value='Active'>Active</option>
+                                                        <option value='On Leave'>On Leave</option>
+                                                        <option value='Terminated'>Terminated</option>
+                                                    </> :
+                                                    employeeFilterSelect === 'Department' ?
+                                                    <>
+                                                        <option vlaue=''>Choose Department...</option>
+                                                        { 
+                                                            deptAll.length > 0 ?
+                                                            (
+                                                                deptAll?.map((dept) => (
+                                                                    <option key={dept?.dept?._id} value={dept?.dept_name}>{dept?.dept_name}</option>
+                                                                ))
+                                                            ) :
+                                                            <option>No Departments</option>
+                                                        }
+                                                    </> :
+                                                    employeeFilterSelect === 'Unit' ?
+                                                    <>
+                                                        <option vlaue=''>Choose Unit...</option>
+                                                        { 
+                                                            unitAll?.map((unit) => (
+                                                                unit?.unit?.length > 0 ?
+                                                                (
+                                                                    unit?.unit?.map((unitName) => (
+                                                                        <option key={unitName?.unit_name} value={unitName?.unit_name}>{unitName?.unit_name}</option>
+                                                                    ))
+                                                                ) :
+                                                                <option>No units</option>
+                                                            ))
+                                                        }
+                                                    </> :
+                                                    employeeFilterSelect === 'Position' ?
+                                                    <>
+                                                        <option vlaue=''>Choose Position...</option>
+                                                        <option value='1'>1</option>
+                                                        <option value='2'>2</option>
+                                                        <option value='3'>3</option>
+                                                    </> :
+                                                    employeeFilterSelect === 'Grade' ? 
+                                                    <>
+                                                        <option vlaue=''>Choose Grade...</option>
+                                                        <option value='1'>1</option>
+                                                        <option value='2'>2</option>
+                                                        <option value='3'>3</option>
+                                                    </> :
+                                                    employeeFilterSelect === 'Employment Type' ?
+                                                    <>
+                                                        <option vlaue=''>Choose Employment Type...</option>
+                                                        <option value='Full-Time'>Full-Time</option>
+                                                        <option value='Contracted'>Contracted</option>
+                                                    </> :
+                                                    ''
+                                                }
+                                            </select>
+                                            <span onClick={() => {
+                                                        setEmployeeFilterInput(false);
+                                                        setEmployeeFilterSelect('');
+                                                        setEmployeeFilterInput('');
+                                                    }
+                                            }>
+                                                <MdIcons.MdOutlineCancel className="employeeFilterInput_close" />
+                                            </span>
+                                        </>
                                     }
-                                </>
-                            )
-            
+                                    
+                                    <div className='employeeFilterTable'>
+                                        <DataTable 
+                                            columns={employeeFilterColumn}
+                                            data={
+                                                empfilter.length > 0 ?
+                                                (
+                                                    empfilter?.map((empDetails) => (
+                                                        {
+                                                            staff_ID: empDetails.staff_ID,
+                                                            name: <div className="name_email">
+                                                                    <p><b>{empDetails.last_name}</b></p>
+                                                                    <small className="text-muted">{empDetails.first_name}</small>
+                                                                </div>,
+                                                            email: empDetails.email,
+                                                            dob: empDetails.date_of_birth,
+                                                            phone_number: empDetails.phone_number,
+                                                            department: empDetails.department,
+                                                            unit: empDetails.unit,
+                                                            position: empDetails.position,
+                                                            grade: empDetails.grade,
+                                                            gross: <p>{`NGN ${(empDetails.gross_salary)?.toLocaleString()}`}</p>,
+                                                            employment_type: empDetails.employee_type,
+                                                            status: <span className={empDetails.status === "Active" ? "green" : empDetails.status === "On Leave" ? "warning" : "red"}>{empDetails.status}</span>,
+                                                        }
+                                                    ))
+                                                ) :''
+                                            }
+                                            fixedHeader
+                                            pagination
+                                            className='datatables'
+                                        />
+                                    </div>
+                                </div>
+                            </>
                         }
                     </>
                 )

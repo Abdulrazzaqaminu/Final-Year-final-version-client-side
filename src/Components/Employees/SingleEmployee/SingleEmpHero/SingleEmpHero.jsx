@@ -477,8 +477,8 @@ const SingleEmpHero = () =>{
                                         <p>{employee?.employee_details?.employee_type}</p>
                                     </div>
                                     <div className="field">
-                                        <label>Address:</label>
-                                        <p>{`${employee?.employee_details?.street}, ${employee?.employee_details?.city}, ${employee?.employee_details?.state}`}</p>
+                                        <label>State of Origin/Loval Gov:</label>
+                                        <p>{`${employee?.employee_details?.state_of_origin}/ ${employee?.employee_details?.localGov}`}</p>
                                     </div>
                                     { employee?.employee_details?.hod?.status === false ?
                                         <>
@@ -654,8 +654,8 @@ const SingleEmpHero = () =>{
                                 <p>{employee?.employee_details?.employee_type}</p>
                             </div>
                             <div className="field">
-                                <label>Address:</label>
-                                <p>{`${employee?.employee_details?.street}, ${employee?.employee_details?.city}, ${employee?.employee_details?.state}`}</p>
+                                <label>State of Origin/Loval Government:</label>
+                                <p>{`${employee?.employee_details?.state_of_origin}/ ${employee?.employee_details?.localGov}`}</p>
                             </div>
                             { employee?.employee_details?.hod?.status === false ?
                                 <>

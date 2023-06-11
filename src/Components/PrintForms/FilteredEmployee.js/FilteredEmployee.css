@@ -1,13 +1,13 @@
-.employeeListPrint table{
+.employeeFilteredListPrint table{
     white-space: nowrap;
 }
 
-.employeeListPrint h1{
+.employeeFilteredListPrint h1{
     padding: 0px 15px;
 }
 
 @media print {
-    .employeeListPrint{
+    .employeeFilteredListPrint{
         display: block !important;
     }
 }
