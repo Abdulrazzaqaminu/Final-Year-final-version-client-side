@@ -490,7 +490,7 @@ input[type=checkbox]{
 }
 
 .emp_att {
-    position: absolute;
+    /* position: absolute;
     margin: 36px 35px;
     height: 64%;
     width: 60%;
@@ -498,43 +498,49 @@ input[type=checkbox]{
     opacity: 0.9;
     border-radius: 5px;
     background: var(--color-white);
-    box-shadow: 0rem 0rem 1rem 0.5rem rgb(222, 222, 222, 0.8);
+    box-shadow: 0rem 0rem 1rem 0.5rem rgb(222, 222, 222, 0.8); */
+    height: 40vh;
 }
 
-.emp_att .close {
-    position: fixed;
-    background: var(--color-white);
-    box-shadow: var(--box-shadow);
-    width: 60%;
-    height: 32px;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-}
-
-.emp_att .close .close_btn {
+.timeFilter{
     position: absolute;
-    display: grid;
-    place-items: center;
-    top: 6px;
-    right: 6px;
-    font-size: 20px;
-    transition: 0.3s ease;
+    left: 332px;
     cursor: pointer;
+    z-index: 100;
+    white-space: nowrap;
+    border-radius: 5px;
+    padding: 10px;
+    height: 42px;
+    background: transparent;
+    /* color: var(--color-info-dark); */
+    border: 0.5px solid rgb(215, 215, 215);
 }
 
-.emp_att .close .close_btn:hover {
-    color: red;
+.timeFilter2{
+    position: absolute;
+    left: 405px;
+    cursor: pointer;
+    z-index: 100;
+    white-space: nowrap;
+    border-radius: 5px;
+    padding: 10px;
+    height: 42px;
+    background: transparent;
+    /* color: var(--color-info-dark); */
+    border: 0.5px solid rgb(215, 215, 215);
 }
 
 .emp_att .filtertable{
+    display: flex;
+    flex-direction: column;
+    /* background: red; */
+    /* margin: 10px 0px; */
+    height: 76vh;
     width: 100%;
-    height: 100%;
-    margin-top: 35px;
+    box-shadow: var(--box-shadow);
+    border-radius: 5px;
 }
 
-.emp_att .filtertable .datatables {
-    height: 50vh;
-}
 
 .printEmp{
     display: flex;
@@ -659,20 +665,6 @@ input[type=checkbox]{
     box-shadow: 0rem 0rem 0.3rem 0rem rgba(136, 136, 136, 0.6);
 }
 
-.employeeFilterMainContainer .employeeFilterInput_close{
-    position: absolute;
-    top: 77px;
-    left: 809px;
-    z-index: 20;
-    font-size: 16px;
-    transition: 0.5s ease;
-}
-
-.employeeFilterMainContainer .employeeFilterInput_close:hover{
-    color: red;
-    cursor: pointer;
-}
-
 .printemployeeFilter{
     display: flex;
     justify-content: center;
@@ -696,6 +688,34 @@ input[type=checkbox]{
 }
 
 .printemployeeFilter .printemployeeFilter_icon:hover{
+    cursor: pointer;
+    box-shadow: 0rem 0rem 0.5rem 0rem rgba(136, 136, 136, 0.8);
+}
+
+.date_range .printEmpatt{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    /* top: 68px; */
+    z-index: 10;
+    left: 799px;
+}
+
+.date_range .printEmpatt .printEmpatt_icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    padding: 5px;
+    border-radius: 50%;
+    color: black;
+    background: var(--color-white);
+    box-shadow: 0rem 0rem 0.7rem 0rem rgb(222, 222, 222, 0.8);
+    transition: all 300ms ease;
+}
+
+.date_range .printEmpatt .printEmpatt_icon:hover{
     cursor: pointer;
     box-shadow: 0rem 0rem 0.5rem 0rem rgba(136, 136, 136, 0.8);
 }

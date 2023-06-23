@@ -1,21 +1,17 @@
 import React from "react";
 import './RecordHero.css';
 import TextInput from "../../../TextInput/TextInput";
-import Button from '../../../Button/Button';
 import Html5Qrcode from './Html5Qrcode';
-// import ResultContainer from './ResultContainer';
-import * as ImIcons from 'react-icons/im';
 import { useState } from "react";
 import axios from "axios"
 
-const RecordHero = (props) =>{
+const RecordHero = () =>{
 
     const [staffid, setStaffid] = useState("");
     const [firstname, setFirstName] = useState("");
     const [lastname, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [date, setDate] = useState("");
-    const [button, setButton] = useState(false);
     const [time, setTime] = useState("")
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null)
@@ -93,6 +89,10 @@ const RecordHero = (props) =>{
                 setEmail("")
                 setDecodedResults([])
             }).catch((error) => {
+                setStaffid("")
+                setFirstName("")
+                setLastName("")
+                setEmail("")
                 setError(error.response.data.Message)
                 setDecodedResults([])
             })

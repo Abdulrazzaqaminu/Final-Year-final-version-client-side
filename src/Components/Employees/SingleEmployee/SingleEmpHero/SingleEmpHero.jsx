@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from "react";
 import './SingleEmpHero.css'
 import TextInput from "../../../TextInput/TextInput";
 import Button from "../../../Button/Button";
-// import * as FiIcons from "react-icons/fi"
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import * as MdIcons from "react-icons/md"
@@ -477,8 +476,8 @@ const SingleEmpHero = () =>{
                                         <p>{employee?.employee_details?.employee_type}</p>
                                     </div>
                                     <div className="field">
-                                        <label>State of Origin/Loval Gov:</label>
-                                        <p>{`${employee?.employee_details?.state_of_origin}/ ${employee?.employee_details?.localGov}`}</p>
+                                        <label>State of Origin / Loval Gov:</label>
+                                        <p>{`${employee?.employee_details?.state_of_origin} / ${employee?.employee_details?.localGov}`}</p>
                                     </div>
                                     { employee?.employee_details?.hod?.status === false ?
                                         <>
@@ -654,8 +653,8 @@ const SingleEmpHero = () =>{
                                 <p>{employee?.employee_details?.employee_type}</p>
                             </div>
                             <div className="field">
-                                <label>State of Origin/Loval Government:</label>
-                                <p>{`${employee?.employee_details?.state_of_origin}/ ${employee?.employee_details?.localGov}`}</p>
+                                <label>State of Origin / Loval Government:</label>
+                                <p>{`${employee?.employee_details?.state_of_origin} / ${employee?.employee_details?.localGov}`}</p>
                             </div>
                             { employee?.employee_details?.hod?.status === false ?
                                 <>

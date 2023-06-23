@@ -1,13 +1,13 @@
-.analytics{
+.analyticsBar{
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
     right: 45px;
-    margin-top: -50px;
+    top: 42%;
 }
 
-.analytics .analytics_icon{
+.analyticsBar .analyticsBar_icon{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,7 +20,7 @@
     transition: all 300ms ease;
 }
 
-.analytics .analytics_icon:hover{
+.analyticsBar .analyticsBar_icon:hover{
     cursor: pointer;
     box-shadow: 0rem 0rem 0.5rem 0rem rgba(136, 136, 136, 0.8);
 }

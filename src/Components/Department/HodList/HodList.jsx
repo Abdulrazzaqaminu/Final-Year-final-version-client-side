@@ -14,7 +14,7 @@ const HodList = () => {
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
-        documentTitle: `Enrolled employees`,
+        documentTitle: `List of HODs`,
         onAfterPrint: () => alert("Ok")
     })
 
@@ -22,6 +22,7 @@ const HodList = () => {
         {
             name: "Staff ID",
             selector: row => row.staff_ID,
+            sortable: true,
             width: "100px"
         },
         {

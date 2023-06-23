@@ -9,17 +9,18 @@ import * as MdIcons from "react-icons/md"
 import axios from "axios"
 import DataTable from "react-data-table-component";
 import { DateRange } from "react-date-range";
-import "react-date-range/dist/styles.css"; // main css file
-import "react-date-range/dist/theme/default.css"; // theme css file
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 import { format } from "date-fns";
 import Analytics from "../../Analytics/Pie/Analytics";
 import Cancel from "../../Analytics/Cancel";
 import PieChart from "../../Graphs/Pie/PieChart";
 import Loading from "../../Loading/Loading";
-import { confirmAlert } from 'react-confirm-alert'; // Import
+import { confirmAlert } from 'react-confirm-alert';
 import * as AiIcons from 'react-icons/ai';
 import { useReactToPrint } from "react-to-print";
 import LeaveList from "../../PrintForms/LeaveList/LeaveList";
+import LeaveFilteredList from "../../PrintForms/LeaveFilteredList/LeaveFilteredList";
 
 const LeaveHero = () => {
     const {leave, dispatch} = useLeaveContext();
@@ -71,47 +72,39 @@ const LeaveHero = () => {
         {
             name: "Name",
             selector: row => row.name,
-            sortable: true,
-            width: "120px"
+            width: "140px"
         },
         {
             name: "Email",
             selector: row => row.email,
-            sortable: true,
             width: "255px"
         },
         {
             name: "Leave Type",
-            selector: row => row.leave_type,
-            sortable: true
+            selector: row => row.leave_type
         },
         {
             name: "Approval Date",
             selector: row => row.approval_date,
-            sortable: true,
             width: "135px"
         },
         {
             name: "Start - End",
-            selector: row => row.start_end,
-            sortable: true
+            selector: row => row.start_end
         },
         {
             name: "Duration",
             selector: row => row.duration,
-            sortable: true,
             width: "100px"
         },
         {
             name: "Paid",
             selector: row => row.paid,
-            sortable: true,
             width: "80px"
         },
         {
             name: "Status",
-            selector: row => row.status,
-            sortable: true
+            selector: row => row.status
         },
     ]
 
@@ -125,19 +118,16 @@ const LeaveHero = () => {
         {
             name: "Name",
             selector: row => row.name,
-            sortable: true,
-            width: "120px"
+            width: "140px"
         },
         {
             name: "Leave Type",
             selector: row => row.leave_type,
-            sortable: true,
             width: "120px"
         },
         {
             name: "Approval Date",
             selector: row => row.approval_date,
-            sortable: true,
             width: "120px"
         },
         {
@@ -148,13 +138,11 @@ const LeaveHero = () => {
         {
             name: "Duration",
             selector: row => row.duration,
-            sortable: true,
             width: "100px"
         },
         {
             name: "Paid",
             selector: row => row.paid,
-            sortable: true,
             width: "120px"
         }
     ]
@@ -297,6 +285,12 @@ const LeaveHero = () => {
         documentTitle: `Employee leave requests`,
         onAfterPrint: () => alert("Ok")
     })
+    const componentRef2 = useRef();
+    const handlePrint2 = useReactToPrint({
+        content: () => componentRef2.current,
+        documentTitle: `Employee leave  filter`,
+        onAfterPrint: () => alert("Ok")
+    })
 
     return (
         <>
@@ -329,7 +323,7 @@ const LeaveHero = () => {
                                             filterLeaveType();
                                         }}
                                     />
-                                     {
+                                    {
                                         leave?.length > 0 ?
                                             (
                                                 <div className="printLeave" onClick={handlePrint}>
@@ -456,6 +450,18 @@ const LeaveHero = () => {
                                             setPieResults({})
                                         }}
                                     />
+                                    {
+                                        filterLeave_Table?.length > 0 ?
+                                        (
+                                            <div className="printLeaveFilter" onClick={handlePrint2}>
+                                                <div className="printLeaveFilter_icon">
+                                                    <AiIcons.AiFillPrinter />
+                                                </div>
+                                            </div>
+                                        ) :
+                                        ("")
+                                    }
+                                    <LeaveFilteredList leaveDetails={filterLeave_Table} componentref={componentRef2}/>
                                     <PieChart 
                                         onClick = {(node, event) => {
                                             // node.data
@@ -474,6 +480,7 @@ const LeaveHero = () => {
                                 <span className="close"><MdIcons.MdOutlineCancel className='close_btn' 
                                     onClick={() => {
                                         setFilterLeave(false);
+                                        setFilterLeave_Table([])
                                     }}
                                 /></span>
                                 <div className="table">

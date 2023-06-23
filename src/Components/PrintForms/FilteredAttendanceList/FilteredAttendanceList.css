@@ -1,0 +1,10 @@
+.empFillteredListDetails table{
+    white-space: nowrap;
+    padding: 5px;
+}
+
+@media print {
+    .empFillteredListDetails{
+        display: block !important;
+    }
+}

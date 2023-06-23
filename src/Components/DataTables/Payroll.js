@@ -14,12 +14,13 @@ const Payroll = () => {
         {
             name: "Staff ID",
             selector: row => row.staff_ID,
+            sortable: true,
             width: "100px"
         },
         {
             name: "Name",
             selector: row => row.name,
-            width: "120px"
+            width: "140px"
         },
         {
             name: "Email",

@@ -22,7 +22,7 @@ const Login = () => {
 
     const validateEmail = (e) => {
         var email = e.target.value
-        const regex = /^[a-zA-Z@.\b]+$/;
+        const regex = /^[a-zA-Z0-9\b._@]+$/;
         if ((e.target.value) === "" || regex.test(e.target.value)) {
             setEmail(e.target.value);
             if(!email){

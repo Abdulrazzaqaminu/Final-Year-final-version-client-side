@@ -5,8 +5,8 @@ import * as SiIcons from 'react-icons/si';
 const Analytics = ({onClick}) => {
     return (
         <>
-            <div className="analytics">
-                <div className="analytics_icon" onClick={onClick}>
+            <div className="analyticsBar">
+                <div className="analyticsBar_icon" onClick={onClick}>
                     <SiIcons.SiSimpleanalytics /> 
                 </div>
             </div>

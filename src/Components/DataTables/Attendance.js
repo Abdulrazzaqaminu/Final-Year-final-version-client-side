@@ -16,31 +16,26 @@ const Attendance = () =>{
         {
             name: "Name",
             selector: row => row.name,
-            sortable: true,
             width: "140px"
         },
         {
             name: "Email",
             selector: row => row.email,
-            sortable: true,
             width: "230px"
         },
         {
             name: "Date",
             selector: row => row.date,
-            sortable: true,
             width: "120px"
         },
         {
             name: "Entry Time",
             selector: row => row.entry_time,
-            sortable: true,
             width: "120px"
         },
         {
             name: "Exit Time",
             selector: row => row.exit_time,
-            sortable: true,
             width: "120px"
         },
     ]
